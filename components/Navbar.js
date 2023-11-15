@@ -5,11 +5,14 @@ const Navbar = () => {
     <>
       <nav className="bg-white border-gray-200 dark:bg-gray-900">
         <div className="w-screen flex items-center justify-start px-5 py-1">
-          <button className="font-bold text-[22px] pr-2">
-            <span className="text-sky-500">UIT</span>
-            <span className="text-cyan-600">-</span>
-            <span className="text-blue-700">PMS</span>
-          </button>
+          <Link href="/">
+            <button className="font-bold text-[22px] pr-2">
+              <span className="text-sky-500">UIT</span>
+              <span className="text-cyan-600">-</span>
+              <span className="text-blue-700">PMS</span>
+            </button>
+          </Link>
+
           <ul className="font-medium text-[17px] flex flex-row p-4 gap-2 items-center rounded-lg bg-white">
             <li>
               <Link
