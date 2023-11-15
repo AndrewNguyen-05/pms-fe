@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import { set } from "lodash";
 import axios from "axios";
 
-const index = () => {
+const viewProject = () => {
   const [project_list, setProjectList] = useState([]);
 
   useEffect(() => {
@@ -61,7 +61,7 @@ const index = () => {
           </form>
         </div>
         <div className="flex justify-end gap-8 w-full mr-16">
-          <Link href="/project/create">
+          <Link href="/academic-affair/project/create">
             <button
               type="button"
               className="w-[150px] border-[1px] border-sky-400 text-blue-700 bg-white hover:text-white hover:fill-white hover:bg-blue-700 focus:ring-1 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 focus:outline-none flex items-center justify-center gap-3"
@@ -150,8 +150,8 @@ const index = () => {
                   <td className="px-6 py-4">{project.name}</td>
                   <td className="px-6 py-4">{project.type}</td>
                   <td className="px-6 py-4">
-                    {project.Teacher.User.name} - {project.Teacher.User.email} -
-                    0111333222
+                    {project.Teacher.User.name} - {project.Teacher.User.email} -{" "}
+                    {project.Teacher.User.phone}
                   </td>
                 </tr>
               );
@@ -237,4 +237,4 @@ const index = () => {
   );
 };
 
-export default index;
+export default viewProject;

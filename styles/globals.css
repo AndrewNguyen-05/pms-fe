@@ -2,6 +2,24 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer utilities {
+  .nav-item {
+    @apply relative;
+  }
+
+  .nav-item::after {
+    @apply content-[''] bg-blue-400 h-[2px] w-[0%] left-0 -bottom-[5px] rounded-xl absolute duration-300;
+  }
+
+  .nav-item:focus::after {
+    @apply w-[100%] bg-blue-700;
+  }
+
+  .nav-item:hover::after {
+    @apply w-[100%] bg-blue-400;
+  }
+}
+
 html,
 body {
   padding: 0;
