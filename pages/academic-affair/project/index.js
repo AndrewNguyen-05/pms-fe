@@ -1,9 +1,25 @@
 import Link from "next/link";
 import useFetch from "@/utils/useFetch";
+import { useState, useEffect } from "react";
+import { set } from "lodash";
+import axios from "axios";
 
 const index = () => {
-  const project_list = useFetch("http://localhost:8888/api/v1/project/list");
-  console.log(">>> check projectlist: ", project_list);
+  const [project_list, setProjectList] = useState([]);
+
+  useEffect(() => {
+    fetchProjectData();
+  }, []);
+
+  const fetchProjectData = async () => {
+    const res = await axios.get("http://localhost:8888/api/v1/project/list");
+    if (res && res.data.DT && res.data.EC === 0) {
+      setProjectList(res.data.DT);
+    }
+  };
+
+  console.log(">>> check project_list: ", project_list);
+  //console.log(">>> check data: ", project_data);
 
   return (
     <div className="bg-slate-50 min-h-full pt-6">
@@ -112,266 +128,34 @@ const index = () => {
             </tr>
           </thead>
           <tbody>
-            <tr className="bg-white border-b hover:bg-gray-50 ">
-              <td className="w-4 p-4">
-                <div className="flex items-center">
-                  <input
-                    id="checkbox-table-search-1"
-                    type="checkbox"
-                    className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
-                  />
-                  <label htmlFor="checkbox-table-search-1" className="sr-only">
-                    checkbox
-                  </label>
-                </div>
-              </td>
-              <th
-                scope="row"
-                className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap"
-              >
-                SE001
-              </th>
-              <td className="px-6 py-4">CNPM</td>
-              <td className="px-6 py-4">Ứng dụng gọi xe chung cho sinh viên</td>
-              <td className="px-6 py-4">1</td>
-              <td className="px-6 py-4">
-                Nguyễn Văn A - nva@gm.uit.edu.vn - 0111333222
-              </td>
-            </tr>
-            <tr className="bg-white border-b hover:bg-gray-50 ">
-              <td className="w-4 p-4">
-                <div className="flex items-center">
-                  <input
-                    id="checkbox-table-search-1"
-                    type="checkbox"
-                    className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
-                  />
-                  <label htmlFor="checkbox-table-search-1" className="sr-only">
-                    checkbox
-                  </label>
-                </div>
-              </td>
-              <th
-                scope="row"
-                className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap"
-              >
-                SE001
-              </th>
-              <td className="px-6 py-4">CNPM</td>
-              <td className="px-6 py-4">Ứng dụng gọi xe chung cho sinh viên</td>
-              <td className="px-6 py-4">1</td>
-              <td className="px-6 py-4">
-                Nguyễn Văn A - nva@gm.uit.edu.vn - 0111333222
-              </td>
-            </tr>
-            <tr className="bg-white border-b hover:bg-gray-50 ">
-              <td className="w-4 p-4">
-                <div className="flex items-center">
-                  <input
-                    id="checkbox-table-search-1"
-                    type="checkbox"
-                    className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
-                  />
-                  <label htmlFor="checkbox-table-search-1" className="sr-only">
-                    checkbox
-                  </label>
-                </div>
-              </td>
-              <th
-                scope="row"
-                className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap"
-              >
-                SE001
-              </th>
-              <td className="px-6 py-4">CNPM</td>
-              <td className="px-6 py-4">Ứng dụng gọi xe chung cho sinh viên</td>
-              <td className="px-6 py-4">1</td>
-              <td className="px-6 py-4">
-                Nguyễn Văn A - nva@gm.uit.edu.vn - 0111333222
-              </td>
-            </tr>
-            <tr className="bg-white border-b hover:bg-gray-50 ">
-              <td className="w-4 p-4">
-                <div className="flex items-center">
-                  <input
-                    id="checkbox-table-search-1"
-                    type="checkbox"
-                    className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
-                  />
-                  <label htmlFor="checkbox-table-search-1" className="sr-only">
-                    checkbox
-                  </label>
-                </div>
-              </td>
-              <th
-                scope="row"
-                className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap"
-              >
-                SE001
-              </th>
-              <td className="px-6 py-4">CNPM</td>
-              <td className="px-6 py-4">Ứng dụng gọi xe chung cho sinh viên</td>
-              <td className="px-6 py-4">1</td>
-              <td className="px-6 py-4">
-                Nguyễn Văn A - nva@gm.uit.edu.vn - 0111333222
-              </td>
-            </tr>
-            <tr className="bg-white border-b hover:bg-gray-50 ">
-              <td className="w-4 p-4">
-                <div className="flex items-center">
-                  <input
-                    id="checkbox-table-search-1"
-                    type="checkbox"
-                    className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
-                  />
-                  <label htmlFor="checkbox-table-search-1" className="sr-only">
-                    checkbox
-                  </label>
-                </div>
-              </td>
-              <th
-                scope="row"
-                className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap"
-              >
-                SE001
-              </th>
-              <td className="px-6 py-4">CNPM</td>
-              <td className="px-6 py-4">Ứng dụng gọi xe chung cho sinh viên</td>
-              <td className="px-6 py-4">1</td>
-              <td className="px-6 py-4">
-                Nguyễn Văn A - nva@gm.uit.edu.vn - 0111333222
-              </td>
-            </tr>
-            <tr className="bg-white border-b hover:bg-gray-50 ">
-              <td className="w-4 p-4">
-                <div className="flex items-center">
-                  <input
-                    id="checkbox-table-search-1"
-                    type="checkbox"
-                    className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
-                  />
-                  <label htmlFor="checkbox-table-search-1" className="sr-only">
-                    checkbox
-                  </label>
-                </div>
-              </td>
-              <th
-                scope="row"
-                className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap"
-              >
-                SE001
-              </th>
-              <td className="px-6 py-4">CNPM</td>
-              <td className="px-6 py-4">Ứng dụng gọi xe chung cho sinh viên</td>
-              <td className="px-6 py-4">1</td>
-              <td className="px-6 py-4">
-                Nguyễn Văn A - nva@gm.uit.edu.vn - 0111333222
-              </td>
-            </tr>
-            <tr className="bg-white border-b hover:bg-gray-50 ">
-              <td className="w-4 p-4">
-                <div className="flex items-center">
-                  <input
-                    id="checkbox-table-search-1"
-                    type="checkbox"
-                    className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
-                  />
-                  <label htmlFor="checkbox-table-search-1" className="sr-only">
-                    checkbox
-                  </label>
-                </div>
-              </td>
-              <th
-                scope="row"
-                className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap"
-              >
-                SE001
-              </th>
-              <td className="px-6 py-4">CNPM</td>
-              <td className="px-6 py-4">Ứng dụng gọi xe chung cho sinh viên</td>
-              <td className="px-6 py-4">1</td>
-              <td className="px-6 py-4">
-                Nguyễn Văn A - nva@gm.uit.edu.vn - 0111333222
-              </td>
-            </tr>
-            <tr className="bg-white border-b hover:bg-gray-50 ">
-              <td className="w-4 p-4">
-                <div className="flex items-center">
-                  <input
-                    id="checkbox-table-search-1"
-                    type="checkbox"
-                    className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
-                  />
-                  <label htmlFor="checkbox-table-search-1" className="sr-only">
-                    checkbox
-                  </label>
-                </div>
-              </td>
-              <th
-                scope="row"
-                className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap"
-              >
-                SE001
-              </th>
-              <td className="px-6 py-4">CNPM</td>
-              <td className="px-6 py-4">Ứng dụng gọi xe chung cho sinh viên</td>
-              <td className="px-6 py-4">1</td>
-              <td className="px-6 py-4">
-                Nguyễn Văn A - nva@gm.uit.edu.vn - 0111333222
-              </td>
-            </tr>
-            <tr className="bg-white border-b hover:bg-gray-50 ">
-              <td className="w-4 p-4">
-                <div className="flex items-center">
-                  <input
-                    id="checkbox-table-search-1"
-                    type="checkbox"
-                    className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
-                  />
-                  <label htmlFor="checkbox-table-search-1" className="sr-only">
-                    checkbox
-                  </label>
-                </div>
-              </td>
-              <th
-                scope="row"
-                className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap"
-              >
-                SE001
-              </th>
-              <td className="px-6 py-4">CNPM</td>
-              <td className="px-6 py-4">Ứng dụng gọi xe chung cho sinh viên</td>
-              <td className="px-6 py-4">1</td>
-              <td className="px-6 py-4">
-                Nguyễn Văn A - nva@gm.uit.edu.vn - 0111333222
-              </td>
-            </tr>
-            <tr className="bg-white border-b hover:bg-gray-50 ">
-              <td className="w-4 p-4">
-                <div className="flex items-center">
-                  <input
-                    id="checkbox-table-search-1"
-                    type="checkbox"
-                    className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
-                  />
-                  <label htmlFor="checkbox-table-search-1" className="sr-only">
-                    checkbox
-                  </label>
-                </div>
-              </td>
-              <th
-                scope="row"
-                className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap"
-              >
-                SE001
-              </th>
-              <td className="px-6 py-4">CNPM</td>
-              <td className="px-6 py-4">Ứng dụng gọi xe chung cho sinh viên</td>
-              <td className="px-6 py-4">1</td>
-              <td className="px-6 py-4">
-                Nguyễn Văn A - nva@gm.uit.edu.vn - 0111333222
-              </td>
-            </tr>
+            {project_list.map((project) => {
+              return (
+                <tr className="bg-white border-b hover:bg-gray-50 ">
+                  <td className="w-4 p-4">
+                    <div className="flex items-center">
+                      <input
+                        id="checkbox-table-search-1"
+                        type="checkbox"
+                        className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                      />
+                    </div>
+                  </td>
+                  <th
+                    scope="row"
+                    className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap"
+                  >
+                    {project.id}
+                  </th>
+                  <td className="px-6 py-4">{project.faculty}</td>
+                  <td className="px-6 py-4">{project.name}</td>
+                  <td className="px-6 py-4">{project.type}</td>
+                  <td className="px-6 py-4">
+                    {project.Teacher.User.name} - {project.Teacher.User.email} -
+                    0111333222
+                  </td>
+                </tr>
+              );
+            })}
           </tbody>
         </table>
         <nav
