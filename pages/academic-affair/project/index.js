@@ -1,5 +1,5 @@
 import Link from "next/link";
-import useFetch from "@/utils/fetch";
+import useFetch from "@/utils/useFetch";
 
 const index = () => {
   const project_list = useFetch("http://localhost:8888/api/v1/project/list");
