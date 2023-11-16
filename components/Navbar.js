@@ -16,7 +16,7 @@ const Navbar = () => {
           <ul className="font-medium text-[17px] flex flex-row p-4 gap-2 items-center rounded-lg bg-white">
             <li>
               <Link
-                href="/academic-affair/project/view"
+                href="/academic-affair/project/view-project"
                 className="nav-item mx-5 bg-blue-700 rounded md:bg-transparent text-black hover:after:w-[100%] hover:text-blue-400 focus:text-blue-700"
               >
                 Project
@@ -24,7 +24,7 @@ const Navbar = () => {
             </li>
             <li>
               <Link
-                href="/academic-affair/announcement/view"
+                href="/academic-affair/announcement/view-announcement"
                 className="nav-item mx-5 bg-blue-700 rounded md:bg-transparent text-black hover:text-blue-400 focus:text-blue-700"
               >
                 Announcement
@@ -32,7 +32,7 @@ const Navbar = () => {
             </li>
             <li>
               <Link
-                href="/academic-affair/score/view"
+                href="/academic-affair/score/view-score"
                 className="nav-item mx-5 bg-blue-700 rounded md:bg-transparent text-black hover:text-blue-400 focus:text-blue-700"
               >
                 Score
@@ -40,7 +40,7 @@ const Navbar = () => {
             </li>
             <li>
               <Link
-                href="/academic-affair/analysis/view"
+                href="/academic-affair/analysis/view-analysis"
                 className="nav-item mx-5 bg-blue-700 rounded md:bg-transparent text-black hover:text-blue-400 focus:text-blue-700"
               >
                 Analysis
@@ -48,7 +48,7 @@ const Navbar = () => {
             </li>
             <li>
               <Link
-                href="/academic-affair/report/view"
+                href="/academic-affair/report/view-report"
                 className="nav-item mx-5 bg-blue-700 rounded md:bg-transparent text-black hover:text-blue-400 focus:text-blue-700"
               >
                 Report
