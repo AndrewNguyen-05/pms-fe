@@ -18,6 +18,13 @@
   .nav-item:hover::after {
     @apply w-[100%] bg-blue-400;
   }
+
+  .nav-item-actived {
+    @apply text-blue-700;
+  }
+  .nav-item-actived::after {
+    @apply w-[100%] bg-blue-700;
+  }
 }
 
 html,
