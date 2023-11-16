@@ -141,7 +141,7 @@ const createProject = () => {
                     setProjectFaculty(event.target.value);
                   }}
                 >
-                  <option selected={true} disabled={true}>
+                  <option value={true} disabled={true}>
                     Select falcuty
                   </option>
                   <option value="Công nghệ Phần Mềm">Công nghệ Phần Mềm</option>
@@ -172,7 +172,7 @@ const createProject = () => {
                     setProjectType(event.target.value);
                   }}
                 >
-                  <option selected={true} disabled={true}>
+                  <option value={true} disabled={true}>
                     Select project type
                   </option>
                   <option value="1">1</option>
@@ -209,7 +209,7 @@ const createProject = () => {
                         setTeacherId(selectedTeacher.id);
                       }}
                     >
-                      <option selected={true} disabled={true}>
+                      <option value={true} disabled={true}>
                         Select name
                       </option>
                       {teacher_list.map((teacher) => (
