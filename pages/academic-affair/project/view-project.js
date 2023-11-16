@@ -24,7 +24,7 @@ const viewProject = () => {
   return (
     <>
       <Meta title={"View project"} />
-      <div className="bg-slate-50 min-h-full pt-6">
+      <div className="bg-slate-50 h-full pt-6">
         <div className="flex items-center">
           <div className="px-16">
             <form className=" flex flex-row">
@@ -107,8 +107,8 @@ const viewProject = () => {
             </button>
           </div>
         </div>
-        <div className="px-16 py-7">
-          <table className="w-full text-[16px] text-left rtl:text-right text-gray-500">
+        <div className="px-16 py-7 ">
+          <table className="w-full text-[16px] text-left rtl:text-right text-gray-500 ">
             <thead className="text-[16px] text-blue -700 uppercase border-b bg-white ">
               <tr>
                 <th scope="col" className="p-4"></th>
@@ -132,7 +132,7 @@ const viewProject = () => {
             <tbody>
               {project_list.map((project) => {
                 return (
-                  <tr className="bg-white border-b hover:bg-gray-50 ">
+                  <tr className="bg-white border-b hover:bg-gray-50 cursor-pointer">
                     <td className="w-4 p-4">
                       <div className="flex items-center">
                         <input
