@@ -1,25 +1,20 @@
 import Link from "next/link";
-import useFetch from "@/utils/useFetch";
 import { useState, useEffect } from "react";
 import Meta from "@/components/Meta";
-import axios from "axios";
+import { getProjectData } from "../../../services/projectServices";
 
-const viewProject = () => {
+const ViewProject = () => {
   const [project_list, setProjectList] = useState([]);
 
   useEffect(() => {
-    fetchProjectData();
-  }, []);
-
-  const fetchProjectData = async () => {
-    const res = await axios.get("http://localhost:8888/api/v1/project/list");
-    if (res && res.data.DT && res.data.EC === 0) {
-      setProjectList(res.data.DT);
+    async function getProjectsData() {
+      let projectsData = await getProjectData();
+      setProjectList(projectsData);
+      console.log(">>> check data from fetchProjectData: ", projectsData);
     }
-  };
-
+    getProjectsData();
+  }, []);
   console.log(">>> check project_list: ", project_list);
-  //console.log(">>> check data: ", project_data);
 
   return (
     <>
@@ -87,7 +82,7 @@ const viewProject = () => {
             </Link>
             <button
               type="button"
-              className="w-[150px] border-[1px] border-sky-400 text-blue-700 bg-white hover:text-white hover:bg-blue-700 focus:ring-1 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 focus:outline-none flex items-center justify-center gap-3"
+              className="w-[150px] border-[1px] border-red-400 text-red-600 bg-white hover:text-white hover:bg-red-600 focus:ring-1 focus:ring-red-200 font-medium rounded-lg text-sm px-5 py-2.5 focus:outline-none flex items-center justify-center gap-3"
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -127,6 +122,9 @@ const viewProject = () => {
                 <th scope="col" className="px-6 py-3">
                   Teacher Information
                 </th>
+                <th scope="col" className="px-6 py-3">
+                  Action
+                </th>
               </tr>
             </thead>
             <tbody>
@@ -154,6 +152,14 @@ const viewProject = () => {
                     <td className="px-6 py-4">
                       {project.Teacher.User.name} - {project.Teacher.User.email}{" "}
                       - {project.Teacher.User.phone}
+                    </td>
+                    <td className="px-6 py-4">
+                      <Link
+                        href="#"
+                        className="font-medium text-blue-600 dark:text-blue-500 hover:underline"
+                      >
+                        Edit
+                      </Link>
                     </td>
                   </tr>
                 );
@@ -240,4 +246,4 @@ const viewProject = () => {
   );
 };
 
-export default viewProject;
+export default ViewProject;
