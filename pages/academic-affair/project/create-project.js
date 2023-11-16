@@ -7,7 +7,6 @@ import { toast } from "react-toastify";
 import { useRouter } from "next/router";
 
 const createProject = () => {
-  const [project_list, setProjectList] = useState([]);
   const [teacher_list, setTeacherList] = useState([]);
   let defaultTeacherInformation = {
     name: "",
@@ -36,10 +35,6 @@ const createProject = () => {
   //get data
   useEffect(() => {
     async function getData() {
-      //get project data
-      let projectsData = await getProjectData();
-      setProjectList(projectsData);
-
       //get teacher data
       let teachersData = await getTeacherData();
       setTeacherList(teachersData);
@@ -100,16 +95,16 @@ const createProject = () => {
     <>
       <Meta title={"Create new project"} />
       <div className="bg-slate-100 h-full py-6">
-        <section class="bg-white mx-20 rounded-2xl">
-          <div class="py-4 px-6">
-            <h2 class="mb-4 text-xl font-bold text-gray-900 ">
+        <section className="bg-white mx-20 rounded-2xl">
+          <div className="py-4 px-6">
+            <h2 className="mb-4 text-xl font-bold text-gray-900 ">
               Create new project
             </h2>
-            <div class="grid grid-cols-2 gap-4 text-sm">
-              <div class="col-span-2">
+            <div className="grid grid-cols-2 gap-4 text-sm">
+              <div className="col-span-2">
                 <label
-                  for="name"
-                  class="block mb-2 text-sm font-medium text-gray-900 "
+                  htmlFor="name"
+                  className="block mb-2 text-sm font-medium text-gray-900 "
                 >
                   Topic <span className="text-red-600">(*)</span>
                 </label>
@@ -128,10 +123,10 @@ const createProject = () => {
                   }}
                 />
               </div>
-              <div class="w-full">
+              <div className="w-full">
                 <label
-                  for="faculty"
-                  class="block mb-2 text-sm font-medium text-gray-900"
+                  htmlFor="faculty"
+                  className="block mb-2 text-sm font-medium text-gray-900"
                 >
                   Faculty <span className="text-red-600">(*)</span>
                 </label>
@@ -146,20 +141,23 @@ const createProject = () => {
                     setProjectFaculty(event.target.value);
                   }}
                 >
-                  <option selected="true" disabled="disabled">
+                  <option selected={true} disabled={true}>
                     Select falcuty
                   </option>
-                  {project_list.map((project) => (
-                    <>
-                      <option value={project.faculty}>{project.faculty}</option>
-                    </>
-                  ))}
+                  <option value="Công nghệ Phần Mềm">Công nghệ Phần Mềm</option>
+                  <option value="Hệ thống Thông Tin">Hệ thống Thông Tin</option>
+                  <option value="Kỹ thuật Máy Tính">Kỹ thuật Máy Tính</option>
+                  <option value="Khoa học Máy Tính">Khoa học Máy Tính</option>
+                  <option value="Khoa học và Kỹ thuật Thông Tin">
+                    Khoa học và Kỹ thuật Thông Tin
+                  </option>
+                  <option value="MMT & Truyền thông">MMT & Truyền thông</option>
                 </select>
               </div>
               <div>
                 <label
-                  for="project-type"
-                  class="block mb-2 text-sm font-medium text-gray-900"
+                  htmlFor="project-type"
+                  className="block mb-2 text-sm font-medium text-gray-900"
                 >
                   Type <span className="text-red-600">(*)</span>
                 </label>
@@ -174,7 +172,7 @@ const createProject = () => {
                     setProjectType(event.target.value);
                   }}
                 >
-                  <option selected="true" disabled="disabled">
+                  <option selected={true} disabled={true}>
                     Select project type
                   </option>
                   <option value="1">1</option>
@@ -187,10 +185,10 @@ const createProject = () => {
                   <span className="text-red-600">(*)</span>
                 </legend>
                 <div className="grid grid-cols-3 gap-4">
-                  <div class="w-full col-span-1">
+                  <div className="w-full col-span-1">
                     <label
-                      for="teacher-name"
-                      class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                      htmlFor="teacher-name"
+                      className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
                     >
                       Name
                     </label>
@@ -211,7 +209,7 @@ const createProject = () => {
                         setTeacherId(selectedTeacher.id);
                       }}
                     >
-                      <option selected="true" disabled="disabled">
+                      <option selected={true} disabled={true}>
                         Select name
                       </option>
                       {teacher_list.map((teacher) => (
@@ -223,8 +221,8 @@ const createProject = () => {
                   </div>
                   <div className="col-span-1">
                     <label
-                      for="teacher-contact-info"
-                      class="block mb-2 text-sm font-medium text-gray-900 "
+                      htmlFor="teacher-contact-info"
+                      className="block mb-2 text-sm font-medium text-gray-900 "
                     >
                       Email
                     </label>
@@ -232,7 +230,7 @@ const createProject = () => {
                       type="text"
                       name="teacher-contact-info"
                       id="teacher-info"
-                      class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 "
+                      className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 "
                       placeholder="Teacher's information"
                       readOnly={true}
                       value={teacherInformation.email}
@@ -240,8 +238,8 @@ const createProject = () => {
                   </div>
                   <div className="col-span-1">
                     <label
-                      for="teacher-contact-info"
-                      class="block mb-2 text-sm font-medium text-gray-900 "
+                      htmlFor="teacher-contact-info"
+                      className="block mb-2 text-sm font-medium text-gray-900 "
                     >
                       Phone number
                     </label>
@@ -249,7 +247,7 @@ const createProject = () => {
                       type="text"
                       name="teacher-contact-info"
                       id="teacher-info"
-                      class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 "
+                      className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 "
                       placeholder="Teacher's information"
                       readOnly={true}
                       value={teacherInformation.phone}
@@ -258,18 +256,18 @@ const createProject = () => {
                 </div>
               </fieldset>
 
-              <div class="col-span-2">
+              <div className="col-span-2">
                 <label
-                  for="description"
-                  class="block mb-2 text-sm font-medium text-gray-900 "
+                  htmlFor="description"
+                  className="block mb-2 text-sm font-medium text-gray-900 "
                 >
                   Requirement
                 </label>
                 <textarea
                   id="requirement"
                   rows="8"
-                  class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-primary-500 focus:border-primary-500 "
-                  placeholder="Requirement for the project"
+                  className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-primary-500 focus:border-primary-500 "
+                  placeholder="Requirement htmlFor the project"
                   onChange={(event) => {
                     setProjectRequirement(event.target.value);
                   }}
