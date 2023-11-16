@@ -8,7 +8,7 @@
   }
 
   .nav-item::after {
-    @apply content-[''] bg-blue-400 h-[2px] w-[0%] left-0 -bottom-[5px] rounded-xl absolute duration-300;
+    @apply content-[''] bg-blue-700 h-[2px] w-[0%] left-0 -bottom-[5px] rounded-xl absolute duration-200;
   }
 
   .nav-item:focus::after {
