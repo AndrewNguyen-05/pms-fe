@@ -7,8 +7,20 @@ const getProjectData = async () => {
   }
 };
 
-const postCreateProject = async () => {
-  return await axios.post("http://localhost:8888/api/v1/project/create", {});
+const postCreateProject = async (
+  projectName,
+  projectType,
+  projectFaculty,
+  teacherId,
+  projectRequirement
+) => {
+  return await axios.post("http://localhost:8888/api/v1/project/create", {
+    projectName,
+    projectType,
+    projectFaculty,
+    teacherId,
+    projectRequirement,
+  });
 };
 
 export { getProjectData, postCreateProject };
