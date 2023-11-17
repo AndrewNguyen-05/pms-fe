@@ -114,8 +114,8 @@ const createProject = () => {
                   id="name"
                   className={
                     objCheckInput.isValidProjectName
-                      ? "bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 "
-                      : "bg-red-50 border border-red-600 ring-2 ring-red-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
+                      ? "bg-slate-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 "
+                      : "bg-red-50 border ring-1 ring-red-400 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
                   }
                   placeholder="Enter topic of project"
                   onChange={(event) => {
@@ -134,14 +134,15 @@ const createProject = () => {
                   id="faculty"
                   className={
                     objCheckInput.isValidFaculty
-                      ? "bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 "
-                      : "bg-red-50 border border-red-600 ring-2 ring-red-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5  invalid:border-red-700 invalid:bg-red-700"
+                      ? "bg-slate-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 "
+                      : "bg-red-50 border ring-1 ring-red-400 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5  invalid:border-red-700 invalid:bg-red-700"
                   }
+                  defaultValue={"DEFAULT"}
                   onChange={(event) => {
                     setProjectFaculty(event.target.value);
                   }}
                 >
-                  <option value={true} disabled={true}>
+                  <option value={"DEFAULT"} disabled={true}>
                     Select falcuty
                   </option>
                   <option value="Công nghệ Phần Mềm">Công nghệ Phần Mềm</option>
@@ -165,14 +166,15 @@ const createProject = () => {
                   id="project-type"
                   className={
                     objCheckInput.isValidType
-                      ? "bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 "
-                      : "bg-red-50 border border-red-600 ring-2 ring-red-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
+                      ? "bg-slate-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 "
+                      : "bg-red-50 border ring-1 ring-red-400 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
                   }
+                  defaultValue={"DEFAULT"}
                   onChange={(event) => {
                     setProjectType(event.target.value);
                   }}
                 >
-                  <option value={true} disabled={true}>
+                  <option value={"DEFAULT"} disabled={true}>
                     Select project type
                   </option>
                   <option value="1">1</option>
@@ -188,7 +190,7 @@ const createProject = () => {
                   <div className="w-full col-span-1">
                     <label
                       htmlFor="teacher-name"
-                      className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                      className="block mb-2 text-sm font-medium text-gray-900 "
                     >
                       Name
                     </label>
@@ -196,9 +198,10 @@ const createProject = () => {
                       id="teacher-name"
                       className={
                         objCheckInput.isValidTeacher
-                          ? "bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 "
-                          : "bg-red-50 border border-red-600 ring-2 ring-red-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
+                          ? "bg-slate-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 "
+                          : "bg-red-50 border ring-1 ring-red-400 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
                       }
+                      defaultValue={"DEFAULT"}
                       onChange={(event) => {
                         const selectedTeacher = teacher_list.find(
                           (teacher) => teacher.User.name === event.target.value
@@ -209,7 +212,7 @@ const createProject = () => {
                         setTeacherId(selectedTeacher.id);
                       }}
                     >
-                      <option value={true} disabled={true}>
+                      <option value={"DEFAULT"} disabled={true}>
                         Select name
                       </option>
                       {teacher_list.map((teacher) => (
@@ -230,7 +233,7 @@ const createProject = () => {
                       type="text"
                       name="teacher-contact-info"
                       id="teacher-info"
-                      className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 "
+                      className="bg-slate-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 "
                       placeholder="Teacher's information"
                       readOnly={true}
                       value={teacherInformation.email}
@@ -247,7 +250,7 @@ const createProject = () => {
                       type="text"
                       name="teacher-contact-info"
                       id="teacher-info"
-                      className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 "
+                      className="bg-slate-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 "
                       placeholder="Teacher's information"
                       readOnly={true}
                       value={teacherInformation.phone}
