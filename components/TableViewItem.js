@@ -16,7 +16,7 @@ const TableViewItem = ({ columnNames, rowList, editHref }) => {
         </tr>
       </thead>
       <tbody>
-        {rowList.map((project, index) => {
+        {rowList.map((row, index) => {
           return (
             <tr
               className="bg-white border-b hover:bg-gray-50 cursor-pointer"
@@ -31,19 +31,26 @@ const TableViewItem = ({ columnNames, rowList, editHref }) => {
                   />
                 </div>
               </td>
-              <th
-                scope="row"
-                className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap"
-              >
-                {project.id}
-              </th>
-              <td className="px-6 py-4">{project.faculty}</td>
-              <td className="px-6 py-4">{project.name}</td>
-              <td className="px-6 py-4">{project.type}</td>
-              <td className="px-6 py-4">
-                {project.Teacher.User.name} - {project.Teacher.User.email} -{" "}
-                {project.Teacher.User.phone}
-              </td>
+
+              {Object.values(row).map((cell, index) => {
+                if (index == 0) {
+                  return (
+                    <th
+                      scope="row"
+                      className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap"
+                      key={index}
+                    >
+                      {cell}
+                    </th>
+                  );
+                }
+                return (
+                  <td className="px-6 py-4" key={index}>
+                    {cell}
+                  </td>
+                );
+              })}
+
               <td className="px-6 py-4">
                 <Link
                   href={editHref}

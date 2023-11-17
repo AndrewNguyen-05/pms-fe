@@ -9,16 +9,29 @@ import SearchBar from "@/components/SearchBar";
 
 const ViewProject = () => {
   const [project_list, setProjectList] = useState([]);
+  const [projectListCombined, setProjectListCombined] = useState([]);
 
   useEffect(() => {
     async function getProjectsData() {
       let projectsData = await getProjectData();
       setProjectList(projectsData);
+      setProjectListCombined(
+        projectsData.map((row) => {
+          row.teacherInformation = `${row.Teacher.User.name} - ${row.Teacher.User.email} - ${row.Teacher.User.phone}`;
+          return {
+            id: row.id,
+            faculty: row.faculty,
+            name: row.name,
+            type: row.type,
+            teacherInformation: row.teacherInformation,
+          };
+        })
+      );
       console.log(">>> check data from fetchProjectData: ", projectsData);
     }
     getProjectsData();
   }, []);
-  console.log(">>> check project_list: ", project_list);
+  console.log(">>> check project_list: ", projectListCombined);
 
   return (
     <>
@@ -39,14 +52,14 @@ const ViewProject = () => {
         <div className="px-16 py-7 ">
           <TableViewItem
             columnNames={[
-              "ID",
+              "bao gio thi duoc 1 ti goi me",
               "Faculty",
               "Topic",
               "Type",
               "Teacher Information",
               "Action",
             ]}
-            rowList={project_list}
+            rowList={projectListCombined}
             editHref="#"
           />
           <nav

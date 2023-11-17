@@ -6,7 +6,7 @@ import { useState, useEffect } from "react";
 import { toast } from "react-toastify";
 import { useRouter } from "next/router";
 
-const createProject = () => {
+const CreateProject = () => {
   const [teacher_list, setTeacherList] = useState([]);
   let defaultTeacherInformation = {
     name: "",
@@ -299,4 +299,4 @@ const createProject = () => {
   );
 };
 
-export default createProject;
+export default CreateProject;
