@@ -52,13 +52,13 @@ const createProject = () => {
 
     if (!projectType) {
       toast.error("Project type is required!");
-      setObjCheckInput({ ...defaultValidInput, isValidProjectType: false });
+      setObjCheckInput({ ...defaultValidInput, isValidType: false });
       return false;
     }
 
     if (!projectFaculty) {
       toast.error("Project faculty is required!");
-      setObjCheckInput({ ...defaultValidInput, isValidProjectFaculty: false });
+      setObjCheckInput({ ...defaultValidInput, isValidFaculty: false });
       return false;
     }
 
