@@ -100,7 +100,7 @@ const createProject = () => {
             <h2 className="mb-4 text-xl font-bold text-gray-900 ">
               Create new project
             </h2>
-            <div className="grid grid-cols-2 gap-4 text-sm">
+            <div className="grid grid-cols-2 gap-4 text-base">
               <div className="col-span-2">
                 <label
                   htmlFor="name"
@@ -213,7 +213,7 @@ const createProject = () => {
                       }}
                     >
                       <option value={"DEFAULT"} disabled={true}>
-                        Select name
+                        Select teacher
                       </option>
                       {teacher_list.map((teacher) => (
                         <option value={teacher.User.name}>

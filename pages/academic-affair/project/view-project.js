@@ -61,7 +61,7 @@ const ViewProject = () => {
             <Link href="/academic-affair/project/create-project">
               <button
                 type="button"
-                className="w-[150px] border-[1px] border-sky-400 text-blue-700 bg-white hover:text-white hover:fill-white hover:bg-blue-700 focus:ring-1 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 focus:outline-none flex items-center justify-center gap-3"
+                className="w-[150px] border-[1px] border-sky-400 text-blue-700 bg-white hover:text-white hover:bg-blue-700 focus:ring-1 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 focus:outline-none flex items-center justify-center gap-3"
               >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -136,7 +136,7 @@ const ViewProject = () => {
                         <input
                           id="checkbox-table-search-1"
                           type="checkbox"
-                          className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                          className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded-lg "
                         />
                       </div>
                     </td>
