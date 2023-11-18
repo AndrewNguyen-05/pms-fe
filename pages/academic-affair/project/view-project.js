@@ -57,7 +57,7 @@ const ViewProject = () => {
             <ButtonDelete text="Delete" href="#" />
           </div>
         </div>
-        <div className="px-16 py-7">
+        <div className="px-16 py-7 h-screen">
           <TableViewItem
             columnNames={[
               "Topic",
