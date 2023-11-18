@@ -10,32 +10,33 @@ import ReactPaginate from "react-paginate";
 
 const ViewProject = () => {
   const [project_list, setProjectList] = useState([]);
-  const [projectListCombined, setProjectListCombined] = useState([]);
-  const [totalPage, setTotalPage] = useState(2);
+  const [totalPage, setTotalPage] = useState(0);
   const [currentPage, setCurrentPage] = useState(1);
   const [currentLimit, setCurrentLimit] = useState(10);
   const [currentOffset, setCurrentOffset] = useState(0);
 
   useEffect(() => {
-    async function getProjectsData() {
-      let projectsData = await getProjectData(currentPage, currentLimit);
-      setProjectList(projectsData);
-      setProjectListCombined(
-        projectsData.map((row) => {
-          row.teacherInformation = `${row.Teacher.User.name} - ${row.Teacher.User.email} - ${row.Teacher.User.phone}`;
-          return {
-            name: row.name,
-            faculty: row.faculty,
-            type: row.type,
-            teacherInformation: row.teacherInformation,
-          };
-        })
-      );
-    }
     getProjectsData();
     setCurrentOffset((currentPage - 1) * currentLimit + 1);
   }, [currentPage]);
-  console.log(">>> check project_list: ", projectListCombined);
+
+  async function getProjectsData() {
+    let projectsData = await getProjectData(currentPage, currentLimit);
+    setProjectList(
+      projectsData.projects.map((row) => {
+        row.teacherInformation = `${row.Teacher.User.name} - ${row.Teacher.User.email} - ${row.Teacher.User.phone}`;
+        return {
+          name: row.name,
+          faculty: row.faculty,
+          type: row.type,
+          teacherInformation: row.teacherInformation,
+        };
+      })
+    );
+    console.log(">>> check projectData: ", projectsData);
+    setTotalPage(projectsData.totalPage);
+  }
+  console.log(">>> check project_list: ", project_list);
 
   const handlePageClick = async (event) => {
     setCurrentPage(+event.selected + 1);
@@ -66,7 +67,7 @@ const ViewProject = () => {
               "Teacher Information",
               "Action",
             ]}
-            rowList={projectListCombined}
+            rowList={project_list}
             editHref="#"
           />
           <div className="flex items-center flex-row flex-wrap justify-between pt-4">
@@ -85,7 +86,7 @@ const ViewProject = () => {
                 <ReactPaginate
                   pageCount={totalPage}
                   marginPagesDisplayed={2}
-                  pageRangeDisplayed={5}
+                  pageRangeDisplayed={2}
                   onPageChange={handlePageClick}
                   previousLabel="Previous"
                   nextLabel="Next"

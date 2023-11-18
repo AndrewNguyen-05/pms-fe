@@ -5,7 +5,7 @@ const getProjectData = async (page, limit) => {
     `http://localhost:8888/api/v1/project/read?page=${page}&&limit=${limit}`
   );
   if (res && res.data.DT && res.data.EC === 0) {
-    return res.data.DT.projects;
+    return res.data.DT;
   }
 };
 
