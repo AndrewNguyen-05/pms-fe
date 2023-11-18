@@ -4,8 +4,8 @@ const TableViewItem = ({
   columnNames,
   rowList,
   editHref,
-  selectedProject,
-  onProjectSelect,
+  selectedItem,
+  onItemSelect,
 }) => {
   return (
     <table className="w-full text-[16px] text-left rtl:text-right text-gray-500 ">
@@ -34,11 +34,9 @@ const TableViewItem = ({
                     id="checkbox-table-search-1"
                     type="checkbox"
                     className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded-lg "
-                    checked={selectedProject.some(
-                      (project) => project.id === row.id
-                    )}
+                    checked={selectedItem.some((item) => item.id === row.id)}
                     onChange={(event) =>
-                      onProjectSelect(row, event.target.checked)
+                      onItemSelect(row, event.target.checked)
                     }
                   />
                 </div>

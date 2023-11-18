@@ -209,14 +209,6 @@ const ViewProject = () => {
                   prev.filter((p) => p.id !== project.id)
                 );
               }
-              console.log(
-                ">>> check project: ",
-                project,
-                " array: ",
-                selectedProject,
-                " isSelected: ",
-                isSelected
-              );
             }}
           />
           <div className="flex items-center flex-row flex-wrap justify-between pt-4">

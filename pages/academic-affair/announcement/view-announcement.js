@@ -15,6 +15,12 @@ const ViewAnnouncement = () => {
   const [currentLimit, setCurrentLimit] = useState(10);
   const [currentOffset, setCurrentOffset] = useState(0);
 
+  //control the state of open modal
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  //list of project that is selected
+  const [selectedAnnouncement, setSelectedAnnouncement] = useState([]);
+
   useEffect(() => {
     getAnnouncementData();
     setCurrentOffset((currentPage - 1) * currentLimit + 1);
@@ -25,6 +31,7 @@ const ViewAnnouncement = () => {
     setAnnouncementList(
       projectsData.announcements.map((row) => {
         return {
+          id: row.id,
           title: row.title,
           name: row.content,
           dateCreated: row.dateCreated.slice(0, 10),
@@ -62,6 +69,16 @@ const ViewAnnouncement = () => {
             ]}
             rowList={announcementList}
             editHref="#"
+            selectedItem={selectedAnnouncement}
+            onItemSelect={(announcement, isSelected) => {
+              if (isSelected) {
+                setSelectedAnnouncement((prev) => [...prev, announcement]);
+              } else {
+                setSelectedAnnouncement((prev) =>
+                  prev.filter((p) => p.id !== announcement.id)
+                );
+              }
+            }}
           />
           <nav className="flex items-center flex-column flex-wrap md:flex-row justify-between pt-4">
             <span className="text-sm font-normal text-gray-500  mb-4 md:mb-0 block w-full md:inline md:w-auto">
@@ -92,7 +109,7 @@ const ViewAnnouncement = () => {
                   breakLinkClassName="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700"
                   containerClassName="pagination"
                   activeClassName=""
-                  activeLinkClassName="bg-blue-100 text-blue-700"
+                  activeLinkClassName="bg-blue-600 text-white font-semibold hover:bg-blue-500 hover:text-white"
                   renderOnZeroPageCount={null}
                   disabledClassName="opacity-50"
                   className="inline-flex"
