@@ -270,7 +270,7 @@ const CreateProject = () => {
                   id="requirement"
                   rows="8"
                   className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-primary-500 focus:border-primary-500 "
-                  placeholder="Requirement htmlFor the project"
+                  placeholder="Requirement for the project"
                   onChange={(event) => {
                     setProjectRequirement(event.target.value);
                   }}

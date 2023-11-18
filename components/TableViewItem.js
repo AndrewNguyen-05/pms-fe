@@ -33,17 +33,17 @@ const TableViewItem = ({ columnNames, rowList, editHref }) => {
               </td>
 
               {Object.values(row).map((cell, index) => {
-                if (index == 0) {
-                  return (
-                    <th
-                      scope="row"
-                      className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap"
-                      key={index}
-                    >
-                      {cell}
-                    </th>
-                  );
-                }
+                // if (index == 0) {
+                //   return (
+                //     <th
+                //       scope="row"
+                //       className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap"
+                //       key={index}
+                //     >
+                //       {cell}
+                //     </th>
+                //   );
+                // }
                 return (
                   <td className="px-6 py-4" key={index}>
                     {cell}

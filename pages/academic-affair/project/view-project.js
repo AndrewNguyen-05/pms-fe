@@ -19,15 +19,13 @@ const ViewProject = () => {
         projectsData.map((row) => {
           row.teacherInformation = `${row.Teacher.User.name} - ${row.Teacher.User.email} - ${row.Teacher.User.phone}`;
           return {
-            id: row.id,
-            faculty: row.faculty,
             name: row.name,
+            faculty: row.faculty,
             type: row.type,
             teacherInformation: row.teacherInformation,
           };
         })
       );
-      console.log(">>> check data from fetchProjectData: ", projectsData);
     }
     getProjectsData();
   }, []);
@@ -52,9 +50,8 @@ const ViewProject = () => {
         <div className="px-16 py-7 ">
           <TableViewItem
             columnNames={[
-              "bao gio thi duoc 1 ti goi me",
-              "Faculty",
               "Topic",
+              "Faculty",
               "Type",
               "Teacher Information",
               "Action",
