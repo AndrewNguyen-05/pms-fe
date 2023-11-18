@@ -200,8 +200,8 @@ const ViewProject = () => {
             ]}
             rowList={project_list}
             editHref="#"
-            selectedProject={selectedProject}
-            onProjectSelect={(project, isSelected) => {
+            selectedItem={selectedProject}
+            onItemSelect={(project, isSelected) => {
               if (isSelected) {
                 setSelectedProject((prev) => [...prev, project]);
               } else {
