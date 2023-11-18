@@ -99,7 +99,8 @@ const ViewProject = () => {
                   breakClassName=""
                   breakLinkClassName="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700"
                   containerClassName="pagination"
-                  activeClassName="bg-blue-100 text-blue-700"
+                  activeClassName=""
+                  activeLinkClassName="bg-blue-100 text-blue-700"
                   renderOnZeroPageCount={null}
                   className="inline-flex"
                 />
