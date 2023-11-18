@@ -5,8 +5,15 @@ const TableViewItem = ({
   rowList,
   editHref,
   selectedItem,
-  onItemSelect,
+  setSelectedItem,
 }) => {
+  const onItemSelect = (project, isSelected) => {
+    if (isSelected) {
+      setSelectedItem((prev) => [...prev, project]);
+    } else {
+      setSelectedItem((prev) => prev.filter((p) => p.id !== project.id));
+    }
+  };
   return (
     <table className="w-full text-[16px] text-left rtl:text-right text-gray-500 ">
       <thead className="text-[16px] text-blue -700 uppercase border-b bg-white ">
