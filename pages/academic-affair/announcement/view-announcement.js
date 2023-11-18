@@ -96,6 +96,7 @@ const ViewAnnouncement = () => {
                   activeClassName=""
                   activeLinkClassName="bg-blue-100 text-blue-700"
                   renderOnZeroPageCount={null}
+                  disabledClassName="opacity-50"
                   className="inline-flex"
                 />
               )}
