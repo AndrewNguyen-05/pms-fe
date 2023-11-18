@@ -9,4 +9,12 @@ const getAnnouncementList = async (page, limit) => {
   }
 };
 
-export { getAnnouncementList };
+const postCreateAnnouncement = async (title, content, isPublic) => {
+  return await axios.post("http://localhost:8888/api/v1/announcement/create", {
+    title,
+    content,
+    isPublic,
+  });
+};
+
+export { getAnnouncementList, postCreateAnnouncement };
