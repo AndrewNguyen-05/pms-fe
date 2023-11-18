@@ -1,8 +1,11 @@
 import { useState, useEffect } from "react";
 import Meta from "@/components/Meta";
-import { getProjectData } from "../../../services/projectServices";
+import {
+  getProjectData,
+  deleteProject,
+} from "../../../services/projectServices";
 import ButtonCreate from "@/components/ButtonCreate";
-import ButtonDelete from "@/components/ButtonDelete";
+import {} from "../../../services/projectServices";
 import TableViewItem from "@/components/TableViewItem";
 import SearchBar from "@/components/SearchBar";
 import ReactPaginate from "react-paginate";
@@ -54,6 +57,21 @@ const ViewProject = () => {
       setIsModalOpen(true);
     }
   };
+  const handleConfirmDelete = async () => {
+    const projectIds = selectedProject.map((project) => project.id);
+    let response = await deleteProject(projectIds);
+    setSelectedProject([]);
+    setIsModalOpen(false);
+    if (response && response.data && response.data.EC === 0) {
+      toast.success(response.data.EM);
+      getProjectsData();
+    } else {
+      toast.error(response.data.EM);
+      getProjectsData();
+    }
+    console.log(">>> response: ", response);
+  };
+
   const handleCloseModal = () => {
     setIsModalOpen(false);
   };
@@ -120,7 +138,7 @@ const ViewProject = () => {
                     data-modal-hide="popup-modal"
                     type="button"
                     className="text-white bg-red-600 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300  font-medium rounded-lg text-sm inline-flex items-center px-5 py-2.5 text-center me-2"
-                    onClick={() => handleCancelClick()}
+                    onClick={() => handleConfirmDelete()}
                   >
                     Yes, I'm sure
                   </button>
@@ -182,6 +200,7 @@ const ViewProject = () => {
             ]}
             rowList={project_list}
             editHref="#"
+            selectedProject={selectedProject}
             onProjectSelect={(project, isSelected) => {
               if (isSelected) {
                 setSelectedProject((prev) => [...prev, project]);
@@ -201,15 +220,13 @@ const ViewProject = () => {
             }}
           />
           <div className="flex items-center flex-row flex-wrap justify-between pt-4">
-            <span className="text-sm font-normal text-gray-500 dark:text-gray-400 mb-4 md:mb-0 block w-full md:inline md:w-auto">
+            <span className="text-sm font-normal text-gray-500 mb-4 md:mb-0 block w-full md:inline md:w-auto">
               Showing{" "}
-              <span className="font-semibold text-gray-900 dark:text-white">
+              <span className="font-semibold text-gray-900 ">
                 {currentOffset}-{currentOffset + currentLimit - 1}
               </span>{" "}
               of{" "}
-              <span className="font-semibold text-gray-900 dark:text-white">
-                {totalPage}
-              </span>
+              <span className="font-semibold text-gray-900 ">{totalPage}</span>
             </span>
             <div>
               {totalPage > 0 && (

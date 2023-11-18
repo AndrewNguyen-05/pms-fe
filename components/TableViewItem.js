@@ -1,6 +1,12 @@
 import React from "react";
 import Link from "next/link";
-const TableViewItem = ({ columnNames, rowList, editHref, onProjectSelect }) => {
+const TableViewItem = ({
+  columnNames,
+  rowList,
+  editHref,
+  selectedProject,
+  onProjectSelect,
+}) => {
   return (
     <table className="w-full text-[16px] text-left rtl:text-right text-gray-500 ">
       <thead className="text-[16px] text-blue -700 uppercase border-b bg-white ">
@@ -28,6 +34,9 @@ const TableViewItem = ({ columnNames, rowList, editHref, onProjectSelect }) => {
                     id="checkbox-table-search-1"
                     type="checkbox"
                     className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded-lg "
+                    checked={selectedProject.some(
+                      (project) => project.id === row.id
+                    )}
                     onChange={(event) =>
                       onProjectSelect(row, event.target.checked)
                     }
@@ -53,7 +62,7 @@ const TableViewItem = ({ columnNames, rowList, editHref, onProjectSelect }) => {
               <td className="px-6 py-4">
                 <Link
                   href={editHref}
-                  className="font-medium text-blue-600 dark:text-blue-500 hover:underline"
+                  className="font-medium text-blue-600 hover:underline"
                 >
                   Edit
                 </Link>

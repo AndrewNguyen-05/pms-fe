@@ -64,15 +64,13 @@ const ViewAnnouncement = () => {
             editHref="#"
           />
           <nav className="flex items-center flex-column flex-wrap md:flex-row justify-between pt-4">
-            <span className="text-sm font-normal text-gray-500 dark:text-gray-400 mb-4 md:mb-0 block w-full md:inline md:w-auto">
+            <span className="text-sm font-normal text-gray-500  mb-4 md:mb-0 block w-full md:inline md:w-auto">
               Showing{" "}
-              <span className="font-semibold text-gray-900 dark:text-white">
+              <span className="font-semibold text-gray-900 ">
                 {currentOffset}-{currentOffset + currentLimit - 1}
               </span>{" "}
               of{" "}
-              <span className="font-semibold text-gray-900 dark:text-white">
-                {totalPage}
-              </span>
+              <span className="font-semibold text-gray-900 ">{totalPage}</span>
             </span>
             <div>
               {totalPage > 0 && (

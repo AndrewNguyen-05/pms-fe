@@ -25,4 +25,10 @@ const postCreateProject = async (
   });
 };
 
-export { getProjectData, postCreateProject };
+const deleteProject = async (projectIds) => {
+  return await axios.delete("http://localhost:8888/api/v1/project/delete", {
+    data: { projectIds },
+  });
+};
+
+export { getProjectData, postCreateProject, deleteProject };
