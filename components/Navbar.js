@@ -32,7 +32,7 @@ const Navbar = () => {
 
   return (
     <>
-      <nav className="bg-white border-gray-200 dark:bg-gray-900">
+      <nav className="bg-white border-gray-200">
         <div className="w-screen flex items-center justify-start px-5 py-1">
           <Link href="/">
             <button

@@ -1,6 +1,6 @@
 import React from "react";
 import Link from "next/link";
-const TableViewItem = ({ columnNames, rowList, editHref }) => {
+const TableViewItem = ({ columnNames, rowList, editHref, onProjectSelect }) => {
   return (
     <table className="w-full text-[16px] text-left rtl:text-right text-gray-500 ">
       <thead className="text-[16px] text-blue -700 uppercase border-b bg-white ">
@@ -28,22 +28,21 @@ const TableViewItem = ({ columnNames, rowList, editHref }) => {
                     id="checkbox-table-search-1"
                     type="checkbox"
                     className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded-lg "
+                    onChange={(event) =>
+                      onProjectSelect(row, event.target.checked)
+                    }
                   />
                 </div>
               </td>
 
               {Object.values(row).map((cell, index) => {
-                // if (index == 0) {
-                //   return (
-                //     <th
-                //       scope="row"
-                //       className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap"
-                //       key={index}
-                //     >
-                //       {cell}
-                //     </th>
-                //   );
-                // }
+                if (index == 0) {
+                  return (
+                    <th scope="row" className="hidden" key={index}>
+                      {cell}
+                    </th>
+                  );
+                }
                 return (
                   <td className="px-6 py-4" key={index}>
                     {cell}
