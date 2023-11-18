@@ -4,8 +4,6 @@ import { getTeacherData } from "@/services/teacherServices";
 import { useState, useEffect } from "react";
 import { toast } from "react-toastify";
 import { useRouter } from "next/router";
-import ModalWarning from "@/components/ModalWarning";
-import { set } from "lodash";
 
 const CreateProject = () => {
   const [teacher_list, setTeacherList] = useState([]);
