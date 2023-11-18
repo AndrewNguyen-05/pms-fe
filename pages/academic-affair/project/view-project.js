@@ -248,7 +248,7 @@ const ViewProject = () => {
                   breakLinkClassName="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700"
                   containerClassName="pagination"
                   activeClassName=""
-                  activeLinkClassName="bg-black text-blue-700"
+                  activeLinkClassName="bg-blue-600 text-white font-semibold hover:bg-blue-500 hover:text-white"
                   renderOnZeroPageCount={null}
                   disabledClassName="opacity-50"
                   className="inline-flex"
