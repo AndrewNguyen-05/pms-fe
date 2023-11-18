@@ -44,7 +44,7 @@ const ViewProject = () => {
   return (
     <>
       <Meta title={"View project"} />
-      <div className="bg-slate-50 h-full pt-6">
+      <div className="bg-slate-50 min-h-screen pt-6">
         <div className="flex items-center">
           <div className="px-16">
             <SearchBar placeholder="Search Project..." />
@@ -57,7 +57,7 @@ const ViewProject = () => {
             <ButtonDelete text="Delete" href="#" />
           </div>
         </div>
-        <div className="px-16 py-7 h-screen">
+        <div className="px-16 py-7">
           <TableViewItem
             columnNames={[
               "Topic",
