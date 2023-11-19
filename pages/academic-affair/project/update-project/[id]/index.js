@@ -57,11 +57,13 @@ const UpdateProject = () => {
     setProjectName(projectData.name);
     setProjectType(projectData.type);
     setProjectFaculty(projectData.faculty);
-    setTeacherId(projectData.Teacher.User.id);
+    setTeacherId(projectData.Teacher.id);
+
+    console.log(">>> teacherId in pjdata: ", projectData.Teacher);
     setTeacherInformation({
-      name: projectData?.Teacher?.User?.name,
-      email: projectData?.Teacher?.User?.email,
-      phone: projectData?.Teacher?.User?.phone,
+      name: projectData.Teacher.User.name,
+      email: projectData.Teacher.User.email,
+      phone: projectData.Teacher.User.phone,
     });
     setProjectRequirement(projectData.requirement);
   };
@@ -86,6 +88,7 @@ const UpdateProject = () => {
       return false;
     }
 
+    console.log(">>> teacherId: ", teacherId);
     if (!teacherId) {
       toast.error("Teacher is required!");
       setObjCheckInput({ ...defaultValidInput, isValidTeacher: false });
