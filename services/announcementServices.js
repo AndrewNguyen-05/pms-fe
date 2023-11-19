@@ -17,4 +17,13 @@ const postCreateAnnouncement = async (title, content, isPublic) => {
   });
 };
 
-export { getAnnouncementList, postCreateAnnouncement };
+const deleteAnnouncement = async (ids) => {
+  return await axios.delete(
+    "http://localhost:8888/api/v1/announcement/delete",
+    {
+      data: { ids },
+    }
+  );
+};
+
+export { getAnnouncementList, postCreateAnnouncement, deleteAnnouncement };

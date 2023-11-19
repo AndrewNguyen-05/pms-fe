@@ -4,9 +4,14 @@ import ButtonCreate from "@/components/ButtonCreate";
 import ButtonDelete from "@/components/ButtonDelete";
 import TableViewItem from "@/components/TableViewItem";
 import SearchBar from "@/components/SearchBar";
-import { getAnnouncementList } from "@/services/announcementServices";
+import {
+  deleteAnnouncement,
+  getAnnouncementList,
+} from "@/services/announcementServices";
 import { useState, useEffect } from "react";
 import ReactPaginate from "react-paginate";
+import WarningModal from "@/components/WarningModal";
+import { toast } from "react-toastify";
 
 const ViewAnnouncement = () => {
   const [announcementList, setAnnouncementList] = useState([]);
@@ -45,10 +50,49 @@ const ViewAnnouncement = () => {
   const handlePageClick = async (event) => {
     setCurrentPage(+event.selected + 1);
   };
+
+  const handleDeleteClick = () => {
+    if (selectedAnnouncement.length === 0) {
+      toast.error("Please select at least one announcement to delete");
+    } else if (selectedAnnouncement.length > 0) {
+      setIsModalOpen(true);
+    }
+  };
+
+  const handleConfirmDelete = async () => {
+    const announcementIds = selectedAnnouncement.map(
+      (announcement) => announcement.id
+    );
+    let response = await deleteAnnouncement(announcementIds);
+    setSelectedAnnouncement([]);
+    setIsModalOpen(false);
+    if (response && response.data && response.data.EC === 0) {
+      toast.success(response.data.EM);
+      getAnnouncementData();
+    } else {
+      toast.error(response.data.EM);
+      getAnnouncementData();
+    }
+    console.log(">>> response: ", response);
+  };
+
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
+  };
+
   return (
     <>
       <Meta title={"View announcement"} />
       <div className="bg-slate-50 h-full pt-6">
+        {isModalOpen && (
+          <WarningModal
+            question="Are you sure you want to delete ?"
+            btnYesText="Yes, I'm sure"
+            btnNoText="No, cancel"
+            handleConfirmDelete={handleConfirmDelete}
+            handleCloseModal={handleCloseModal}
+          />
+        )}
         <div className="flex items-center">
           <div className="px-16">
             <SearchBar placeholder="Search Announcement..." />
@@ -58,7 +102,12 @@ const ViewAnnouncement = () => {
               text="Add new"
               href="/academic-affair/announcement/create-announcement"
             />
-            <ButtonDelete text="Delete" href="#" />
+            <ButtonDelete
+              text="Delete"
+              onClick={() => {
+                handleDeleteClick();
+              }}
+            />
           </div>
         </div>
         <div className="px-16 py-7 ">
