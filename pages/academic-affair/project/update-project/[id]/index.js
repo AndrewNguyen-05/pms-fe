@@ -44,6 +44,14 @@ const UpdateProject = () => {
     }
   }, [router.query.id]);
 
+  // useEffect(() => {
+  //   setProjectId(project.id);
+  //   setProjectName(project.name);
+  //   setProjectType(project.type);
+  //   setProjectFaculty(project.faculty);
+  //   setTeacherId(project.Teacher.id);
+  // }, [project]);
+
   const getData = async () => {
     //get teacher data
     let teachersData = await getTeacherData();
@@ -58,6 +66,14 @@ const UpdateProject = () => {
     setProjectType(projectData.type);
     setProjectFaculty(projectData.faculty);
     setTeacherId(projectData.Teacher.id);
+    console.log(">>> check project data: ", project);
+
+    console.log(">>>> check pjfaculty", projectData.faculty);
+    console.log(">>> check pj type", projectData.type);
+    console.log(">>> check teacher id:", projectData.Teacher.id);
+    console.log(">>>> check pjfaculty22:", projectFaculty);
+    console.log(">>> check pj type22:", projectType);
+    console.log(">>> check teacher id22:", teacherId);
 
     console.log(">>> teacherId in pjdata: ", projectData.Teacher);
     setTeacherInformation({
@@ -65,6 +81,7 @@ const UpdateProject = () => {
       email: projectData.Teacher.User.email,
       phone: projectData.Teacher.User.phone,
     });
+    console.log(">>> check teacher name:", teacherInformation.name);
     setProjectRequirement(projectData.requirement);
   };
 
@@ -248,15 +265,12 @@ const UpdateProject = () => {
                       ? "bg-slate-50 border border-gray-300 text-gray-900 text-base rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 "
                       : "bg-red-50 border ring-1 ring-red-400 text-gray-900 text-base rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5  invalid:border-red-700 invalid:bg-red-700"
                   }
-                  value={project.faculty}
-                  defaultValue={"DEFAULT"}
+                  value={projectFaculty}
                   onChange={(event) => {
                     setProjectFaculty(event.target.value);
                   }}
                 >
-                  <option value={"DEFAULT"} disabled={true}>
-                    Select falcuty
-                  </option>
+                  <option disabled={true}>Select falcuty</option>
                   <option value="Công nghệ Phần Mềm">Công nghệ Phần Mềm</option>
                   <option value="Hệ thống Thông Tin">Hệ thống Thông Tin</option>
                   <option value="Kỹ thuật Máy Tính">Kỹ thuật Máy Tính</option>
@@ -281,25 +295,14 @@ const UpdateProject = () => {
                       ? "bg-slate-50 border border-gray-300 text-gray-900 text-base rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 "
                       : "bg-red-50 border ring-1 ring-red-400 text-gray-900 text-base rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
                   }
-                  value={project.type}
-                  defaultValue={"DEFAULT"}
+                  value={projectType}
                   onChange={(event) => {
                     setProjectType(event.target.value);
                   }}
                 >
                   <option disabled={true}>Select project type</option>
-                  <option
-                    defaultValue={project.type === 1 ? "DEFAULT" : ""}
-                    value="1"
-                  >
-                    1
-                  </option>
-                  <option
-                    defaultValue={project.type === 2 ? "DEFAULT" : ""}
-                    value="2"
-                  >
-                    2
-                  </option>
+                  <option value="1">1</option>
+                  <option value="2">2</option>
                   {/* <option
                           value={teacher.User.name}
                           defaultValue={
@@ -330,6 +333,7 @@ const UpdateProject = () => {
                           ? "bg-slate-50 border border-gray-300 text-gray-900 text-base rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 "
                           : "bg-red-50 border ring-1 ring-red-400 text-gray-900 text-base rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
                       }
+                      value={teacherInformation.name}
                       onChange={(event) => {
                         const selectedTeacher = teacher_list.find(
                           (teacher) => teacher.User.name === event.target.value
@@ -347,9 +351,11 @@ const UpdateProject = () => {
                       {teacher_list.map((teacher) => (
                         <option
                           value={teacher.User.name}
-                          defaultValue={
-                            teacher.User.name === project?.Teacher?.User?.name
-                          }
+                          // defaultValue={
+                          //   teacher.User.name === project?.Teacher?.User?.name
+                          //     ? "DEFAULT"
+                          //     : ""
+                          // }
                         >
                           {teacher.User.name}
                         </option>
