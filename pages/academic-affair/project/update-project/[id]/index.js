@@ -1,11 +1,11 @@
-import Meta from "@/components/Meta";
-import { postCreateProject } from "@/services/projectServices";
-import { getTeacherData } from "@/services/teacherServices";
 import { useState, useEffect } from "react";
-import { toast } from "react-toastify";
+import Meta from "@/components/Meta";
 import { useRouter } from "next/router";
+import { toast } from "react-toastify";
+import { getTeacherData } from "@/services/teacherServices";
+import { getProjectById, putUpdateProject } from "@/services/projectServices";
 
-const CreateProject = () => {
+const UpdateProject = () => {
   const [teacher_list, setTeacherList] = useState([]);
   let defaultTeacherInformation = {
     name: "",
@@ -23,11 +23,13 @@ const CreateProject = () => {
     isValidTeacher: true,
   };
   const [objCheckInput, setObjCheckInput] = useState(defaultValidInput);
+  const [projectId, setProjectId] = useState("");
   const [projectName, setProjectName] = useState("");
   const [projectFaculty, setProjectFaculty] = useState("");
   const [projectType, setProjectType] = useState("");
   const [projectRequirement, setProjectRequirement] = useState("");
   const [teacherId, setTeacherId] = useState("");
+  const [project, setProject] = useState({});
 
   //control the state of open modal
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -36,13 +38,33 @@ const CreateProject = () => {
 
   //get data
   useEffect(() => {
-    async function getData() {
-      //get teacher data
-      let teachersData = await getTeacherData();
-      setTeacherList(teachersData);
+    if (router.isReady) {
+      getProjectsData();
+      getData();
     }
-    getData();
-  }, []);
+  }, [router.query.id]);
+
+  const getData = async () => {
+    //get teacher data
+    let teachersData = await getTeacherData();
+    setTeacherList(teachersData);
+  };
+
+  const getProjectsData = async () => {
+    const projectData = await getProjectById(router.query.id);
+    setProject(projectData);
+    setProjectId(projectData.id);
+    setProjectName(projectData.name);
+    setProjectType(projectData.type);
+    setProjectFaculty(projectData.faculty);
+    setTeacherId(projectData.Teacher.User.id);
+    setTeacherInformation({
+      name: projectData?.Teacher?.User?.name,
+      email: projectData?.Teacher?.User?.email,
+      phone: projectData?.Teacher?.User?.phone,
+    });
+    setProjectRequirement(projectData.requirement);
+  };
 
   //validate the input
   const isValidateInput = () => {
@@ -73,10 +95,11 @@ const CreateProject = () => {
   };
 
   //handle create project
-  const handleCreateProject = async () => {
+  const handleUpdateProject = async () => {
     let check = isValidateInput();
     if (check) {
-      let response = await postCreateProject(
+      let response = await putUpdateProject(
+        projectId,
         projectName,
         projectType,
         projectFaculty,
@@ -100,10 +123,9 @@ const CreateProject = () => {
   const handleCloseModal = () => {
     setIsModalOpen(false);
   };
-
   return (
     <>
-      <Meta title={"Create new project"} />
+      <Meta title={"Update project"} />
       <div className="bg-slate-100 h-full py-6 ">
         {isModalOpen && (
           <div
@@ -183,7 +205,7 @@ const CreateProject = () => {
         <section className="bg-white mx-20 rounded-2xl">
           <div className="py-4 px-6">
             <h2 className="mb-4 text-xl font-bold text-gray-900 ">
-              Create new project
+              Update project
             </h2>
             <div className="grid grid-cols-2 gap-4 text-base">
               <div className="col-span-2">
@@ -202,6 +224,7 @@ const CreateProject = () => {
                       ? "bg-slate-50 border border-gray-300 text-gray-900 text-base rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 "
                       : "bg-red-50 border ring-1 ring-red-400 text-gray-900 text-base rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
                   }
+                  defaultValue={project.name}
                   placeholder="Enter topic of project"
                   onChange={(event) => {
                     setProjectName(event.target.value);
@@ -222,6 +245,7 @@ const CreateProject = () => {
                       ? "bg-slate-50 border border-gray-300 text-gray-900 text-base rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 "
                       : "bg-red-50 border ring-1 ring-red-400 text-gray-900 text-base rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5  invalid:border-red-700 invalid:bg-red-700"
                   }
+                  value={project.faculty}
                   defaultValue={"DEFAULT"}
                   onChange={(event) => {
                     setProjectFaculty(event.target.value);
@@ -254,16 +278,33 @@ const CreateProject = () => {
                       ? "bg-slate-50 border border-gray-300 text-gray-900 text-base rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 "
                       : "bg-red-50 border ring-1 ring-red-400 text-gray-900 text-base rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
                   }
+                  value={project.type}
                   defaultValue={"DEFAULT"}
                   onChange={(event) => {
                     setProjectType(event.target.value);
                   }}
                 >
-                  <option value={"DEFAULT"} disabled={true}>
-                    Select project type
+                  <option disabled={true}>Select project type</option>
+                  <option
+                    defaultValue={project.type === 1 ? "DEFAULT" : ""}
+                    value="1"
+                  >
+                    1
                   </option>
-                  <option value="1">1</option>
-                  <option value="2">2</option>
+                  <option
+                    defaultValue={project.type === 2 ? "DEFAULT" : ""}
+                    value="2"
+                  >
+                    2
+                  </option>
+                  {/* <option
+                          value={teacher.User.name}
+                          defaultValue={
+                            teacher.User.name === project?.Teacher?.User?.name
+                          }
+                        >
+                          {teacher.User.name}
+                        </option> */}
                 </select>
               </div>
               <fieldset className="col-span-2 border border-solid border-gray-300 p-3 rounded-lg">
@@ -286,22 +327,27 @@ const CreateProject = () => {
                           ? "bg-slate-50 border border-gray-300 text-gray-900 text-base rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 "
                           : "bg-red-50 border ring-1 ring-red-400 text-gray-900 text-base rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
                       }
-                      defaultValue={"DEFAULT"}
                       onChange={(event) => {
                         const selectedTeacher = teacher_list.find(
                           (teacher) => teacher.User.name === event.target.value
                         );
-                        setTeacherInformation(
-                          selectedTeacher ? selectedTeacher.User : ""
-                        );
-                        setTeacherId(selectedTeacher.id);
+                        if (selectedTeacher) {
+                          setTeacherInformation(selectedTeacher.User);
+                          setTeacherId(selectedTeacher.id);
+                        } else {
+                          setTeacherInformation("");
+                          setTeacherId("");
+                        }
                       }}
                     >
-                      <option value={"DEFAULT"} disabled={true}>
-                        Select teacher
-                      </option>
+                      <option disabled={true}>Select teacher</option>
                       {teacher_list.map((teacher) => (
-                        <option value={teacher.User.name}>
+                        <option
+                          value={teacher.User.name}
+                          defaultValue={
+                            teacher.User.name === project?.Teacher?.User?.name
+                          }
+                        >
                           {teacher.User.name}
                         </option>
                       ))}
@@ -321,6 +367,7 @@ const CreateProject = () => {
                       className="bg-slate-50 border border-gray-300 text-gray-900 text-base rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 "
                       placeholder="Teacher's information"
                       readOnly={true}
+                      defaultValue={project?.Teacher?.User?.email}
                       value={teacherInformation.email}
                     />
                   </div>
@@ -338,6 +385,7 @@ const CreateProject = () => {
                       className="bg-slate-50 border border-gray-300 text-gray-900 text-base rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 "
                       placeholder="Teacher's information"
                       readOnly={true}
+                      defaultValue={project?.Teacher?.User?.phone}
                       value={teacherInformation.phone}
                     />
                   </div>
@@ -359,6 +407,7 @@ const CreateProject = () => {
                   onChange={(event) => {
                     setProjectRequirement(event.target.value);
                   }}
+                  defaultValue={projectRequirement}
                 ></textarea>
               </div>
             </div>
@@ -374,10 +423,10 @@ const CreateProject = () => {
               <button
                 className="items-center px-5 py-2.5 mt-4 text-base font-medium border-2 border-blue-700 text-center text-blue-700 bg-white  rounded-lg focus:ring-2 focus:ring-blue-200 hover:bg-blue-700 hover:text-white"
                 onClick={() => {
-                  handleCreateProject();
+                  handleUpdateProject();
                 }}
               >
-                Add project
+                Update project
               </button>
             </div>
           </div>
@@ -387,4 +436,4 @@ const CreateProject = () => {
   );
 };
 
-export default CreateProject;
+export default UpdateProject;
