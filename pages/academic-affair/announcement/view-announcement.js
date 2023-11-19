@@ -33,9 +33,9 @@ const ViewAnnouncement = () => {
         return {
           id: row.id,
           title: row.title,
-          name: row.content,
-          dateCreated: row.dateCreated.slice(0, 10),
-          dateUpdated: row.dateUpdated.slice(0, 10),
+          isPublic: row.isPublic ? "posted" : "not posted",
+          dateCreated: row.dateCreated ? row.dateCreated.slice(0, 10) : "",
+          dateUpdated: row.dateUpdated ? row.dateUpdated.slice(0, 10) : "",
         };
       })
     );
@@ -54,7 +54,10 @@ const ViewAnnouncement = () => {
             <SearchBar placeholder="Search Announcement..." />
           </div>
           <div className="flex justify-end gap-8 w-full mr-16">
-            <ButtonCreate text="Add new" href="#" />
+            <ButtonCreate
+              text="Add new"
+              href="/academic-affair/announcement/create-announcement"
+            />
             <ButtonDelete text="Delete" href="#" />
           </div>
         </div>
@@ -62,7 +65,7 @@ const ViewAnnouncement = () => {
           <TableViewItem
             columnNames={[
               "Title",
-              "Content",
+              "Status",
               "Date Created",
               "Last Modified",
               "Action",
@@ -70,15 +73,7 @@ const ViewAnnouncement = () => {
             rowList={announcementList}
             editHref="#"
             selectedItem={selectedAnnouncement}
-            onItemSelect={(announcement, isSelected) => {
-              if (isSelected) {
-                setSelectedAnnouncement((prev) => [...prev, announcement]);
-              } else {
-                setSelectedAnnouncement((prev) =>
-                  prev.filter((p) => p.id !== announcement.id)
-                );
-              }
-            }}
+            setSelectedItem={setSelectedAnnouncement}
           />
           <nav className="flex items-center flex-column flex-wrap md:flex-row justify-between pt-4">
             <span className="text-sm font-normal text-gray-500  mb-4 md:mb-0 block w-full md:inline md:w-auto">

@@ -46,6 +46,7 @@ const ViewProject = () => {
       })
     );
     setTotalPage(projectsData.totalPage);
+    console.log(projectsData);
   }
 
   const handlePageClick = async (event) => {
