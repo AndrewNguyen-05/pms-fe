@@ -131,7 +131,7 @@ const ViewProject = () => {
                 <ReactPaginate
                   pageCount={totalPage}
                   marginPagesDisplayed={2}
-                  pageRangeDisplayed={2}
+                  pageRangeDisplayed={10}
                   onPageChange={handlePageClick}
                   previousLabel="Previous"
                   nextLabel="Next"
@@ -145,8 +145,8 @@ const ViewProject = () => {
                   breakClassName=""
                   breakLinkClassName="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700"
                   containerClassName="pagination"
-                  activeClassName=""
-                  activeLinkClassName="bg-blue-600 text-white font-semibold hover:bg-blue-500 hover:text-white"
+                  activeClassName="bg-blue-500 text-white font-semibold hover:bg-blue-400 hover:text-white"
+                  activeLinkClassName="bg-blue-500 text-white font-semibold hover:bg-blue-400 hover:text-white"
                   renderOnZeroPageCount={null}
                   disabledClassName="opacity-50"
                   className="inline-flex"
