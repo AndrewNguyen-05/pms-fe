@@ -32,7 +32,7 @@ const ViewAnnouncement = () => {
     getAnnouncementData();
     setCurrentOffset((currentPage - 1) * currentLimit + 1);
     console.log("effect called");
-  }, [currentPage]);
+  }, [currentPage, pageSearchValue]);
 
   const setAnnouncementListRaw = (announcementData) => {
     setAnnouncementList(
@@ -49,7 +49,7 @@ const ViewAnnouncement = () => {
   };
 
   async function getAnnouncementData() {
-    console.log("anncallled");
+    console.log("anncallled", pageSearchValue);
     let announcementData;
     if (!pageSearchValue) {
       announcementData = await getAnnouncementList(currentPage, currentLimit);
