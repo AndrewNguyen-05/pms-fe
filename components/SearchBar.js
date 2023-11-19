@@ -3,7 +3,7 @@ import React, { useState } from "react";
 const SearchBar = ({ placeholder, handleSearch }) => {
   const [searchValue, setSearchValue] = useState("");
   return (
-    <form className=" flex flex-row">
+    <div className=" flex flex-row">
       <div className="relative">
         <div className="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
           <svg
@@ -40,7 +40,7 @@ const SearchBar = ({ placeholder, handleSearch }) => {
           Search
         </button>
       </div>
-    </form>
+    </div>
   );
 };
 
