@@ -130,8 +130,8 @@ const ViewProject = () => {
               {totalPage > 0 && (
                 <ReactPaginate
                   pageCount={totalPage}
-                  marginPagesDisplayed={2}
-                  pageRangeDisplayed={2}
+                  marginPagesDisplayed={0}
+                  pageRangeDisplayed={4}
                   onPageChange={handlePageClick}
                   previousLabel="Previous"
                   nextLabel="Next"

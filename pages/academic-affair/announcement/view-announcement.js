@@ -102,13 +102,6 @@ const ViewAnnouncement = () => {
   const handleSerach = async (searchValue) => {
     setCurrentPage(1);
     setPageSearchValue(searchValue);
-    let announcementData = await searchAnnouncement(
-      currentPage,
-      currentLimit,
-      pageSearchValue.toLowerCase()
-    );
-    setAnnouncementListRaw(announcementData);
-    setTotalPage(announcementData.totalPage);
   };
 
   return (
@@ -174,6 +167,7 @@ const ViewAnnouncement = () => {
                   marginPagesDisplayed={2}
                   pageRangeDisplayed={2}
                   onPageChange={handlePageClick}
+                  forcePage={currentPage - 1}
                   previousLabel="Previous"
                   nextLabel="Next"
                   pageClassName="bg-white border border-gray-300 text-gray-500 hover:bg-gray-100 hover:text-gray-700"
