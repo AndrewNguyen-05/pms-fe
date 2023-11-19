@@ -3,7 +3,6 @@ import Link from "next/link";
 const TableViewItem = ({
   columnNames,
   rowList,
-  editHref,
   selectedItem,
   setSelectedItem,
 }) => {
@@ -16,7 +15,7 @@ const TableViewItem = ({
   };
   return (
     <table className="w-full text-[16px] text-left rtl:text-right text-gray-500 ">
-      <thead className="text-[16px] text-blue -700 uppercase border-b bg-white ">
+      <thead className="text-[16px] text-blue-700 uppercase border-b bg-white ">
         <tr>
           <th scope="col" className="p-4"></th>
           {columnNames.map((name, index) => {
@@ -66,7 +65,8 @@ const TableViewItem = ({
 
               <td className="px-6 py-4">
                 <Link
-                  href={editHref}
+                  href={`/academic-affair/project/update-project/[id]`}
+                  as={`/academic-affair/project/update-project/${row.id}`}
                   className="font-medium text-blue-600 hover:underline"
                 >
                   Edit

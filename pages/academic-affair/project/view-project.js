@@ -114,7 +114,6 @@ const ViewProject = () => {
               "Action",
             ]}
             rowList={project_list}
-            editHref="#"
             selectedItem={selectedProject}
             setSelectedItem={setSelectedProject}
           />
