@@ -4,6 +4,8 @@ import { useState } from "react";
 import { useRouter } from "next/router";
 import { postCreateAnnouncement } from "@/services/announcementServices";
 import { toast } from "react-toastify";
+import Meta from "@/components/Meta";
+
 const CreateAnnouncement = () => {
   const defaultValidInput = {
     isValidTitle: true,
@@ -58,6 +60,7 @@ const CreateAnnouncement = () => {
 
   return (
     <>
+      <Meta title={"Create announcement"} />
       <div className="bg-slate-100 min-w-full min-h-screen h-0 py-6">
         {isModalOpen && (
           <WarningModal
@@ -105,18 +108,18 @@ const CreateAnnouncement = () => {
             }
           />
           <input
-            className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounedd-2xl m-3 "
+            className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounedd-2xl mr-3 my-3 "
             type="checkbox"
             id="isPublic"
             name="isPublic"
             checked={isPublic}
             value={content}
-            onChange={(e) => {
-              setIsPublic(e.target.checked);
+            onChange={(event) => {
+              setIsPublic(event.target.checked);
             }}
           />
           <label
-            className="ms-2 text-base font-medium text-gray-900 dark:text-gray-300 select-none"
+            className="text-base font-medium text-gray-900 select-none"
             htmlFor="isPublic"
           >
             Post this announcement
