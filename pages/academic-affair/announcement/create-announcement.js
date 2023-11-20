@@ -75,8 +75,12 @@ const CreateAnnouncement = () => {
           <h1 className="mb-4 text-xl font-bold text-gray-900">
             New announcement
           </h1>
-          <label htmlFor="title">Title:</label>
-          <br />
+          <label
+            htmlFor="name"
+            className="block mb-2 text-base font-medium text-gray-900 "
+          >
+            Title <span className="text-red-600">(*)</span>
+          </label>
           <input
             value={title}
             onChange={(e) => {
@@ -91,9 +95,12 @@ const CreateAnnouncement = () => {
                 : "bg-red-50 border ring-1 ring-red-400 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 "
             }
           />
-          <br />
-          <label htmlFor="content">Content:</label>
-          <br />
+          <label
+            htmlFor="name"
+            className="block mb-2 mt-6 text-base font-medium text-gray-900 "
+          >
+            Content <span className="text-red-600">(*)</span>
+          </label>
           <textarea
             value={content}
             onChange={(e) => {
