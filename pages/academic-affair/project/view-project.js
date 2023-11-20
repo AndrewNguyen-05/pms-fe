@@ -3,6 +3,7 @@ import Meta from "@/components/Meta";
 import {
   getProjectData,
   deleteProject,
+  searchProject,
 } from "../../../services/projectServices";
 import ButtonCreate from "@/components/ButtonCreate";
 import {} from "../../../services/projectServices";
@@ -19,6 +20,7 @@ const ViewProject = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [currentLimit, setCurrentLimit] = useState(10);
   const [currentOffset, setCurrentOffset] = useState(0);
+  const [pageSearchValue, setPageSearchValue] = useState("");
 
   //control the state of open modal
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -29,10 +31,9 @@ const ViewProject = () => {
   useEffect(() => {
     getProjectsData();
     setCurrentOffset((currentPage - 1) * currentLimit + 1);
-  }, [currentPage]);
+  }, [currentPage, pageSearchValue]);
 
-  async function getProjectsData() {
-    let projectsData = await getProjectData(currentPage, currentLimit);
+  const setProjectListRaw = (projectsData) => {
     setProjectList(
       projectsData.projects.map((row) => {
         row.teacherInformation = `${row.Teacher.User.name} - ${row.Teacher.User.email} - ${row.Teacher.User.phone}`;
@@ -45,8 +46,21 @@ const ViewProject = () => {
         };
       })
     );
+  };
+
+  async function getProjectsData() {
+    let projectsData;
+    if (!pageSearchValue) {
+      projectsData = await getProjectData(currentPage, currentLimit);
+    } else {
+      projectsData = await searchProject(
+        currentPage,
+        currentLimit,
+        pageSearchValue.toLowerCase()
+      );
+    }
+    setProjectListRaw(projectsData);
     setTotalPage(projectsData.totalPage);
-    console.log(projectsData);
   }
 
   const handlePageClick = async (event) => {
@@ -72,13 +86,17 @@ const ViewProject = () => {
       toast.error(response.data.EM);
       getProjectsData();
     }
-    console.log(">>> response: ", response);
   };
 
   const handleCloseModal = () => {
     setIsModalOpen(false);
   };
 
+  // search event
+  const handleSearch = async (searchValue) => {
+    setCurrentPage(1);
+    setPageSearchValue(searchValue);
+  };
   return (
     <>
       <Meta title={"View project"} />
@@ -94,7 +112,15 @@ const ViewProject = () => {
         )}
         <div className="flex items-center">
           <div className="px-16">
-            <SearchBar placeholder="Search Project..." />
+            <SearchBar
+              placeholder="Search Project..."
+              handleSearch={handleSearch}
+              handleKeyDown={(event) => {
+                if (event.key === "Enter") {
+                  handleSearch(event.target.value);
+                }
+              }}
+            />
           </div>
           <div className="flex justify-end gap-8 w-full mr-16">
             <ButtonCreate
@@ -131,7 +157,7 @@ const ViewProject = () => {
                 <ReactPaginate
                   pageCount={totalPage}
                   marginPagesDisplayed={0}
-                  pageRangeDisplayed={4}
+                  pageRangeDisplayed={10}
                   onPageChange={handlePageClick}
                   previousLabel="Previous"
                   nextLabel="Next"
@@ -146,7 +172,7 @@ const ViewProject = () => {
                   breakLinkClassName="flex items-center justify-center leading-tight px-3 h-8"
                   containerClassName="pagination"
                   activeClassName="text-blue-600 border border-gray-300 text-blue-600 bg-blue-50 hover:bg-blue-100 hover:text-blue-700 "
-                  activeLinkClassName="flex items-center justify-center leading-tight px-3 h-8 text-blue-600 "
+                  activeLinkClassName="bg-blue-600 flex items-center justify-center leading-tight px-3 h-8 text-white font-semibold "
                   renderOnZeroPageCount={null}
                   disabledClassName="opacity-50"
                   className="inline-flex"

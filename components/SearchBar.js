@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-const SearchBar = ({ placeholder, handleSearch }) => {
+const SearchBar = ({ placeholder, handleSearch, handleKeyDown }) => {
   const [searchValue, setSearchValue] = useState("");
   return (
     <div className=" flex flex-row">
@@ -28,7 +28,8 @@ const SearchBar = ({ placeholder, handleSearch }) => {
           className=" w-[500px] p-4 ps-10 text-sm text-gray-900 border border-gray-200 rounded-lg bg-white focus:ring-1 focus:outline-none focus:ring-blue-300 "
           placeholder={placeholder}
           required
-          onChange={(e) => setSearchValue(e.target.value)}
+          onChange={(event) => setSearchValue(event.target.value)}
+          onKeyDown={(event) => handleKeyDown(event)}
         />
         <button
           type="submit"

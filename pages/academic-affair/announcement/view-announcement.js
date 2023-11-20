@@ -31,7 +31,6 @@ const ViewAnnouncement = () => {
   useEffect(() => {
     getAnnouncementData();
     setCurrentOffset((currentPage - 1) * currentLimit + 1);
-    console.log("effect called");
   }, [currentPage, pageSearchValue]);
 
   const setAnnouncementListRaw = (announcementData) => {
@@ -49,7 +48,6 @@ const ViewAnnouncement = () => {
   };
 
   async function getAnnouncementData() {
-    console.log("anncallled", pageSearchValue);
     let announcementData;
     if (!pageSearchValue) {
       announcementData = await getAnnouncementList(currentPage, currentLimit);
@@ -91,15 +89,14 @@ const ViewAnnouncement = () => {
       toast.error(response.data.EM);
       getAnnouncementData();
     }
-    console.log(">>> response: ", response);
   };
 
   const handleCloseModal = () => {
     setIsModalOpen(false);
   };
 
-  // serach event
-  const handleSerach = async (searchValue) => {
+  // search event
+  const handleSearch = async (searchValue) => {
     setCurrentPage(1);
     setPageSearchValue(searchValue);
   };
@@ -121,7 +118,12 @@ const ViewAnnouncement = () => {
           <div className="px-16">
             <SearchBar
               placeholder="Search Announcement..."
-              handleSearch={handleSerach}
+              handleSearch={handleSearch}
+              handleKeyDown={(event) => {
+                if (event.key === "Enter") {
+                  handleSearch(event.target.value);
+                }
+              }}
             />
           </div>
           <div className="flex justify-end gap-8 w-full mr-16">
@@ -181,7 +183,7 @@ const ViewAnnouncement = () => {
                   breakLinkClassName="flex items-center justify-center leading-tight px-3 h-8"
                   containerClassName="pagination"
                   activeClassName="text-blue-600 border border-gray-300 text-blue-600 bg-blue-50 hover:bg-blue-100 hover:text-blue-700 "
-                  activeLinkClassName="flex items-center justify-center leading-tight px-3 h-8 text-blue-600 "
+                  activeLinkClassName="flex items-center justify-center leading-tight px-3 h-8 text-white bg-blue-600 font-semibold "
                   renderOnZeroPageCount={null}
                   disabledClassName="opacity-50"
                   className="inline-flex"

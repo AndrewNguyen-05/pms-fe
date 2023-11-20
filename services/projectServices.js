@@ -9,6 +9,20 @@ const getProjectData = async (page, limit) => {
   }
 };
 
+const searchProject = async (page, limit, search = "") => {
+  console.log(">>> search: ", search);
+  const res = await axios.get(`http://localhost:8888/api/v1/project/read`, {
+    params: {
+      page,
+      limit,
+      search,
+    },
+  });
+  if (res && res.data.DT && res.data.EC === 0) {
+    return res.data.DT;
+  }
+};
+
 const postCreateProject = async (
   projectName,
   projectType,
@@ -24,19 +38,6 @@ const postCreateProject = async (
     projectRequirement,
   });
 };
-
-// const putUpdateProject = async (
-//   projectId,
-//   projectName,
-//   projectType,
-//   projectFaculty,
-//   teacherId,
-//   projectRequirement
-// ) => {
-//   return await axios.put(
-//     `http://localhost:8888/api/v1/project/update?projectId=${projectId}&&projectName=${projectName}&&projectType=${projectType}&&projectFaculty=${projectFaculty}&&teacherId=${teacherId}&&projectRequirement=${projectRequirement}`
-//   );
-// };
 
 const putUpdateProject = async (
   projectId,
@@ -86,4 +87,5 @@ export {
   deleteProject,
   putUpdateProject,
   getProjectById,
+  searchProject,
 };
