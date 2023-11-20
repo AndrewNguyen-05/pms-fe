@@ -149,7 +149,7 @@ const ViewAnnouncement = () => {
               "Action",
             ]}
             rowList={announcementList}
-            editHref="#"
+            editHref={"/academic-affair/announcement/update-announcement/"}
             selectedItem={selectedAnnouncement}
             setSelectedItem={setSelectedAnnouncement}
           />

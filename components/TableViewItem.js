@@ -1,10 +1,12 @@
 import React from "react";
 import Link from "next/link";
+const path = require("path");
 const TableViewItem = ({
   columnNames,
   rowList,
   selectedItem,
   setSelectedItem,
+  editHref,
 }) => {
   const onItemSelect = (project, isSelected) => {
     if (isSelected) {
@@ -65,8 +67,8 @@ const TableViewItem = ({
 
               <td className="px-6 py-4">
                 <Link
-                  href={`/academic-affair/project/update-project/[id]`}
-                  as={`/academic-affair/project/update-project/${row.id}`}
+                  href={path.join(editHref, `[id]`)}
+                  as={path.join(editHref, "" + row.id)}
                   className="font-medium text-blue-600 hover:underline"
                 >
                   Edit

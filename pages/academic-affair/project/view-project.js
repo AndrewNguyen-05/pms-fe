@@ -142,6 +142,7 @@ const ViewProject = () => {
             rowList={project_list}
             selectedItem={selectedProject}
             setSelectedItem={setSelectedProject}
+            editHref={"/academic-affair/project/update-project/"}
           />
           <div className="flex items-center flex-row flex-wrap justify-between pt-4">
             <span className="text-sm font-normal text-gray-500 mb-4 md:mb-0 block w-full md:inline md:w-auto">
