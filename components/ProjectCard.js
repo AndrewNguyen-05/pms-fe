@@ -17,10 +17,7 @@ const ProjectCard = ({
   };
   return (
     <>
-      <div
-        className="bg-white rounded-3xl min-h-[100px] flex items-center py-1 my-3 hover:bg-blue-100 cursor-pointer"
-        onClick={onClickView}
-      >
+      <div className="bg-white border-2 border-slate-200 rounded-2xl min-h-[100px] flex items-center my-2 hover:bg-slate-50 cursor-pointer">
         <div className="grid grid-cols-12 justify-between">
           <div className="col-span-1 flex items-center justify-center">
             <input
@@ -30,16 +27,16 @@ const ProjectCard = ({
               onChange={(event) => onItemSelect(project, event.target.checked)}
             />
           </div>
-          <div className="col-span-7 pr-4">
+          <div className="col-span-7 pr-4" onClick={onClickView}>
             <div className="flex flex-col">
               <div className="font-bold text-base">{project.name}</div>
               <div className="grid grid-cols-5 mt-2">
                 <div className="col-span-2 text-base">{project.faculty}</div>
                 <div className="col-span-3 text-sm flex gap-4">
-                  <div className="bg-red-50 text-red-700 rounded-3xl flex justify-center items-center col-span-1 py-1 px-3">
+                  <div className="bg-blue-50 text-blue-700 rounded-3xl flex justify-center items-center col-span-1 py-1 px-3">
                     Type {project.type}
                   </div>
-                  <div className="bg-red-50 text-red-700 rounded-3xl flex justify-center items-center col-span-1 py-1 px-3">
+                  <div className="bg-blue-50 text-blue-700 rounded-3xl flex justify-center items-center col-span-1 py-1 px-3">
                     {project.registerStatus === 1
                       ? "Registered"
                       : "Unregistered"}

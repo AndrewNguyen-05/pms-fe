@@ -11,10 +11,10 @@ const ViewModal = ({ project, btnBackText, handleCloseModal }) => {
       }}
     >
       <div
-        className="relative p-4 w-9/12"
+        className="relative p-4 w-1/2"
         onClick={(event) => event.stopPropagation()}
       >
-        <div className="relative bg-white rounded-lg shadow p-6">
+        <div className="relative bg-white rounded-lg shadow px-8 pb-3 pt-8">
           <button
             type="button"
             className="absolute top-3 end-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center"
@@ -41,7 +41,7 @@ const ViewModal = ({ project, btnBackText, handleCloseModal }) => {
             {project.name}
           </div>
           <div>
-            <div class="text-lg leading-relaxed text-gray-500 flex flex-col gap-3 mt-3">
+            <div class="text-lg leading-relaxed text-black flex flex-col gap-3 mt-3">
               <div>
                 <span className="font-bold">Requirement</span>:{" "}
                 {project.requirement}
@@ -56,24 +56,22 @@ const ViewModal = ({ project, btnBackText, handleCloseModal }) => {
               <div>
                 <fieldset className="col-span-2 border border-solid border-gray-300 py-2 px-3 rounded-lg">
                   <legend className="font-bold">Teacher's Information</legend>
-                  <div className="grid grid-cols-4">
-                    <div className=" col-span-1">
-                      <span className="font-bold">Name:</span>{" "}
-                      {project.teacherInformation.name}
-                    </div>
-                    <div className=" col-span-2">
-                      <span className="font-bold">Email:</span>{" "}
-                      {project.teacherInformation.email}
-                    </div>
-                    <div className="col-span-1">
-                      <span className="font-bold ">Phone:</span>{" "}
-                      {project.teacherInformation.phone}
-                    </div>
+                  <div className="mb-1">
+                    <span className="font-bold">Name:</span>{" "}
+                    {project.teacherInformation.name}
+                  </div>
+                  <div className="my-1">
+                    <span className="font-bold">Email:</span>{" "}
+                    {project.teacherInformation.email}
+                  </div>
+                  <div className="my-1">
+                    <span className="font-bold ">Phone:</span>{" "}
+                    {project.teacherInformation.phone}
                   </div>
                 </fieldset>
               </div>
             </div>
-            <div class="flex items-center justify-end px-5 py-2">
+            <div class="flex items-center justify-end pt-3">
               <button
                 type="button"
                 class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-1 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-base px-5 py-2.5 text-center"

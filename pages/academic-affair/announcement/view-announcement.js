@@ -2,7 +2,6 @@ import React, { use } from "react";
 import Meta from "@/components/Meta";
 import ButtonCreate from "@/components/ButtonCreate";
 import ButtonDelete from "@/components/ButtonDelete";
-import TableViewItem from "@/components/TableViewItem";
 import SearchBar from "@/components/SearchBar";
 import {
   deleteAnnouncement,
@@ -10,17 +9,21 @@ import {
   searchAnnouncement,
 } from "@/services/announcementServices";
 import { useState, useEffect } from "react";
-import ReactPaginate from "react-paginate";
 import WarningModal from "@/components/WarningModal";
 import { toast } from "react-toastify";
+import AnnouncementCard from "@/components/AnnouncementCard";
+import Footer from "@/components/Footer";
+import ViewAnnouncementPanel from "../../../components/ViewAnnouncementPanel";
 
-const ViewAnnouncement = () => {
+const ViewAnalysis = () => {
   const [announcementList, setAnnouncementList] = useState([]);
   const [totalPage, setTotalPage] = useState(0);
   const [currentPage, setCurrentPage] = useState(1);
   const [currentLimit, setCurrentLimit] = useState(10);
   const [currentOffset, setCurrentOffset] = useState(0);
   const [pageSearchValue, setPageSearchValue] = useState("");
+  const [selectedAnnouncementForModal, setSelectedAnnouncementForModal] =
+    useState({});
 
   //control the state of open modal
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -30,6 +33,7 @@ const ViewAnnouncement = () => {
 
   useEffect(() => {
     getAnnouncementData();
+    console.log(">>> check announcement:", announcementList);
     setCurrentOffset((currentPage - 1) * currentLimit + 1);
   }, [currentPage, pageSearchValue]);
 
@@ -39,7 +43,8 @@ const ViewAnnouncement = () => {
         return {
           id: row.id,
           title: row.title,
-          isPublic: row.isPublic ? "posted" : "not posted",
+          content: row.content,
+          isPublic: row.isPublic ? "Posted" : "Unposted",
           dateCreated: row.dateCreated ? row.dateCreated.slice(0, 10) : "",
           dateUpdated: row.dateUpdated ? row.dateUpdated.slice(0, 10) : "",
         };
@@ -101,6 +106,11 @@ const ViewAnnouncement = () => {
     setPageSearchValue(searchValue);
   };
 
+  const handleAnnouncementClick = (announcement) => {
+    setSelectedAnnouncementForModal(announcement);
+    setIsModalOpen(true);
+  };
+
   return (
     <>
       <Meta title={"View announcement"} />
@@ -139,22 +149,36 @@ const ViewAnnouncement = () => {
             />
           </div>
         </div>
-        <div className="px-16 py-7 ">
-          <TableViewItem
-            columnNames={[
-              "Title",
-              "Status",
-              "Date Created",
-              "Last Modified",
-              "Action",
-            ]}
-            rowList={announcementList}
-            editHref={"/academic-affair/announcement/update-announcement/"}
-            selectedItem={selectedAnnouncement}
-            setSelectedItem={setSelectedAnnouncement}
-          />
-          <nav className="flex items-center flex-column flex-wrap md:flex-row justify-between pt-4">
-            <span className="text-sm font-normal text-gray-500  mb-4 md:mb-0 block w-full md:inline md:w-auto">
+        <div className="px-10 py-7 ">
+          <div className="grid grid-cols-2">
+            <div className="col-span-1 pt-2 rounded-3xl px-2 mx-5 bg-white overflow-auto h-screen">
+              {announcementList.map((announcement_item) => {
+                return (
+                  <>
+                    <AnnouncementCard
+                      announcement={announcement_item}
+                      selectedItem={selectedAnnouncement}
+                      setSelectedItem={setSelectedAnnouncement}
+                      editHref={
+                        "/academic-affair/announcement/update-announcement/"
+                      }
+                      onClickView={() => {
+                        setSelectedAnnouncementForModal(announcement_item);
+                      }}
+                    />
+                  </>
+                );
+              })}
+            </div>
+            <div className="col-span-1 overflow-auto max-h-screen">
+              <ViewAnnouncementPanel
+                announcement={selectedAnnouncementForModal}
+              />
+            </div>
+          </div>
+
+          <div className="flex items-center flex-row flex-wrap justify-between pt-4">
+            <span className="text-sm font-normal text-gray-500 mb-4 md:mb-0 block w-full md:inline md:w-auto">
               Showing{" "}
               <span className="font-semibold text-gray-900 ">
                 {currentOffset}-{currentOffset + currentLimit - 1}
@@ -162,39 +186,20 @@ const ViewAnnouncement = () => {
               of{" "}
               <span className="font-semibold text-gray-900 ">{totalPage}</span>
             </span>
-            <div>
+
+            <div className="">
               {totalPage > 0 && (
-                <ReactPaginate
-                  pageCount={totalPage}
-                  marginPagesDisplayed={2}
-                  pageRangeDisplayed={2}
-                  onPageChange={handlePageClick}
-                  forcePage={currentPage - 1}
-                  previousLabel="Previous"
-                  nextLabel="Next"
-                  pageClassName="bg-white border border-gray-300 text-gray-500 hover:bg-gray-100 hover:text-gray-700"
-                  pageLinkClassName="flex items-center justify-center leading-tight px-3 h-8"
-                  previousClassName="text-gray-500 bg-white border border-e-0 border-gray-300 rounded-s-lg hover:bg-gray-100 hover:text-gray-700"
-                  previousLinkClassName="flex items-center justify-center px-3 h-8 ms-0 leading-tight "
-                  nextClassName="text-gray-500 bg-white border border-gray-300 rounded-e-lg hover:bg-gray-100 hover:text-gray-700"
-                  nextLinkClassName="flex items-center justify-center px-3 h-8 leading-tight"
-                  breakLabel="..."
-                  breakClassName="bg-white border border-gray-300 text-gray-500 hover:bg-gray-100 hover:text-gray-700 "
-                  breakLinkClassName="flex items-center justify-center leading-tight px-3 h-8"
-                  containerClassName="pagination"
-                  activeClassName="text-blue-600 border border-gray-300 text-blue-600 bg-blue-50 hover:bg-blue-100 hover:text-blue-700 "
-                  activeLinkClassName="flex items-center justify-center leading-tight px-3 h-8 text-white bg-blue-600 font-semibold "
-                  renderOnZeroPageCount={null}
-                  disabledClassName="opacity-50"
-                  className="inline-flex"
+                <Footer
+                  totalPage={totalPage}
+                  handlePageClick={handlePageClick}
                 />
               )}
             </div>
-          </nav>
+          </div>
         </div>
       </div>
     </>
   );
 };
 
-export default ViewAnnouncement;
+export default ViewAnalysis;

@@ -303,14 +303,6 @@ const UpdateProject = () => {
                   <option disabled={true}>Select project type</option>
                   <option value="1">1</option>
                   <option value="2">2</option>
-                  {/* <option
-                          value={teacher.User.name}
-                          defaultValue={
-                            teacher.User.name === project?.Teacher?.User?.name
-                          }
-                        >
-                          {teacher.User.name}
-                        </option> */}
                 </select>
               </div>
               <fieldset className="col-span-2 border border-solid border-gray-300 p-3 rounded-lg">
@@ -349,14 +341,7 @@ const UpdateProject = () => {
                     >
                       <option disabled={true}>Select teacher</option>
                       {teacher_list.map((teacher) => (
-                        <option
-                          value={teacher.User.name}
-                          // defaultValue={
-                          //   teacher.User.name === project?.Teacher?.User?.name
-                          //     ? "DEFAULT"
-                          //     : ""
-                          // }
-                        >
+                        <option value={teacher.User.name}>
                           {teacher.User.name}
                         </option>
                       ))}

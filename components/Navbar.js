@@ -52,7 +52,7 @@ const Navbar = () => {
   return (
     <>
       <nav className="bg-white border-gray-200">
-        <div className="w-screen flex items-center justify-start px-5 py-1">
+        <div className="w-full flex items-center justify-start px-5 py-1">
           <Link href="/">
             <button
               className="font-bold text-[22px] pr-2"

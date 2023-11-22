@@ -113,8 +113,8 @@ const Index = () => {
             name="title"
             className={
               objCheckInput.isValidTitle
-                ? "bg-slate-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 "
-                : "bg-red-50 border ring-1 ring-red-400 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 "
+                ? "bg-slate-50 border border-gray-300 text-gray-900 text-base rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 "
+                : "bg-red-50 border ring-1 ring-red-400 text-gray-900 text-base rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 "
             }
           />
           <label
@@ -132,8 +132,8 @@ const Index = () => {
             name="content"
             className={
               objCheckInput.isValidContent
-                ? "bg-slate-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 resize-none h-96"
-                : "bg-red-50 border ring-1 ring-red-400 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 resize-none h-96 "
+                ? "bg-slate-50 border border-gray-300 text-gray-900 text-base rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 resize-none h-96"
+                : "bg-red-50 border ring-1 ring-red-400 text-gray-900 text-base rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 resize-none h-96 "
             }
           />
           <input
@@ -157,7 +157,7 @@ const Index = () => {
 
           <div className="flex gap-8 justify-end">
             <button
-              className="items-center px-5 py-2.5 mt-4 text-sm font-medium border-2 border-red-600 text-center text-red-600 bg-white  rounded-lg focus:ring-2 focus:ring-red-200 hover:bg-red-600 hover:text-white hover:border-red-600"
+              className="items-center px-5 py-2.5 mt-4 text-base font-medium border-2 border-red-600 text-center text-red-600 bg-white  rounded-lg focus:ring-2 focus:ring-red-200 hover:bg-red-600 hover:text-white hover:border-red-600"
               onClick={() => {
                 setIsModalOpen(true);
               }}
@@ -165,7 +165,7 @@ const Index = () => {
               Cancel
             </button>
             <button
-              className="items-center px-5 py-2.5 mt-4 text-sm font-medium border-2 border-blue-700 text-center text-blue-700 bg-white  rounded-lg focus:ring-2 focus:ring-blue-200 hover:bg-blue-700 hover:text-white"
+              className="items-center px-5 py-2.5 mt-4 text-base font-medium border-2 border-blue-700 text-center text-blue-700 bg-white  rounded-lg focus:ring-2 focus:ring-blue-200 hover:bg-blue-700 hover:text-white"
               onClick={() => {
                 handleUpdateAnnouncement();
               }}

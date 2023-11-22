@@ -114,7 +114,7 @@ const ViewAnalysis = () => {
   return (
     <>
       <Meta title={"View project"} />
-      <div className="bg-blue-50 min-h-screen w-screen flex flex-col justify-between pt-6">
+      <div className="bg-slate-50 h-full w-full overflow-auto flex flex-col justify-between pt-6">
         {isWarningModalOpen && (
           <WarningModal
             question="Are you sure you want to delete ?"
@@ -151,7 +151,7 @@ const ViewAnalysis = () => {
             <ButtonDelete text="Delete" onClick={handleDeleteClick} />
           </div>
         </div>
-        <div className="px-16 py-7 flex-grow">
+        <div className="px-16 py-7">
           {project_list.map((project_item) => {
             return (
               <>
