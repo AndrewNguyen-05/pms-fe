@@ -33,12 +33,10 @@ const ViewAnalysis = () => {
 
   useEffect(() => {
     getProjectsData();
-    console.log(">>> check project data:", project_list);
     setCurrentOffset((currentPage - 1) * currentLimit + 1);
   }, [currentPage, pageSearchValue]);
 
   const setProjectListRaw = (projectsData) => {
-    console.log(">>> check raw data:", projectsData);
     setProjectList(
       projectsData.projects.map((row) => {
         return {

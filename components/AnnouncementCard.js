@@ -36,8 +36,16 @@ const AnnouncementCard = ({
                 <div className="font-bold text-base mr-1 text-blue-700">
                   {trimText(announcement.title, 70)}
                 </div>
-                <div className="bg-blue-50 text-blue-700 rounded-3xl flex justify-center items-center px-3 w-[100px] h-[25px]">
-                  {announcement.isPublic}
+                <div>
+                  {announcement.isPublic === "Posted" ? (
+                    <div className="bg-blue-50 text-blue-700 rounded-3xl flex justify-center items-center px-3 w-[100px] h-[25px]">
+                      Posted
+                    </div>
+                  ) : (
+                    <div className="bg-red-50 text-red-700 rounded-3xl flex justify-center items-center px-3 w-[100px] h-[25px]">
+                      Unposted
+                    </div>
+                  )}
                 </div>
               </div>
 
