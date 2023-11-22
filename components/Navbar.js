@@ -41,6 +41,7 @@ const Navbar = () => {
   };
   useEffect(() => {
     let currentPath = router.pathname;
+    console.log(currentPath);
     items.forEach((item, index) => {
       if (checkRelatvie(item.effectHref, currentPath)) {
         setActiveIdx(index);
