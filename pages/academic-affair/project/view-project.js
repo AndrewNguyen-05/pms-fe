@@ -1,132 +1,196 @@
-import Link from "next/link";
 import { useState, useEffect } from "react";
 import Meta from "@/components/Meta";
-import { getProjectData } from "../../../services/projectServices";
+import {
+  getProjectData,
+  deleteProject,
+  searchProject,
+} from "../../../services/projectServices";
 import ButtonCreate from "@/components/ButtonCreate";
-import ButtonDelete from "@/components/ButtonDelete";
-import TableViewItem from "@/components/TableViewItem";
+import {} from "../../../services/projectServices";
 import SearchBar from "@/components/SearchBar";
+import { toast } from "react-toastify";
+import WarningModal from "@/components/WarningModal";
+import ButtonDelete from "@/components/ButtonDelete";
+import ProjectCard from "@/components/ProjectCard";
+import Footer from "@/components/Footer";
+import ViewProjectModal from "@/components/ViewProjectModal";
 
-const ViewProject = () => {
+const ViewAnalysis = () => {
   const [project_list, setProjectList] = useState([]);
+  const [totalPage, setTotalPage] = useState(0);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [currentLimit, setCurrentLimit] = useState(10);
+  const [currentOffset, setCurrentOffset] = useState(0);
+  const [pageSearchValue, setPageSearchValue] = useState("");
+  const [selectedProjectForModal, setSelectedProjectForModal] = useState({});
+
+  //control the state of open modal
+  const [isWarningModalOpen, setIsWarningModalOpen] = useState(false);
+  const [isViewModalOpen, setIsViewModalOpen] = useState(false);
+
+  //list of project that is selected
+  const [selectedProject, setSelectedProject] = useState([]);
 
   useEffect(() => {
-    async function getProjectsData() {
-      let projectsData = await getProjectData();
-      setProjectList(projectsData);
-      console.log(">>> check data from fetchProjectData: ", projectsData);
-    }
     getProjectsData();
-  }, []);
-  console.log(">>> check project_list: ", project_list);
+    console.log(">>> check project data:", project_list);
+    setCurrentOffset((currentPage - 1) * currentLimit + 1);
+  }, [currentPage, pageSearchValue]);
 
+  const setProjectListRaw = (projectsData) => {
+    console.log(">>> check raw data:", projectsData);
+    setProjectList(
+      projectsData.projects.map((row) => {
+        return {
+          id: row.id,
+          name: row.name,
+          faculty: row.faculty,
+          type: row.type,
+          requirement: row.requirement,
+          teacherInformation: {
+            name: row.Teacher.User.name,
+            email: row.Teacher.User.email,
+            phone: row.Teacher.User.phone,
+          },
+          registerStatus: row.isregistered,
+        };
+      })
+    );
+  };
+
+  async function getProjectsData() {
+    let projectsData;
+    if (!pageSearchValue) {
+      projectsData = await getProjectData(currentPage, currentLimit);
+    } else {
+      projectsData = await searchProject(
+        currentPage,
+        currentLimit,
+        pageSearchValue.toLowerCase()
+      );
+    }
+    setProjectListRaw(projectsData);
+    setTotalPage(projectsData.totalPage);
+  }
+
+  const handlePageClick = async (event) => {
+    setCurrentPage(+event.selected + 1);
+  };
+
+  const handleDeleteClick = () => {
+    if (selectedProject.length === 0) {
+      toast.error("Please select at least one project to delete");
+    } else if (selectedProject.length > 0) {
+      setIsWarningModalOpen(true);
+    }
+  };
+  const handleConfirmDelete = async () => {
+    const projectIds = selectedProject.map((project) => project.id);
+    let response = await deleteProject(projectIds);
+    setSelectedProject([]);
+    setIsWarningModalOpen(false);
+    if (response && response.data && response.data.EC === 0) {
+      toast.success(response.data.EM);
+      getProjectsData();
+    } else {
+      toast.error(response.data.EM);
+      getProjectsData();
+    }
+  };
+
+  const handleCloseWarningModal = () => {
+    setIsWarningModalOpen(false);
+  };
+
+  const handleCloseViewModal = () => {
+    setIsViewModalOpen(false);
+  };
+
+  // search event
+  const handleSearch = async (searchValue) => {
+    setCurrentPage(1);
+    setPageSearchValue(searchValue);
+  };
   return (
     <>
       <Meta title={"View project"} />
-      <div className="bg-slate-50 h-full pt-6">
-        <div className="flex items-center">
+      <div className="bg-slate-50 h-full w-full overflow-auto flex flex-col justify-between pt-6">
+        {isWarningModalOpen && (
+          <WarningModal
+            question="Are you sure you want to delete ?"
+            btnYesText="Yes, I'm sure"
+            btnNoText="No, cancel"
+            handleConfirmDelete={handleConfirmDelete}
+            handleCloseModal={handleCloseWarningModal}
+          />
+        )}
+        {isViewModalOpen && (
+          <ViewProjectModal
+            btnBackText="Back"
+            handleCloseModal={handleCloseViewModal}
+            project={selectedProjectForModal}
+          />
+        )}
+        <div className="flex items-start flex-shrink">
           <div className="px-16">
-            <SearchBar placeholder="Search Project..." />
+            <SearchBar
+              placeholder="Search Project..."
+              handleSearch={handleSearch}
+              handleKeyDown={(event) => {
+                if (event.key === "Enter") {
+                  handleSearch(event.target.value);
+                }
+              }}
+            />
           </div>
           <div className="flex justify-end gap-8 w-full mr-16">
             <ButtonCreate
               text="Add new"
               href="/academic-affair/project/create-project"
             />
-            <ButtonDelete text="Delete" href="#" />
+            <ButtonDelete text="Delete" onClick={handleDeleteClick} />
           </div>
         </div>
-        <div className="px-16 py-7 ">
-          <TableViewItem
-            columnNames={[
-              "ID",
-              "Faculty",
-              "Topic",
-              "Type",
-              "Teacher Information",
-              "Action",
-            ]}
-            rowList={project_list}
-            editHref="#"
-          />
-          <nav
-            className="flex items-center flex-column flex-wrap md:flex-row justify-between pt-4"
-            aria-label="Table navigation"
-          >
-            <span className="text-sm font-normal text-gray-500 dark:text-gray-400 mb-4 md:mb-0 block w-full md:inline md:w-auto">
+        <div className="px-16 py-7">
+          {project_list.map((project_item) => {
+            return (
+              <>
+                <ProjectCard
+                  project={project_item}
+                  selectedItem={selectedProject}
+                  setSelectedItem={setSelectedProject}
+                  editHref={"/academic-affair/project/update-project/"}
+                  onClickView={() => {
+                    setIsViewModalOpen(true);
+                    setSelectedProjectForModal(project_item);
+                  }}
+                />
+              </>
+            );
+          })}
+          <div className="flex items-center flex-row flex-wrap justify-between pt-4">
+            <span className="text-sm font-normal text-gray-500 mb-4 md:mb-0 block w-full md:inline md:w-auto">
               Showing{" "}
-              <span className="font-semibold text-gray-900 dark:text-white">
-                1-10
+              <span className="font-semibold text-gray-900 ">
+                {currentOffset}-{currentOffset + currentLimit - 1}
               </span>{" "}
               of{" "}
-              <span className="font-semibold text-gray-900 dark:text-white">
-                1000
-              </span>
+              <span className="font-semibold text-gray-900 ">{totalPage}</span>
             </span>
-            <ul className="inline-flex -space-x-px rtl:space-x-reverse text-sm h-8">
-              <li>
-                <a
-                  href="#"
-                  className="flex items-center justify-center px-3 h-8 ms-0 leading-tight text-gray-500 bg-white border border-gray-300 rounded-s-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
-                >
-                  Previous
-                </a>
-              </li>
-              <li>
-                <a
-                  href="#"
-                  className="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
-                >
-                  1
-                </a>
-              </li>
-              <li>
-                <a
-                  href="#"
-                  className="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
-                >
-                  2
-                </a>
-              </li>
-              <li>
-                <a
-                  href="#"
-                  aria-current="page"
-                  className="flex items-center justify-center px-3 h-8 text-blue-600 border border-gray-300 bg-blue-50 hover:bg-blue-100 hover:text-blue-700 dark:border-gray-700 dark:bg-gray-700 dark:text-white"
-                >
-                  3
-                </a>
-              </li>
-              <li>
-                <a
-                  href="#"
-                  className="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
-                >
-                  4
-                </a>
-              </li>
-              <li>
-                <a
-                  href="#"
-                  className="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
-                >
-                  5
-                </a>
-              </li>
-              <li>
-                <a
-                  href="#"
-                  className="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 rounded-e-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
-                >
-                  Next
-                </a>
-              </li>
-            </ul>
-          </nav>
+
+            <div className="">
+              {totalPage > 0 && (
+                <Footer
+                  totalPage={totalPage}
+                  handlePageClick={handlePageClick}
+                />
+              )}
+            </div>
+          </div>
         </div>
       </div>
     </>
   );
 };
 
-export default ViewProject;
+export default ViewAnalysis;

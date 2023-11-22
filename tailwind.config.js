@@ -12,6 +12,7 @@ module.exports = {
     extend: {
       color: {
         "main-color": "#F9FAFB",
+        "test-color": "#6002EE",
       },
     },
   },

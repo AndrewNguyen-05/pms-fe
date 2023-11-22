@@ -1,12 +1,11 @@
-import Meta from "@/components/Meta";
-import { postCreateProject } from "@/services/projectServices";
-import { getTeacherData } from "@/services/teacherServices";
 import { useState, useEffect } from "react";
-import { toast } from "react-toastify";
+import Meta from "@/components/Meta";
 import { useRouter } from "next/router";
-import WarningModal from "@/components/WarningModal";
+import { toast } from "react-toastify";
+import { getTeacherData } from "@/services/teacherServices";
+import { getProjectById, putUpdateProject } from "@/services/projectServices";
 
-const CreateProject = () => {
+const UpdateProject = () => {
   const [teacher_list, setTeacherList] = useState([]);
   let defaultTeacherInformation = {
     name: "",
@@ -24,11 +23,13 @@ const CreateProject = () => {
     isValidTeacher: true,
   };
   const [objCheckInput, setObjCheckInput] = useState(defaultValidInput);
+  const [projectId, setProjectId] = useState("");
   const [projectName, setProjectName] = useState("");
   const [projectFaculty, setProjectFaculty] = useState("");
   const [projectType, setProjectType] = useState("");
   const [projectRequirement, setProjectRequirement] = useState("");
   const [teacherId, setTeacherId] = useState("");
+  const [project, setProject] = useState({});
 
   //control the state of open modal
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -37,13 +38,52 @@ const CreateProject = () => {
 
   //get data
   useEffect(() => {
-    async function getData() {
-      //get teacher data
-      let teachersData = await getTeacherData();
-      setTeacherList(teachersData);
+    if (router.isReady) {
+      getProjectsData();
+      getData();
     }
-    getData();
-  }, []);
+  }, [router.query.id]);
+
+  // useEffect(() => {
+  //   setProjectId(project.id);
+  //   setProjectName(project.name);
+  //   setProjectType(project.type);
+  //   setProjectFaculty(project.faculty);
+  //   setTeacherId(project.Teacher.id);
+  // }, [project]);
+
+  const getData = async () => {
+    //get teacher data
+    let teachersData = await getTeacherData();
+    setTeacherList(teachersData);
+  };
+
+  const getProjectsData = async () => {
+    const projectData = await getProjectById(router.query.id);
+    setProject(projectData);
+    setProjectId(projectData.id);
+    setProjectName(projectData.name);
+    setProjectType(projectData.type);
+    setProjectFaculty(projectData.faculty);
+    setTeacherId(projectData.Teacher.id);
+    console.log(">>> check project data: ", project);
+
+    console.log(">>>> check pjfaculty", projectData.faculty);
+    console.log(">>> check pj type", projectData.type);
+    console.log(">>> check teacher id:", projectData.Teacher.id);
+    console.log(">>>> check pjfaculty22:", projectFaculty);
+    console.log(">>> check pj type22:", projectType);
+    console.log(">>> check teacher id22:", teacherId);
+
+    console.log(">>> teacherId in pjdata: ", projectData.Teacher);
+    setTeacherInformation({
+      name: projectData.Teacher.User.name,
+      email: projectData.Teacher.User.email,
+      phone: projectData.Teacher.User.phone,
+    });
+    console.log(">>> check teacher name:", teacherInformation.name);
+    setProjectRequirement(projectData.requirement);
+  };
 
   //validate the input
   const isValidateInput = () => {
@@ -65,6 +105,7 @@ const CreateProject = () => {
       return false;
     }
 
+    console.log(">>> teacherId: ", teacherId);
     if (!teacherId) {
       toast.error("Teacher is required!");
       setObjCheckInput({ ...defaultValidInput, isValidTeacher: false });
@@ -74,10 +115,11 @@ const CreateProject = () => {
   };
 
   //handle create project
-  const handleCreateProject = async () => {
+  const handleUpdateProject = async () => {
     let check = isValidateInput();
     if (check) {
-      let response = await postCreateProject(
+      let response = await putUpdateProject(
+        projectId,
         projectName,
         projectType,
         projectFaculty,
@@ -101,24 +143,89 @@ const CreateProject = () => {
   const handleCloseModal = () => {
     setIsModalOpen(false);
   };
-
   return (
     <>
-      <Meta title={"Create new project"} />
+      <Meta title={"Update project"} />
       <div className="bg-slate-100 h-full py-6 ">
         {isModalOpen && (
-          <WarningModal
-            question="Are you sure you want to quit ?"
-            btnYesText="Yes, I'm sure"
-            btnNoText="No, cancel"
-            handleConfirmDelete={handleCancelClick}
-            handleCloseModal={handleCloseModal}
-          />
+          <div
+            tabIndex="-1"
+            className="fixed inset-0 z-50 flex justify-center items-center bg-black bg-opacity-50"
+            onClick={() => {
+              handleCloseModal();
+            }}
+          >
+            <div
+              className="relative p-4 w-full max-w-md max-h-full"
+              onClick={(event) => event.stopPropagation()}
+            >
+              <div className="relative bg-white rounded-lg shadow">
+                <button
+                  type="button"
+                  className="absolute top-3 end-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-base w-8 h-8 ms-auto inline-flex justify-center items-center"
+                  onClick={() => handleCloseModal()}
+                >
+                  <svg
+                    className="w-3 h-3"
+                    aria-hidden="true"
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 14 14"
+                  >
+                    <path
+                      stroke="currentColor"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth="2"
+                      d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"
+                    />
+                  </svg>
+                  <span className="sr-only">Close modal</span>
+                </button>
+                <div className="p-4 md:p-5 text-center">
+                  <svg
+                    className="mx-auto mb-4 text-gray-400 w-12 h-12"
+                    aria-hidden="true"
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 20 20"
+                  >
+                    <path
+                      stroke="currentColor"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth="2"
+                      d="M10 11V6m0 8h.01M19 10a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
+                    />
+                  </svg>
+                  <h3 className="mb-5 text-lg font-normal text-gray-500">
+                    Are you sure you want to quit ?
+                  </h3>
+                  <button
+                    data-modal-hide="popup-modal"
+                    type="button"
+                    className="text-white bg-red-600 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300  font-medium rounded-lg text-base inline-flex items-center px-5 py-2.5 text-center me-2"
+                    onClick={() => handleCancelClick()}
+                  >
+                    Yes, I'm sure
+                  </button>
+                  <button
+                    data-modal-hide="popup-modal"
+                    type="button"
+                    className="text-gray-500 bg-white hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-gray-200 rounded-lg border border-gray-200 text-base font-medium px-5 py-2.5 hover:text-gray-900 focus:z-10"
+                    onClick={() => handleCloseModal()}
+                  >
+                    No, cancel
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
         )}
         <section className="bg-white mx-20 rounded-2xl">
           <div className="py-4 px-6">
             <h2 className="mb-4 text-xl font-bold text-blue-700 ">
-              Create new project
+              Update project
             </h2>
             <div className="grid grid-cols-2 gap-4 text-base">
               <div className="col-span-2">
@@ -137,6 +244,7 @@ const CreateProject = () => {
                       ? "bg-slate-50 border border-gray-300 text-gray-900 text-base rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 "
                       : "bg-red-50 border ring-1 ring-red-400 text-gray-900 text-base rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
                   }
+                  defaultValue={project.name}
                   placeholder="Enter topic of project"
                   onChange={(event) => {
                     setProjectName(event.target.value);
@@ -157,14 +265,12 @@ const CreateProject = () => {
                       ? "bg-slate-50 border border-gray-300 text-gray-900 text-base rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 "
                       : "bg-red-50 border ring-1 ring-red-400 text-gray-900 text-base rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5  invalid:border-red-700 invalid:bg-red-700"
                   }
-                  defaultValue={"DEFAULT"}
+                  value={projectFaculty}
                   onChange={(event) => {
                     setProjectFaculty(event.target.value);
                   }}
                 >
-                  <option value={"DEFAULT"} disabled={true}>
-                    Select falcuty
-                  </option>
+                  <option disabled={true}>Select falcuty</option>
                   <option value="Công nghệ Phần Mềm">Công nghệ Phần Mềm</option>
                   <option value="Hệ thống Thông Tin">Hệ thống Thông Tin</option>
                   <option value="Kỹ thuật Máy Tính">Kỹ thuật Máy Tính</option>
@@ -189,14 +295,12 @@ const CreateProject = () => {
                       ? "bg-slate-50 border border-gray-300 text-gray-900 text-base rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 "
                       : "bg-red-50 border ring-1 ring-red-400 text-gray-900 text-base rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
                   }
-                  defaultValue={"DEFAULT"}
+                  value={projectType}
                   onChange={(event) => {
                     setProjectType(event.target.value);
                   }}
                 >
-                  <option value={"DEFAULT"} disabled={true}>
-                    Select project type
-                  </option>
+                  <option disabled={true}>Select project type</option>
                   <option value="1">1</option>
                   <option value="2">2</option>
                 </select>
@@ -221,20 +325,21 @@ const CreateProject = () => {
                           ? "bg-slate-50 border border-gray-300 text-gray-900 text-base rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 "
                           : "bg-red-50 border ring-1 ring-red-400 text-gray-900 text-base rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
                       }
-                      defaultValue={"DEFAULT"}
+                      value={teacherInformation.name}
                       onChange={(event) => {
                         const selectedTeacher = teacher_list.find(
                           (teacher) => teacher.User.name === event.target.value
                         );
-                        setTeacherInformation(
-                          selectedTeacher ? selectedTeacher.User : ""
-                        );
-                        setTeacherId(selectedTeacher.id);
+                        if (selectedTeacher) {
+                          setTeacherInformation(selectedTeacher.User);
+                          setTeacherId(selectedTeacher.id);
+                        } else {
+                          setTeacherInformation("");
+                          setTeacherId("");
+                        }
                       }}
                     >
-                      <option value={"DEFAULT"} disabled={true}>
-                        Select teacher
-                      </option>
+                      <option disabled={true}>Select teacher</option>
                       {teacher_list.map((teacher) => (
                         <option value={teacher.User.name}>
                           {teacher.User.name}
@@ -256,6 +361,7 @@ const CreateProject = () => {
                       className="bg-slate-50 border border-gray-300 text-gray-900 text-base rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 "
                       placeholder="Teacher's information"
                       readOnly={true}
+                      defaultValue={project?.Teacher?.User?.email}
                       value={teacherInformation.email}
                     />
                   </div>
@@ -273,6 +379,7 @@ const CreateProject = () => {
                       className="bg-slate-50 border border-gray-300 text-gray-900 text-base rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 "
                       placeholder="Teacher's information"
                       readOnly={true}
+                      defaultValue={project?.Teacher?.User?.phone}
                       value={teacherInformation.phone}
                     />
                   </div>
@@ -294,6 +401,7 @@ const CreateProject = () => {
                   onChange={(event) => {
                     setProjectRequirement(event.target.value);
                   }}
+                  defaultValue={projectRequirement}
                 ></textarea>
               </div>
             </div>
@@ -309,10 +417,10 @@ const CreateProject = () => {
               <button
                 className="items-center px-5 py-2.5 mt-4 text-base font-medium border-2 border-blue-700 text-center text-blue-700 bg-white  rounded-lg focus:ring-2 focus:ring-blue-200 hover:bg-blue-700 hover:text-white"
                 onClick={() => {
-                  handleCreateProject();
+                  handleUpdateProject();
                 }}
               >
-                Add project
+                Update project
               </button>
             </div>
           </div>
@@ -322,4 +430,4 @@ const CreateProject = () => {
   );
 };
 
-export default CreateProject;
+export default UpdateProject;

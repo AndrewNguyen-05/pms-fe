@@ -1,9 +1,23 @@
 import React from "react";
 import Link from "next/link";
-const TableViewItem = ({ columnNames, rowList, editHref }) => {
+const path = require("path");
+const TableViewItem = ({
+  columnNames,
+  rowList,
+  selectedItem,
+  setSelectedItem,
+  editHref,
+}) => {
+  const onItemSelect = (project, isSelected) => {
+    if (isSelected) {
+      setSelectedItem((prev) => [...prev, project]);
+    } else {
+      setSelectedItem((prev) => prev.filter((p) => p.id !== project.id));
+    }
+  };
   return (
     <table className="w-full text-[16px] text-left rtl:text-right text-gray-500 ">
-      <thead className="text-[16px] text-blue -700 uppercase border-b bg-white ">
+      <thead className="text-[16px] text-blue-700 uppercase border-b bg-white ">
         <tr>
           <th scope="col" className="p-4"></th>
           {columnNames.map((name, index) => {
@@ -16,7 +30,7 @@ const TableViewItem = ({ columnNames, rowList, editHref }) => {
         </tr>
       </thead>
       <tbody>
-        {rowList.map((project, index) => {
+        {rowList.map((row, index) => {
           return (
             <tr
               className="bg-white border-b hover:bg-gray-50 cursor-pointer"
@@ -28,26 +42,34 @@ const TableViewItem = ({ columnNames, rowList, editHref }) => {
                     id="checkbox-table-search-1"
                     type="checkbox"
                     className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded-lg "
+                    checked={selectedItem.some((item) => item.id === row.id)}
+                    onChange={(event) =>
+                      onItemSelect(row, event.target.checked)
+                    }
                   />
                 </div>
               </td>
-              <th
-                scope="row"
-                className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap"
-              >
-                {project.id}
-              </th>
-              <td className="px-6 py-4">{project.faculty}</td>
-              <td className="px-6 py-4">{project.name}</td>
-              <td className="px-6 py-4">{project.type}</td>
-              <td className="px-6 py-4">
-                {project.Teacher.User.name} - {project.Teacher.User.email} -{" "}
-                {project.Teacher.User.phone}
-              </td>
+
+              {Object.values(row).map((cell, index) => {
+                if (index == 0) {
+                  return (
+                    <th scope="row" className="hidden" key={index}>
+                      {cell}
+                    </th>
+                  );
+                }
+                return (
+                  <td className="px-6 py-4" key={index}>
+                    {cell}
+                  </td>
+                );
+              })}
+
               <td className="px-6 py-4">
                 <Link
-                  href={editHref}
-                  className="font-medium text-blue-600 dark:text-blue-500 hover:underline"
+                  href={path.join(editHref, `[id]`)}
+                  as={path.join(editHref, "" + row.id)}
+                  className="font-medium text-blue-600 hover:underline"
                 >
                   Edit
                 </Link>

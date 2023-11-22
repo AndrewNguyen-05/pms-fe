@@ -2,29 +2,48 @@ import Link from "next/link";
 import NavItem from "./Navitem";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
+const path = require("path");
 
 const Navbar = () => {
   const router = useRouter();
   const [activeIdx, setActiveIdx] = useState(-1);
   const items = [
-    { name: "Project", href: "/academic-affair/project/view-project" },
+    {
+      name: "Project",
+      href: "/academic-affair/project/view-project",
+      effectHref: "/academic-affair/project/",
+    },
     {
       name: "Announcement",
       href: "/academic-affair/announcement/view-announcement",
+      effectHref: "/academic-affair/announcement/",
     },
     {
       name: "Score",
       href: "/academic-affair/score/view-score",
+      effectHref: "/academic-affair/score/",
     },
-    { name: "Analysis", href: "/academic-affair/analysis/view-analysis" },
-    { name: "Report", href: "/academic-affair/report/view-report" },
+    {
+      name: "Analysis",
+      href: "/academic-affair/analysis/view-analysis",
+      effectHref: "/academic-affair/analysis/",
+    },
+    {
+      name: "Report",
+      href: "/academic-affair/report/view-report",
+      effectHref: "/academic-affair/report/",
+    },
   ];
 
+  const checkRelatvie = (parent, dir) => {
+    const relative = path.relative(parent, dir);
+    return relative && !relative.startsWith("..") && !path.isAbsolute(relative);
+  };
   useEffect(() => {
     let currentPath = router.pathname;
     console.log(currentPath);
     items.forEach((item, index) => {
-      if (item.href == currentPath) {
+      if (checkRelatvie(item.effectHref, currentPath)) {
         setActiveIdx(index);
         return;
       }
@@ -33,8 +52,8 @@ const Navbar = () => {
 
   return (
     <>
-      <nav className="bg-white border-gray-200 dark:bg-gray-900">
-        <div className="w-screen flex items-center justify-start px-5 py-1">
+      <nav className="bg-white border-gray-200">
+        <div className="w-full flex items-center justify-start px-5 py-1">
           <Link href="/">
             <button
               className="font-bold text-[22px] pr-2"
