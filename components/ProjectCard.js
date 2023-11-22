@@ -17,8 +17,8 @@ const ProjectCard = ({
   };
   return (
     <>
-      <div className="bg-white border-2 border-slate-100 rounded-2xl h-[90px] shadow-md flex items-center my-2 hover:bg-slate-50 cursor-pointer">
-        <div className="grid grid-cols-12 justify-between">
+      <div className="bg-white border-2 border-slate-100 rounded-2xl h-[90px] shadow-md flex items-center my-2 hover:bg-slate-50 cursor-pointer w-full">
+        <div className="grid grid-cols-12 justify-between w-full">
           <div className="col-span-1 flex items-center justify-center">
             <input
               type="checkbox"
@@ -47,10 +47,7 @@ const ProjectCard = ({
               </div>
             </div>
           </div>
-          <div
-            className="col-span-3 text-base flex items-center"
-            onClick={onClickView}
-          >
+          <div className="col-span-3 text-base flex items-center w-full">
             {project.teacherInformation.name} -{" "}
             {project.teacherInformation.email} -{" "}
             {project.teacherInformation.phone}
