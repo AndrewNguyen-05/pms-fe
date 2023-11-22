@@ -47,7 +47,10 @@ const ProjectCard = ({
               </div>
             </div>
           </div>
-          <div className="col-span-3 text-base flex items-center">
+          <div
+            className="col-span-3 text-base flex items-center"
+            onClick={onClickView}
+          >
             {project.teacherInformation.name} -{" "}
             {project.teacherInformation.email} -{" "}
             {project.teacherInformation.phone}
