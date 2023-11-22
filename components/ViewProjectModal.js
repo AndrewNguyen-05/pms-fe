@@ -44,8 +44,13 @@ const ViewProjectModal = ({ project, btnBackText, handleCloseModal }) => {
             <div class="text-lg leading-relaxed text-gray-500 flex flex-col gap-3 mt-3">
               <div>
                 <span className="font-bold text-gray-700">Requirement</span>:{" "}
-                {project.requirement}
+                <div
+                  dangerouslySetInnerHTML={{
+                    __html: project.requirement.replace(/\n/g, "<br />"),
+                  }}
+                ></div>
               </div>
+
               <div>
                 <span className="font-bold text-gray-700">Type</span>:{" "}
                 {project.type}
