@@ -20,7 +20,12 @@ const ViewAnnouncementPanel = ({ announcement }) => {
               <div className="italic">
                 Created at {announcement.dateCreated}
               </div>
-              <div className="text-lg my-3 flex-1">{announcement.content}</div>
+              <div
+                className="text-lg my-3 flex-1"
+                dangerouslySetInnerHTML={{
+                  __html: announcement.content.replace(/\n/g, "<br />"),
+                }}
+              ></div>
               <div className="flex justify-end italic">
                 Last modifed {announcement.dateUpdated}
               </div>
