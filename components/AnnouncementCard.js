@@ -31,7 +31,7 @@ const AnnouncementCard = ({
             />
           </div>
           <div className="col-span-9" onClick={onClickView}>
-            <div className="flex flex-col ">
+            <div className="flex flex-col">
               <div className="flex justify-between">
                 <div className="font-bold text-base mr-1 text-blue-700">
                   {trimText(announcement.title, 70)}
