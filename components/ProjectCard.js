@@ -38,11 +38,11 @@ const ProjectCard = ({
                 <div className="col-span-3 text-sm flex gap-4">
                   <div>
                     {project.type === "1" ? (
-                      <div className="bg-blue-100 text-blue-800 rounded-3xl flex justify-center items-center col-span-1 py-1 px-3">
+                      <div className="bg-blue-200 text-blue-700 rounded-3xl flex justify-center items-center col-span-1 py-1 px-3">
                         Type 1
                       </div>
                     ) : (
-                      <div className="bg-sky-50 text-sky-700 rounded-3xl flex justify-center items-center col-span-1 py-1 px-3">
+                      <div className="bg-sky-100 text-sky-700 rounded-3xl flex justify-center items-center col-span-1 py-1 px-3">
                         Type 2
                       </div>
                     )}
