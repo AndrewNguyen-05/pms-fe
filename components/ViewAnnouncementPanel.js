@@ -13,14 +13,17 @@ const ViewAnnouncementPanel = ({ announcement }) => {
       >
         {Object.keys(announcement).length > 0 ? (
           <>
-            <div>
+            <div className="flex flex-col">
               <div className="text-red-700 font-semibold text-3xl my-5">
                 {announcement.title}
               </div>
               <div className="italic">
                 Created at {announcement.dateCreated}
               </div>
-              <div className="text-lg my-3">{announcement.content}</div>
+              <div className="text-lg my-3 flex-1">{announcement.content}</div>
+              <div className="flex justify-end italic">
+                Last modifed {announcement.dateUpdated}
+              </div>
             </div>
           </>
         ) : (
