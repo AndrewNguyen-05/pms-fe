@@ -1,10 +1,16 @@
-import React from "react";
+import { Roboto } from "next/font/google";
+
+const roboto = Roboto({
+  weight: "400",
+  subsets: ["latin"],
+});
 
 const ViewAnnouncementPanel = ({ announcement }) => {
-  console.log(">>> check announcement 123123: ", announcement);
   return (
     <>
-      <div className="bg-white h-full w-full rounded-3xl py-4 px-8 flex justify-center">
+      <div
+        className={`bg-white h-full w-full rounded-3xl py-4 px-8 flex justify-center`}
+      >
         {Object.keys(announcement).length > 0 ? (
           <>
             <div>
@@ -14,11 +20,11 @@ const ViewAnnouncementPanel = ({ announcement }) => {
               <div className="italic">
                 Created at {announcement.dateCreated}
               </div>
-              <div className="text-xl my-3">{announcement.content}</div>
+              <div className="text-lg my-3">{announcement.content}</div>
             </div>
           </>
         ) : (
-          <div className="mt-15 text-xl font-semibold">
+          <div className="mt-48 text-lg font-semibold">
             Please select an announcement to view
           </div>
         )}

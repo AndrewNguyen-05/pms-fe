@@ -1,6 +1,6 @@
 import React from "react";
 
-const ViewModal = ({ project, btnBackText, handleCloseModal }) => {
+const ViewProjectModal = ({ project, btnBackText, handleCloseModal }) => {
   console.log(">>>> check pj requirement: ", project.requirement);
   return (
     <div
@@ -37,35 +37,38 @@ const ViewModal = ({ project, btnBackText, handleCloseModal }) => {
             </svg>
             <span className="sr-only">Close modal</span>
           </button>
-          <div class="flex items-center justify-start font-bold text-2xl pb-3 border-b border-gray-300">
+          <div class="flex items-center justify-start font-bold text-2xl pb-3 border-b border-gray-300 text-blue-700">
             {project.name}
           </div>
           <div>
-            <div class="text-lg leading-relaxed text-black flex flex-col gap-3 mt-3">
+            <div class="text-lg leading-relaxed text-gray-500 flex flex-col gap-3 mt-3">
               <div>
-                <span className="font-bold">Requirement</span>:{" "}
+                <span className="font-bold text-gray-700">Requirement</span>:{" "}
                 {project.requirement}
               </div>
               <div>
-                <span className="font-bold">Type</span>: {project.type}
+                <span className="font-bold text-gray-700">Type</span>:{" "}
+                {project.type}
               </div>
               <div>
-                <span className="font-bold">Register status</span>:{" "}
-                {project.registerStatus === 1 ? "Registered" : "Unregistered"}
+                <span className="font-bold text-gray-700">Register status</span>
+                : {project.registerStatus === 1 ? "Registered" : "Unregistered"}
               </div>
               <div>
                 <fieldset className="col-span-2 border border-solid border-gray-300 py-2 px-3 rounded-lg">
-                  <legend className="font-bold">Teacher's Information</legend>
+                  <legend className="font-bold text-gray-700">
+                    Teacher's Information
+                  </legend>
                   <div className="mb-1">
-                    <span className="font-bold">Name:</span>{" "}
+                    <span className="font-bold text-gray-700">Name:</span>{" "}
                     {project.teacherInformation.name}
                   </div>
                   <div className="my-1">
-                    <span className="font-bold">Email:</span>{" "}
+                    <span className="font-bold text-gray-700">Email:</span>{" "}
                     {project.teacherInformation.email}
                   </div>
                   <div className="my-1">
-                    <span className="font-bold ">Phone:</span>{" "}
+                    <span className="font-bold text-gray-700">Phone:</span>{" "}
                     {project.teacherInformation.phone}
                   </div>
                 </fieldset>
@@ -87,4 +90,4 @@ const ViewModal = ({ project, btnBackText, handleCloseModal }) => {
   );
 };
 
-export default ViewModal;
+export default ViewProjectModal;

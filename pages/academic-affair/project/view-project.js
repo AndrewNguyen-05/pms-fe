@@ -13,7 +13,7 @@ import WarningModal from "@/components/WarningModal";
 import ButtonDelete from "@/components/ButtonDelete";
 import ProjectCard from "@/components/ProjectCard";
 import Footer from "@/components/Footer";
-import ViewModal from "@/components/ViewModal";
+import ViewProjectModal from "@/components/ViewProjectModal";
 
 const ViewAnalysis = () => {
   const [project_list, setProjectList] = useState([]);
@@ -125,7 +125,7 @@ const ViewAnalysis = () => {
           />
         )}
         {isViewModalOpen && (
-          <ViewModal
+          <ViewProjectModal
             btnBackText="Back"
             handleCloseModal={handleCloseViewModal}
             project={selectedProjectForModal}

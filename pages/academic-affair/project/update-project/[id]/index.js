@@ -224,7 +224,7 @@ const UpdateProject = () => {
         )}
         <section className="bg-white mx-20 rounded-2xl">
           <div className="py-4 px-6">
-            <h2 className="mb-4 text-xl font-bold text-gray-900 ">
+            <h2 className="mb-4 text-xl font-bold text-blue-700 ">
               Update project
             </h2>
             <div className="grid grid-cols-2 gap-4 text-base">

@@ -72,7 +72,7 @@ const CreateAnnouncement = () => {
           />
         )}
         <section className="bg-white mx-20 rounded-2xl py-4 px-6 h-max ">
-          <h1 className="mb-4 text-xl font-bold text-gray-900">
+          <h1 className="mb-4 text-xl font-bold text-blue-700">
             New announcement
           </h1>
           <label

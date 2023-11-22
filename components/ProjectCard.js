@@ -17,7 +17,7 @@ const ProjectCard = ({
   };
   return (
     <>
-      <div className="bg-white border-2 border-slate-200 rounded-2xl min-h-[100px] flex items-center my-2 hover:bg-slate-50 cursor-pointer">
+      <div className="bg-white border-2 border-slate-200 rounded-2xl h-[90px] flex items-center my-2 hover:bg-slate-50 cursor-pointer">
         <div className="grid grid-cols-12 justify-between">
           <div className="col-span-1 flex items-center justify-center">
             <input
@@ -29,7 +29,9 @@ const ProjectCard = ({
           </div>
           <div className="col-span-7 pr-4" onClick={onClickView}>
             <div className="flex flex-col">
-              <div className="font-bold text-base">{project.name}</div>
+              <div className="font-bold text-base text-blue-700">
+                {project.name}
+              </div>
               <div className="grid grid-cols-5 mt-2">
                 <div className="col-span-2 text-base">{project.faculty}</div>
                 <div className="col-span-3 text-sm flex gap-4">
