@@ -1,7 +1,5 @@
-import React from "react";
-
-const index = () => {
-  return <div>view analysis</div>;
+const ViewAnalysis = () => {
+  return <div>Analysis</div>;
 };
 
-export default index;
+export default ViewAnalysis;

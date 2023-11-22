@@ -7,42 +7,52 @@ import {
 } from "../../../services/projectServices";
 import ButtonCreate from "@/components/ButtonCreate";
 import {} from "../../../services/projectServices";
-import TableViewItem from "@/components/TableViewItem";
 import SearchBar from "@/components/SearchBar";
-import ReactPaginate from "react-paginate";
 import { toast } from "react-toastify";
 import WarningModal from "@/components/WarningModal";
 import ButtonDelete from "@/components/ButtonDelete";
+import ProjectCard from "@/components/ProjectCard";
+import Footer from "@/components/Footer";
+import ViewModal from "@/components/ViewModal";
 
-const ViewProject = () => {
+const ViewAnalysis = () => {
   const [project_list, setProjectList] = useState([]);
   const [totalPage, setTotalPage] = useState(0);
   const [currentPage, setCurrentPage] = useState(1);
   const [currentLimit, setCurrentLimit] = useState(10);
   const [currentOffset, setCurrentOffset] = useState(0);
   const [pageSearchValue, setPageSearchValue] = useState("");
+  const [selectedProjectForModal, setSelectedProjectForModal] = useState({});
 
   //control the state of open modal
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isWarningModalOpen, setIsWarningModalOpen] = useState(false);
+  const [isViewModalOpen, setIsViewModalOpen] = useState(false);
 
   //list of project that is selected
   const [selectedProject, setSelectedProject] = useState([]);
 
   useEffect(() => {
     getProjectsData();
+    console.log(">>> check project data:", project_list);
     setCurrentOffset((currentPage - 1) * currentLimit + 1);
   }, [currentPage, pageSearchValue]);
 
   const setProjectListRaw = (projectsData) => {
+    console.log(">>> check raw data:", projectsData);
     setProjectList(
       projectsData.projects.map((row) => {
-        row.teacherInformation = `${row.Teacher.User.name} - ${row.Teacher.User.email} - ${row.Teacher.User.phone}`;
         return {
           id: row.id,
           name: row.name,
           faculty: row.faculty,
           type: row.type,
-          teacherInformation: row.teacherInformation,
+          requirement: row.requirement,
+          teacherInformation: {
+            name: row.Teacher.User.name,
+            email: row.Teacher.User.email,
+            phone: row.Teacher.User.phone,
+          },
+          registerStatus: row.isregistered,
         };
       })
     );
@@ -71,14 +81,14 @@ const ViewProject = () => {
     if (selectedProject.length === 0) {
       toast.error("Please select at least one project to delete");
     } else if (selectedProject.length > 0) {
-      setIsModalOpen(true);
+      setIsWarningModalOpen(true);
     }
   };
   const handleConfirmDelete = async () => {
     const projectIds = selectedProject.map((project) => project.id);
     let response = await deleteProject(projectIds);
     setSelectedProject([]);
-    setIsModalOpen(false);
+    setIsWarningModalOpen(false);
     if (response && response.data && response.data.EC === 0) {
       toast.success(response.data.EM);
       getProjectsData();
@@ -88,8 +98,12 @@ const ViewProject = () => {
     }
   };
 
-  const handleCloseModal = () => {
-    setIsModalOpen(false);
+  const handleCloseWarningModal = () => {
+    setIsWarningModalOpen(false);
+  };
+
+  const handleCloseViewModal = () => {
+    setIsViewModalOpen(false);
   };
 
   // search event
@@ -100,17 +114,24 @@ const ViewProject = () => {
   return (
     <>
       <Meta title={"View project"} />
-      <div className="bg-slate-50 min-h-screen pt-6">
-        {isModalOpen && (
+      <div className="bg-blue-50 min-h-screen w-screen flex flex-col justify-between pt-6">
+        {isWarningModalOpen && (
           <WarningModal
             question="Are you sure you want to delete ?"
             btnYesText="Yes, I'm sure"
             btnNoText="No, cancel"
             handleConfirmDelete={handleConfirmDelete}
-            handleCloseModal={handleCloseModal}
+            handleCloseModal={handleCloseWarningModal}
           />
         )}
-        <div className="flex items-center">
+        {isViewModalOpen && (
+          <ViewModal
+            btnBackText="Back"
+            handleCloseModal={handleCloseViewModal}
+            project={selectedProjectForModal}
+          />
+        )}
+        <div className="flex items-start flex-shrink">
           <div className="px-16">
             <SearchBar
               placeholder="Search Project..."
@@ -130,20 +151,23 @@ const ViewProject = () => {
             <ButtonDelete text="Delete" onClick={handleDeleteClick} />
           </div>
         </div>
-        <div className="px-16 py-7">
-          <TableViewItem
-            columnNames={[
-              "Topic",
-              "Faculty",
-              "Type",
-              "Teacher Information",
-              "Action",
-            ]}
-            rowList={project_list}
-            selectedItem={selectedProject}
-            setSelectedItem={setSelectedProject}
-            editHref={"/academic-affair/project/update-project/"}
-          />
+        <div className="px-16 py-7 flex-grow">
+          {project_list.map((project_item) => {
+            return (
+              <>
+                <ProjectCard
+                  project={project_item}
+                  selectedItem={selectedProject}
+                  setSelectedItem={setSelectedProject}
+                  editHref={"/academic-affair/project/update-project/"}
+                  onClickView={() => {
+                    setIsViewModalOpen(true);
+                    setSelectedProjectForModal(project_item);
+                  }}
+                />
+              </>
+            );
+          })}
           <div className="flex items-center flex-row flex-wrap justify-between pt-4">
             <span className="text-sm font-normal text-gray-500 mb-4 md:mb-0 block w-full md:inline md:w-auto">
               Showing{" "}
@@ -153,30 +177,12 @@ const ViewProject = () => {
               of{" "}
               <span className="font-semibold text-gray-900 ">{totalPage}</span>
             </span>
-            <div>
+
+            <div className="">
               {totalPage > 0 && (
-                <ReactPaginate
-                  pageCount={totalPage}
-                  marginPagesDisplayed={0}
-                  pageRangeDisplayed={10}
-                  onPageChange={handlePageClick}
-                  previousLabel="Previous"
-                  nextLabel="Next"
-                  pageClassName="bg-white border border-gray-300 text-gray-500 hover:bg-gray-100 hover:text-gray-700"
-                  pageLinkClassName="flex items-center justify-center leading-tight px-3 h-8"
-                  previousClassName="text-gray-500 bg-white border border-e-0 border-gray-300 rounded-s-lg hover:bg-gray-100 hover:text-gray-700"
-                  previousLinkClassName="flex items-center justify-center px-3 h-8 ms-0 leading-tight "
-                  nextClassName="text-gray-500 bg-white border border-gray-300 rounded-e-lg hover:bg-gray-100 hover:text-gray-700"
-                  nextLinkClassName="flex items-center justify-center px-3 h-8 leading-tight"
-                  breakLabel="..."
-                  breakClassName="bg-white border border-gray-300 text-gray-500 hover:bg-gray-100 hover:text-gray-700 "
-                  breakLinkClassName="flex items-center justify-center leading-tight px-3 h-8"
-                  containerClassName="pagination"
-                  activeClassName="text-blue-600 border border-gray-300 text-blue-600 bg-blue-50 hover:bg-blue-100 hover:text-blue-700 "
-                  activeLinkClassName="bg-blue-600 flex items-center justify-center leading-tight px-3 h-8 text-white font-semibold "
-                  renderOnZeroPageCount={null}
-                  disabledClassName="opacity-50"
-                  className="inline-flex"
+                <Footer
+                  totalPage={totalPage}
+                  handlePageClick={handlePageClick}
                 />
               )}
             </div>
@@ -187,4 +193,4 @@ const ViewProject = () => {
   );
 };
 
-export default ViewProject;
+export default ViewAnalysis;

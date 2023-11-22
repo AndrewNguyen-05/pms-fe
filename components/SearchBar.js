@@ -25,7 +25,7 @@ const SearchBar = ({ placeholder, handleSearch, handleKeyDown }) => {
         <input
           type="search"
           id="default-search"
-          className=" w-[500px] p-4 ps-10 text-sm text-gray-900 border border-gray-200 rounded-lg bg-white focus:ring-1 focus:outline-none focus:ring-blue-300 "
+          className=" w-[500px] p-4 ps-10 text-sm text-gray-900 border border-gray-200 rounded-3xl bg-white focus:ring-1 focus:outline-none focus:ring-blue-300 "
           placeholder={placeholder}
           required
           onChange={(event) => setSearchValue(event.target.value)}
@@ -33,7 +33,7 @@ const SearchBar = ({ placeholder, handleSearch, handleKeyDown }) => {
         />
         <button
           type="submit"
-          className="text-white absolute px-4 py-2 end-2.5 bottom-2 bg-blue-700 focus:ring-2 focus:outline-none focus:ring-blue-300  hover:bg-blue-800 font-medium rounded-lg text-sm"
+          className="text-white absolute px-4 py-2 end-2.5 bottom-2 bg-blue-700 focus:ring-2 focus:outline-none focus:ring-blue-300  hover:bg-blue-800 font-medium rounded-3xl text-sm"
           onClick={() => {
             handleSearch(searchValue);
           }}
