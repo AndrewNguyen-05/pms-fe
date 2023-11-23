@@ -39,8 +39,10 @@ const ViewScore = () => {
       scoreData.scores.map((row) => {
         return {
           id: row.id,
-          name: row.Student.User.name,
-          studentId: row.Student.studentCode,
+          name: row.Student1.User.name,
+          studentId: row.Student1.studentCode,
+          name2: row.Student2.User.name,
+          studentId2: row.Student2.studentCode,
           projectName: row.Project.name,
           score: row.score,
         };
@@ -141,8 +143,10 @@ const ViewScore = () => {
         <div className="px-16 py-7 ">
           <TableViewItem
             columnNames={[
-              "Student Name",
-              "student id",
+              "Student Name1",
+              "student id1",
+              "Student Name2",
+              "student id2",
               "project name",
               "score",
               "Action",
