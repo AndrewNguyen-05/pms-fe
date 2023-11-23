@@ -1,27 +1,33 @@
-import React, { useState } from "react";
+import React from "react";
 
-const ScoreCard = () => {
+const ScoreCard = ({ scoreObj, onClickView }) => {
   return (
-    <div className="bg-slate-50 h-screen pt-6">
-      <div className="bg-white h-fit mx-20 my-10 border-2 rounded-2xl ">
-        <div className="grid grid-cols-12 px-5 py-3">
-          <div className="col-span-4 ">
-            <div className="font-semibold text-blue-700">{projectName}</div>
-            <div>{teacherName}</div>
+    <div className="bg-white border-2 border-slate-100 rounded-2xl h-fit shadow-md ">
+      <div className="grid grid-cols-12 px-5 py-3">
+        <div className="col-span-4 ">
+          <div className="font-semibold text-blue-700">
+            {scoreObj.projectName}
           </div>
-          <div className="col-span-1 "> </div>
-          <div className="col-span-2 text-gray-500 flex flex-col justify-center ">
-            <div>{major}</div>
-            <div>{projectType}</div>
+          <div>{scoreObj.teacher}</div>
+        </div>
+        <div className="col-span-1 "> </div>
+        <div className="col-span-2 text-gray-500 flex flex-row justify-left ">
+          <div className="bg-blue-50 text-blue-700 rounded-3xl justify-center text-center text-sm w-fit h-fit px-3 py-1">
+            {scoreObj.faculty}
           </div>
-          <div className="col-span-1 "> </div>
-          <div className="col-span-3 flex flex-col justify-center ">
-            <div>Nguyen Van A - 21529999</div>
-            <div>Nha Giau Chay Pho - 21528888</div>
+          <div className="bg-blue-50 text-blue-700 rounded-3xl justify-center text-center text-sm w-fit h-fit px-3 py-1">
+            {"type " + scoreObj.type}
           </div>
-          <div className="col-span-1 flex flex-col justify-center">
-            <div className="text-blue-500">score: 10</div>
-            <div className="text-blue-500">score: 8</div>
+        </div>
+        <div className="col-span-1 "> </div>
+        <div className="col-span-3 flex flex-col justify-center border-l-2 border-l-blue-500 pl-3 ">
+          <div>{scoreObj.studentName + " - " + scoreObj.studentCode}</div>
+        </div>
+        <div className="col-span-1 grid content-center">
+          <div className="flex flex-col justify-center text-center border-2 border-blue-500 rounded-xl h-10 ">
+            <div className="text-blue-500 font-bold text-xl	">
+              <div>{scoreObj.score}</div>
+            </div>
           </div>
         </div>
       </div>

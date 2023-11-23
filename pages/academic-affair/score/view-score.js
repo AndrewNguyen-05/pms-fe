@@ -1,9 +1,5 @@
-import React, { use } from "react";
+import React from "react";
 import Meta from "@/components/Meta";
-import ButtonCreate from "@/components/ButtonCreate";
-import ButtonDelete from "@/components/ButtonDelete";
-import TableViewItem from "@/components/TableViewItem";
-import SearchBar from "@/components/SearchBar";
 import {
   deleteScore,
   getScoreList,
@@ -13,10 +9,12 @@ import { useState, useEffect } from "react";
 import ReactPaginate from "react-paginate";
 import WarningModal from "@/components/WarningModal";
 import { toast } from "react-toastify";
-
-const ViewScore = () => {
+import ScoreCard from "@/components/ScoreCard";
+import InfiniteScroll from "react-infinite-scroll-component";
+const NewViewScore = () => {
   const [scoreList, setScoreList] = useState([]);
   const [totalPage, setTotalPage] = useState(0);
+  const [initialSetup, setInitialSetup] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const [currentLimit, setCurrentLimit] = useState(10);
   const [currentOffset, setCurrentOffset] = useState(0);
@@ -28,6 +26,10 @@ const ViewScore = () => {
   //list of score that is selected
   const [selectedScore, setSelectedScore] = useState([]);
 
+  // scorlled to last
+  const [hasMoreScorll, setHasMoreScroll] = useState(true);
+
+  // use effect
   useEffect(() => {
     getScoreData();
     setCurrentOffset((currentPage - 1) * currentLimit + 1);
@@ -36,19 +38,32 @@ const ViewScore = () => {
   const setScoreListRaw = (scoreData) => {
     console.log(">>", scoreData);
     setScoreList(
-      scoreData.scores.map((row) => {
-        return {
-          id: row.id,
-          name: row.Student.User.name,
-          studentId: row.Student.studentCode,
-          projectName: row.Project.name,
-          score: row.score,
-        };
-      })
+      scoreList.concat(
+        scoreData.scores.map((row) => {
+          return {
+            projectName: row.Project.name,
+            teacher: row.Project.Teacher.User.name,
+            faculty: row.Project.faculty,
+            type: row.Project.type,
+            studentName: row.Student.User.name,
+            studentCode: row.Student.studentCode,
+            score: row.score,
+          };
+        })
+      )
     );
+
+    console.log(">> score list", scoreList);
   };
 
   async function getScoreData() {
+    console.log(currentPage);
+    if (initialSetup == true && currentPage > totalPage) {
+      setHasMoreScroll(false);
+      return;
+    }
+    setInitialSetup(true);
+
     let scoreData;
     if (!pageSearchValue) {
       scoreData = await getScoreList(currentPage, currentLimit);
@@ -100,100 +115,55 @@ const ViewScore = () => {
     setPageSearchValue(searchValue);
   };
 
+  const handleScroll = async (event) => {
+    setCurrentPage(currentPage + 1);
+  };
+
   return (
     <>
       <Meta title={"View score"} />
-      <div className="bg-slate-50 h-full pt-6">
-        {isModalOpen && (
-          <WarningModal
-            question="Are you sure you want to delete ?"
-            btnYesText="Yes, I'm sure"
-            btnNoText="No, cancel"
-            handleConfirmDelete={handleConfirmDelete}
-            handleCloseModal={handleCloseModal}
-          />
-        )}
-        <div className="flex items-center">
-          <div className="px-16">
-            <SearchBar
-              placeholder="Search Score..."
-              handleSearch={handleSearch}
-              handleKeyDown={(event) => {
-                if (event.key === "Enter") {
-                  handleSearch(event.target.value);
-                }
-              }}
-            />
-          </div>
-          <div className="flex justify-end gap-8 w-full mr-16">
-            <ButtonCreate
-              text="Add new"
-              href="/academic-affair/score/create-score"
-            />
-            <ButtonDelete
-              text="Delete"
-              onClick={() => {
-                handleDeleteClick();
-              }}
-            />
-          </div>
-        </div>
-        <div className="px-16 py-7 ">
-          <TableViewItem
-            columnNames={[
-              "Student Name",
-              "student id",
-              "project name",
-              "score",
-              "Action",
-            ]}
-            rowList={scoreList}
-            editHref={"/academic-affair/score/update-score/"}
-            selectedItem={selectedScore}
-            setSelectedItem={setSelectedScore}
-          />
-          <nav className="flex items-center flex-column flex-wrap md:flex-row justify-between pt-4">
-            <span className="text-sm font-normal text-gray-500  mb-4 md:mb-0 block w-full md:inline md:w-auto">
-              Showing{" "}
-              <span className="font-semibold text-gray-900 ">
-                {currentOffset}-{currentOffset + currentLimit - 1}
-              </span>{" "}
-              of{" "}
-              <span className="font-semibold text-gray-900 ">{totalPage}</span>
-            </span>
-            <div>
-              {totalPage > 0 && (
-                <ReactPaginate
-                  pageCount={totalPage}
-                  marginPagesDisplayed={2}
-                  pageRangeDisplayed={2}
-                  onPageChange={handlePageClick}
-                  forcePage={currentPage - 1}
-                  previousLabel="Previous"
-                  nextLabel="Next"
-                  pageClassName="bg-white border border-gray-300 text-gray-500 hover:bg-gray-100 hover:text-gray-700"
-                  pageLinkClassName="flex items-center justify-center leading-tight px-3 h-8"
-                  previousClassName="text-gray-500 bg-white border border-e-0 border-gray-300 rounded-s-lg hover:bg-gray-100 hover:text-gray-700"
-                  previousLinkClassName="flex items-center justify-center px-3 h-8 ms-0 leading-tight "
-                  nextClassName="text-gray-500 bg-white border border-gray-300 rounded-e-lg hover:bg-gray-100 hover:text-gray-700"
-                  nextLinkClassName="flex items-center justify-center px-3 h-8 leading-tight"
-                  breakLabel="..."
-                  breakClassName="bg-white border border-gray-300 text-gray-500 hover:bg-gray-100 hover:text-gray-700 "
-                  breakLinkClassName="flex items-center justify-center leading-tight px-3 h-8"
-                  containerClassName="pagination"
-                  activeClassName="text-blue-600 border border-gray-300 text-blue-600 bg-blue-50 hover:bg-blue-100 hover:text-blue-700 "
-                  activeLinkClassName="flex items-center justify-center leading-tight px-3 h-8 text-white bg-blue-600 font-semibold "
-                  renderOnZeroPageCount={null}
-                  disabledClassName="opacity-50"
-                  className="inline-flex"
-                />
-              )}
-            </div>
-          </nav>
+
+      <div className="bg-slate-50 h-screen pt-6">
+        <div className="">
+          <InfiniteScroll
+            dataLength={scoreList.length} //This is important field to render the next data
+            next={handleScroll}
+            hasMore={hasMoreScorll}
+            loader={
+              <div className="flex justify-center my-10">
+                <svg
+                  aria-hidden="true"
+                  class="w-8 h-8 text-gray-200 animate-spin dark:text-gray-600 fill-blue-600"
+                  viewBox="0 0 100 101"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z"
+                    fill="currentColor"
+                  />
+                  <path
+                    d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z"
+                    fill="currentFill"
+                  />
+                </svg>
+              </div>
+            }
+            endMessage={
+              <p style={{ textAlign: "center" }}>
+                <b>Nothing more to show</b>
+              </p>
+            }
+            className="flex flex-col px-16 py-7 gap-3 "
+          >
+            {scoreList.map((item, index) => {
+              return <ScoreCard scoreObj={item} key={index} />;
+            })}
+          </InfiniteScroll>
         </div>
       </div>
     </>
   );
 };
 
-export default ViewScore;
+export default NewViewScore;
