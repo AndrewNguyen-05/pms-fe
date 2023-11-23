@@ -1,12 +1,13 @@
 import { useState, useEffect, use } from "react";
 
-const ScoreCard = ({ scoreObj, onClickView }) => {
+const ScoreCard = ({ scoreObj }) => {
   const [progressValue, setProgressValue] = useState(0);
   const [progressEndValue, setProgressEndValue] = useState(0);
   const speed = 50;
 
   useEffect(() => {
     setProgressEndValue(scoreObj.score);
+    setProgressValue(0);
   }, [scoreObj.score]);
 
   useEffect(() => {
@@ -30,7 +31,7 @@ const ScoreCard = ({ scoreObj, onClickView }) => {
   };
 
   return (
-    <div className="bg-white border-2 border-slate-100 rounded-2xl h-[100px] my-2 shadow-md ">
+    <div className="bg-white border-2 border-slate-100 rounded-2xl h-[110px] my-2 shadow-md ">
       <div className="grid grid-cols-7 px-20 py-5 h-full ">
         <div className="col-span-5 flex flex-col justify-between">
           <div className="font-bold text-blue-700">{scoreObj.projectName}</div>
@@ -57,15 +58,6 @@ const ScoreCard = ({ scoreObj, onClickView }) => {
             </div>
           </div>
         </div>
-
-        {/* <div className="col-span-2 text-gray-500 flex flex-row justify-left ">
-          <div className="bg-blue-50 text-blue-700 rounded-3xl justify-center text-center text-sm w-fit h-fit px-3 py-1">
-            {scoreObj.faculty}
-          </div>
-          <div className="bg-blue-50 text-blue-700 rounded-3xl justify-center text-center text-sm w-fit h-fit px-3 py-1">
-            {"type " + scoreObj.type}
-          </div>
-        </div> */}
         <div className="col-span-2 flex justify-between">
           <div className="flex flex-col justify-center font-semibold">
             {scoreObj.student1Name === null ? (

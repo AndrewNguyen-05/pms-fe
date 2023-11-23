@@ -18,7 +18,7 @@ const ProjectCard = ({
 
   return (
     <>
-      <div className="bg-white border-2 border-slate-100 rounded-2xl h-[100px] shadow-md flex items-center my-2 hover:bg-slate-50 cursor-pointer ">
+      <div className="bg-white border-2 border-slate-100 rounded-2xl h-[110px] shadow-md flex items-center my-2 hover:bg-slate-50 cursor-pointer ">
         <div className="grid grid-cols-12 justify-between w-full">
           <div className="col-span-1 flex items-center justify-center">
             <input
