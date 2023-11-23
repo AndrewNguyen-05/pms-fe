@@ -3,7 +3,7 @@ import React from "react";
 const ScoreCard = ({ scoreObj, onClickView }) => {
   return (
     <div className="bg-white border-2 border-slate-100 rounded-2xl h-fit shadow-md ">
-      <div className="grid grid-cols-12 px-5 py-3">
+      <div className="grid grid-cols-12 px-5 py-3 h-full ">
         <div className="col-span-4 ">
           <div className="font-semibold text-blue-700">
             {scoreObj.projectName}
@@ -23,9 +23,9 @@ const ScoreCard = ({ scoreObj, onClickView }) => {
         <div className="col-span-3 flex flex-col justify-center border-l-2 border-l-blue-500 pl-3 ">
           <div>{scoreObj.studentName + " - " + scoreObj.studentCode}</div>
         </div>
-        <div className="col-span-1 grid content-center">
-          <div className="flex flex-col justify-center text-center border-2 border-blue-500 rounded-xl h-10 ">
-            <div className="text-blue-500 font-bold text-xl	">
+        <div className="col-span-1 flex flex-col justify-center ">
+          <div className="border-2 border-blue-500 rounded-xl h-9 ">
+            <div className="text-blue-500 font-bold text-xl text-center h-full	">
               <div>{scoreObj.score}</div>
             </div>
           </div>
