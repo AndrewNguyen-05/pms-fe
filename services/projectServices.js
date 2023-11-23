@@ -10,7 +10,6 @@ const getProjectData = async (page, limit) => {
 };
 
 const searchProject = async (page, limit, search = "") => {
-  console.log(">>> search: ", search);
   const res = await axios.get(`http://localhost:8888/api/v1/project/read`, {
     params: {
       page,

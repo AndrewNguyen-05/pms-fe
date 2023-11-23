@@ -25,6 +25,17 @@
   .nav-item-actived::after {
     @apply w-[100%] bg-blue-700;
   }
+
+  .circular-progress {
+    @apply relative w-16 h-16 rounded-full bg-orange-400 grid place-items-center;
+  }
+
+  .circular-progress::before {
+    @apply absolute content-[''] h-[84%] w-[84%] bg-white rounded-full;
+  }
+}
+
+@layer components {
 }
 
 html,

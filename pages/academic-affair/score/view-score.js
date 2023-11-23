@@ -6,13 +6,16 @@ import {
   searchScore,
 } from "@/services/scoreServices";
 import { useState, useEffect } from "react";
-import ReactPaginate from "react-paginate";
-import WarningModal from "@/components/WarningModal";
 import { toast } from "react-toastify";
 import ScoreCard from "@/components/ScoreCard";
-import InfiniteScroll from "react-infinite-scroll-component";
+import Footer from "@/components/Footer";
+import SearchBar from "@/components/SearchBar";
+// import ReactPaginate from "react-paginate";
+// import WarningModal from "@/components/WarningModal";
+// import InfiniteScroll from "react-infinite-scroll-component";
+
 const NewViewScore = () => {
-  const [scoreList, setScoreList] = useState([]);
+  const [score_list, setScoreList] = useState([]);
   const [totalPage, setTotalPage] = useState(0);
   const [initialSetup, setInitialSetup] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
@@ -20,14 +23,14 @@ const NewViewScore = () => {
   const [currentOffset, setCurrentOffset] = useState(0);
   const [pageSearchValue, setPageSearchValue] = useState("");
 
-  //control the state of open modal
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  // //control the state of open modal
+  // const [isModalOpen, setIsModalOpen] = useState(false);
 
   //list of score that is selected
   const [selectedScore, setSelectedScore] = useState([]);
 
-  // scorlled to last
-  const [hasMoreScorll, setHasMoreScroll] = useState(true);
+  // // scorlled to last
+  // const [hasMoreScorll, setHasMoreScroll] = useState(true);
 
   // use effect
   useEffect(() => {
@@ -36,35 +39,44 @@ const NewViewScore = () => {
   }, [currentPage, pageSearchValue]);
 
   const setScoreListRaw = (scoreData) => {
-    console.log(">>", scoreData);
     setScoreList(
-      scoreList.concat(
-        scoreData.scores.map((row) => {
-          return {
-            projectName: row.Project.name,
-            teacher: row.Project.Teacher.User.name,
-            faculty: row.Project.faculty,
-            type: row.Project.type,
-            student1Name: row.Student1.User.name,
-            student1Code: row.Student1.studentCode,
-            student2Name: row.Student2.User.name,
-            student2Code: row.Student2.studentCode,
-            score: row.score,
-          };
-        })
-      )
+      // score_list.concat(
+      //   scoreData.scores.map((row) => {
+      //     return {
+      //       projectName: row.Project.name,
+      //       teacher: row.Project.Teacher.User.name,
+      //       faculty: row.Project.faculty,
+      //       type: row.Project.type,
+      //       student1Name: row.Student1.User.name,
+      //       student1Code: row.Student1.studentCode,
+      //       student2Name: row.Student2.User.name,
+      //       student2Code: row.Student2.studentCode,
+      //       score: row.score,
+      //     };
+      //   })
+      // )
+      scoreData.scores.map((row) => {
+        return {
+          projectName: row.Project.name,
+          teacher: row.Project.Teacher.User.name,
+          faculty: row.Project.faculty,
+          type: row.Project.type,
+          student1Name: row.Student1.User.name,
+          student1Code: row.Student1.studentCode,
+          student2Name: row.Student2.User.name,
+          student2Code: row.Student2.studentCode,
+          score: row.score,
+        };
+      })
     );
-
-    console.log(">> score list", scoreList);
   };
 
   async function getScoreData() {
-    console.log(currentPage);
-    if (initialSetup == true && currentPage > totalPage) {
-      setHasMoreScroll(false);
-      return;
-    }
-    setInitialSetup(true);
+    // if (initialSetup == true && currentPage > totalPage) {
+    //   setHasMoreScroll(false);
+    //   return;
+    // }
+    // setInitialSetup(true);
 
     let scoreData;
     if (!pageSearchValue) {
@@ -85,31 +97,31 @@ const NewViewScore = () => {
   };
 
   // btn DELETE events + modal for delete
-  const handleDeleteClick = () => {
-    if (selectedScore.length === 0) {
-      toast.error("Please select at least one score to delete");
-    } else if (selectedScore.length > 0) {
-      setIsModalOpen(true);
-    }
-  };
+  // const handleDeleteClick = () => {
+  //   if (selectedScore.length === 0) {
+  //     toast.error("Please select at least one score to delete");
+  //   } else if (selectedScore.length > 0) {
+  //     setIsModalOpen(true);
+  //   }
+  // };
 
-  const handleConfirmDelete = async () => {
-    const scoreIds = selectedScore.map((score) => score.id);
-    let response = await deleteScore(scoreIds);
-    setSelectedScore([]);
-    setIsModalOpen(false);
-    if (response && response.data && response.data.EC === 0) {
-      toast.success(response.data.EM);
-      getScoreData();
-    } else {
-      toast.error(response.data.EM);
-      getScoreData();
-    }
-  };
+  // const handleConfirmDelete = async () => {
+  //   const scoreIds = selectedScore.map((score) => score.id);
+  //   let response = await deleteScore(scoreIds);
+  //   setSelectedScore([]);
+  //   setIsModalOpen(false);
+  //   if (response && response.data && response.data.EC === 0) {
+  //     toast.success(response.data.EM);
+  //     getScoreData();
+  //   } else {
+  //     toast.error(response.data.EM);
+  //     getScoreData();
+  //   }
+  // };
 
-  const handleCloseModal = () => {
-    setIsModalOpen(false);
-  };
+  // const handleCloseModal = () => {
+  //   setIsModalOpen(false);
+  // };
 
   // search event
   const handleSearch = async (searchValue) => {
@@ -117,16 +129,56 @@ const NewViewScore = () => {
     setPageSearchValue(searchValue);
   };
 
-  const handleScroll = async (event) => {
-    setCurrentPage(currentPage + 1);
-  };
+  // const handleScroll = async (event) => {
+  //   setCurrentPage(currentPage + 1);
+  // };
 
   return (
     <>
       <Meta title={"View score"} />
+      <div className="bg-slate-50 h-full w-full overflow-auto flex flex-col justify-between pt-6">
+        <div className="flex items-start flex-shrink">
+          <div className="px-16">
+            <SearchBar
+              placeholder="Search Project..."
+              handleSearch={handleSearch}
+              handleKeyDown={(event) => {
+                if (event.key === "Enter") {
+                  handleSearch(event.target.value);
+                }
+              }}
+            />
+          </div>
+        </div>
+        <div className="px-16 py-7">
+          {score_list.map((score_item) => {
+            return (
+              <>
+                <ScoreCard scoreObj={score_item} />
+              </>
+            );
+          })}
+          <div className="flex items-center flex-row flex-wrap justify-between pt-4">
+            <span className="text-sm font-normal text-gray-500 mb-4 md:mb-0 block w-full md:inline md:w-auto">
+              Showing{" "}
+              <span className="font-semibold text-gray-900 ">
+                {currentOffset}-{currentOffset + currentLimit - 1}
+              </span>{" "}
+              of{" "}
+              <span className="font-semibold text-gray-900 ">{totalPage}</span>
+            </span>
 
-      <div className="bg-slate-50 h-screen pt-6">
-        <div className="">
+            <div className="">
+              {totalPage > 0 && (
+                <Footer
+                  totalPage={totalPage}
+                  handlePageClick={handlePageClick}
+                />
+              )}
+            </div>
+          </div>
+        </div>
+        {/* <div className="">
           <InfiniteScroll
             dataLength={scoreList.length} //This is important field to render the next data
             next={handleScroll}
@@ -162,7 +214,7 @@ const NewViewScore = () => {
               return <ScoreCard scoreObj={item} key={index} />;
             })}
           </InfiniteScroll>
-        </div>
+        </div>*/}
       </div>
     </>
   );
