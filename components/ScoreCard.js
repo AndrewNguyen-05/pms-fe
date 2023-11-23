@@ -21,7 +21,8 @@ const ScoreCard = ({ scoreObj, onClickView }) => {
         </div>
         <div className="col-span-1 "> </div>
         <div className="col-span-3 flex flex-col justify-center border-l-2 border-l-blue-500 pl-3 ">
-          <div>{scoreObj.studentName + " - " + scoreObj.studentCode}</div>
+          <div>{scoreObj.student1Name + " - " + scoreObj.student1Code}</div>
+          <div>{scoreObj.student2Name + " - " + scoreObj.student2Code}</div>
         </div>
         <div className="col-span-1 flex flex-col justify-center ">
           <div className="border-2 border-blue-500 rounded-xl h-9 ">

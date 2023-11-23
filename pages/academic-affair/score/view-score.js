@@ -45,8 +45,10 @@ const NewViewScore = () => {
             teacher: row.Project.Teacher.User.name,
             faculty: row.Project.faculty,
             type: row.Project.type,
-            studentName: row.Student.User.name,
-            studentCode: row.Student.studentCode,
+            student1Name: row.Student1.User.name,
+            student1Code: row.Student1.studentCode,
+            student2Name: row.Student2.User.name,
+            student2Code: row.Student2.studentCode,
             score: row.score,
           };
         })
