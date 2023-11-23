@@ -15,7 +15,7 @@ import ProjectCard from "@/components/ProjectCard";
 import Footer from "@/components/Footer";
 import ViewProjectModal from "@/components/ViewProjectModal";
 
-const ViewAnalysis = () => {
+const ViewProject = () => {
   const [project_list, setProjectList] = useState([]);
   const [totalPage, setTotalPage] = useState(0);
   const [currentPage, setCurrentPage] = useState(1);
@@ -191,4 +191,4 @@ const ViewAnalysis = () => {
   );
 };
 
-export default ViewAnalysis;
+export default ViewProject;

@@ -15,7 +15,7 @@ import AnnouncementCard from "@/components/AnnouncementCard";
 import ViewAnnouncementPanel from "../../../components/ViewAnnouncementPanel";
 import InfiniteScroll from "react-infinite-scroll-component";
 
-const ViewAnalysis = () => {
+const ViewAnnouncement = () => {
   const [announcementList, setAnnouncementList] = useState([]);
   const [totalPage, setTotalPage] = useState(0);
   const [currentPage, setCurrentPage] = useState(1);
@@ -190,9 +190,9 @@ const ViewAnalysis = () => {
                   </div>
                 }
                 endMessage={
-                  <p style={{ textAlign: "center" }}>
-                    <b>Nothing more to show</b>
-                  </p>
+                  <div className="font-semibold my-3 text-center">
+                    Nothing more to show
+                  </div>
                 }
                 scrollableTarget="scrollableAnnouncementDiv"
               >
@@ -227,4 +227,4 @@ const ViewAnalysis = () => {
   );
 };
 
-export default ViewAnalysis;
+export default ViewAnnouncement;
