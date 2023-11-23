@@ -3,7 +3,7 @@ import { useState, useEffect, use } from "react";
 const ScoreCard = ({ scoreObj }) => {
   const [progressValue, setProgressValue] = useState(0);
   const [progressEndValue, setProgressEndValue] = useState(0);
-  const speed = 50;
+  const speed = 10;
 
   useEffect(() => {
     setProgressEndValue(scoreObj.score);
@@ -14,7 +14,7 @@ const ScoreCard = ({ scoreObj }) => {
     const progress = setInterval(() => {
       setProgressValue((prevValue) => {
         if (prevValue < progressEndValue) {
-          return prevValue + 1;
+          return parseFloat((prevValue + 0.1).toFixed(1));
         }
         clearInterval(progress);
         return prevValue;
