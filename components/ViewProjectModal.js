@@ -52,6 +52,10 @@ const ViewProjectModal = ({ project, btnBackText, handleCloseModal }) => {
               </div>
 
               <div>
+                <span className="font-bold text-gray-700">Faculty</span>:{" "}
+                {project.faculty}
+              </div>
+              <div>
                 <span className="font-bold text-gray-700">Type</span>:{" "}
                 {project.type}
               </div>

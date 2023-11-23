@@ -69,19 +69,12 @@ const UpdateProject = () => {
     console.log(">>> check project data: ", project);
 
     console.log(">>>> check pjfaculty", projectData.faculty);
-    console.log(">>> check pj type", projectData.type);
-    console.log(">>> check teacher id:", projectData.Teacher.id);
-    console.log(">>>> check pjfaculty22:", projectFaculty);
-    console.log(">>> check pj type22:", projectType);
-    console.log(">>> check teacher id22:", teacherId);
 
-    console.log(">>> teacherId in pjdata: ", projectData.Teacher);
     setTeacherInformation({
       name: projectData.Teacher.User.name,
       email: projectData.Teacher.User.email,
       phone: projectData.Teacher.User.phone,
     });
-    console.log(">>> check teacher name:", teacherInformation.name);
     setProjectRequirement(projectData.requirement);
   };
 
@@ -105,7 +98,6 @@ const UpdateProject = () => {
       return false;
     }
 
-    console.log(">>> teacherId: ", teacherId);
     if (!teacherId) {
       toast.error("Teacher is required!");
       setObjCheckInput({ ...defaultValidInput, isValidTeacher: false });
@@ -271,12 +263,12 @@ const UpdateProject = () => {
                   }}
                 >
                   <option disabled={true}>Select falcuty</option>
-                  <option value="Công nghệ Phần Mềm">Công nghệ Phần Mềm</option>
-                  <option value="Hệ thống Thông Tin">Hệ thống Thông Tin</option>
-                  <option value="Kỹ thuật Máy Tính">Kỹ thuật Máy Tính</option>
-                  <option value="Khoa học Máy Tính">Khoa học Máy Tính</option>
-                  <option value="Khoa học và Kỹ thuật Thông Tin">
-                    Khoa học và Kỹ thuật Thông Tin
+                  <option value="Công nghệ Phần mềm">Công nghệ Phần mềm</option>
+                  <option value="Hệ thống Thông tin">Hệ thống Thông tin</option>
+                  <option value="Kỹ thuật Máy tính">Kỹ thuật Máy tính</option>
+                  <option value="Khoa học Máy tính">Khoa học Máy tính</option>
+                  <option value="Khoa học và Kỹ thuật Thông tin">
+                    Khoa học và Kỹ thuật Thông tin
                   </option>
                   <option value="MMT & Truyền thông">MMT & Truyền thông</option>
                 </select>

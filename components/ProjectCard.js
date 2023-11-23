@@ -15,10 +15,11 @@ const ProjectCard = ({
       setSelectedItem((prev) => prev.filter((p) => p.id !== project.id));
     }
   };
+
   return (
     <>
-      <div className="bg-white border-2 border-slate-100 rounded-2xl h-[90px] shadow-md flex items-center my-2 hover:bg-slate-50 cursor-pointer w-full">
-        <div className="grid grid-cols-12 justify-between w-full">
+      <div className="bg-white border-2 border-slate-100 rounded-2xl h-[90px] shadow-md flex items-center my-2 hover:bg-slate-50 cursor-pointer ">
+        <div className="grid grid-cols-12 justify-between  w-full">
           <div className="col-span-1 flex items-center justify-center">
             <input
               type="checkbox"
@@ -35,13 +36,27 @@ const ProjectCard = ({
               <div className="grid grid-cols-5 mt-2">
                 <div className="col-span-2 text-base">{project.faculty}</div>
                 <div className="col-span-3 text-sm flex gap-4">
-                  <div className="bg-blue-50 text-blue-700 rounded-3xl flex justify-center items-center col-span-1 py-1 px-3">
-                    Type {project.type}
+                  <div>
+                    {project.type === "1" ? (
+                      <div className="bg-blue-200 text-blue-700 rounded-3xl flex justify-center items-center col-span-1 py-1 px-3">
+                        Type 1
+                      </div>
+                    ) : (
+                      <div className="bg-sky-100 text-sky-700 rounded-3xl flex justify-center items-center col-span-1 py-1 px-3">
+                        Type 2
+                      </div>
+                    )}
                   </div>
-                  <div className="bg-blue-50 text-blue-700 rounded-3xl flex justify-center items-center col-span-1 py-1 px-3">
-                    {project.registerStatus === 1
-                      ? "Registered"
-                      : "Unregistered"}
+                  <div>
+                    {project.registerStatus === 1 ? (
+                      <div className="bg-blue-50 text-blue-700 rounded-3xl flex justify-center items-center col-span-1 py-1 px-3">
+                        Registered
+                      </div>
+                    ) : (
+                      <div className="bg-red-50 text-red-700 rounded-3xl flex justify-center items-center col-span-1 py-1 px-3">
+                        Unregistered
+                      </div>
+                    )}
                   </div>
                 </div>
               </div>
