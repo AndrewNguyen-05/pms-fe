@@ -37,7 +37,6 @@ const ViewAnnouncement = () => {
 
   useEffect(() => {
     getAnnouncementData();
-    console.log(">>> check announcement:", announcementList);
     setCurrentOffset((currentPage - 1) * currentLimit + 1);
   }, [currentPage, pageSearchValue]);
 
@@ -96,6 +95,7 @@ const ViewAnnouncement = () => {
     setIsModalOpen(false);
     if (response && response.data && response.data.EC === 0) {
       toast.success(response.data.EM);
+      window.location.reload();
       getAnnouncementData();
     } else {
       toast.error(response.data.EM);
