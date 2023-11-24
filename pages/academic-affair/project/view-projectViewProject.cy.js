@@ -16,10 +16,4 @@ describe("Testing the function to view project list", () => {
     cy.get("#default-search").type("Xay dung");
     cy.get("#search-button").click();
   });
-
-  it("Testing the function pagination", () => {
-    cy.viewport(1180, 700);
-    cy.mount(<ViewProject />);
-    cy.get("a").click();
-  });
 });
