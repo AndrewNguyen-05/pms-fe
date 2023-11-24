@@ -1,10 +1,10 @@
-import Meta from "@/components/Meta";
+import Meta from "@/components/header/Meta";
 import { postCreateProject } from "@/services/projectServices";
 import { getTeacherData } from "@/services/teacherServices";
 import { useState, useEffect } from "react";
 import { toast } from "react-toastify";
 import { useRouter } from "next/router";
-import WarningModal from "@/components/WarningModal";
+import WarningModal from "@/components/modals/WarningModal";
 
 const CreateProject = () => {
   const [teacher_list, setTeacherList] = useState([]);

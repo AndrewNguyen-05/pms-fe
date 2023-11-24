@@ -31,8 +31,8 @@ const ScoreCard = ({ scoreObj }) => {
   };
 
   return (
-    <div className="bg-white border-2 border-slate-100 rounded-2xl h-[110px] my-2 shadow-md ">
-      <div className="grid grid-cols-7 px-20 py-5 h-full ">
+    <div className="bg-white border-2 border-slate-100 rounded-2xl h-28 my-2 shadow-md ">
+      <div className="grid grid-cols-7 px-16 py-5 h-full ">
         <div className="col-span-5 flex flex-col justify-between">
           <div className="font-bold text-blue-700">{scoreObj.projectName}</div>
           <div className="grid grid-cols-5 text-base my-1">

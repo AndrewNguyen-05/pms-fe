@@ -1,8 +1,8 @@
 import React, { use } from "react";
-import Meta from "@/components/Meta";
-import ButtonCreate from "@/components/ButtonCreate";
-import ButtonDelete from "@/components/ButtonDelete";
-import TableViewItem from "@/components/TableViewItem";
+import Meta from "@/components/header/Meta";
+import ButtonCreate from "@/components/buttons/ButtonCreate";
+import ButtonDelete from "@/components/buttons/ButtonDelete";
+import TableViewItem from "@/components/views/TableViewItem";
 import SearchBar from "@/components/SearchBar";
 import {
   deleteScore,
@@ -11,7 +11,7 @@ import {
 } from "@/services/scoreServices";
 import { useState, useEffect } from "react";
 import ReactPaginate from "react-paginate";
-import WarningModal from "@/components/WarningModal";
+import WarningModal from "@/components/modals/WarningModal";
 import { toast } from "react-toastify";
 
 const ViewScore = () => {

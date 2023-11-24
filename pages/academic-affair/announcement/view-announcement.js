@@ -1,7 +1,7 @@
 import React, { use } from "react";
-import Meta from "@/components/Meta";
-import ButtonCreate from "@/components/ButtonCreate";
-import ButtonDelete from "@/components/ButtonDelete";
+import Meta from "@/components/header/Meta";
+import ButtonCreate from "@/components/buttons/ButtonCreate";
+import ButtonDelete from "@/components/buttons/ButtonDelete";
 import SearchBar from "@/components/SearchBar";
 import {
   deleteAnnouncement,
@@ -9,10 +9,10 @@ import {
   searchAnnouncement,
 } from "@/services/announcementServices";
 import { useState, useEffect } from "react";
-import WarningModal from "@/components/WarningModal";
+import WarningModal from "@/components/modals/WarningModal";
 import { toast } from "react-toastify";
-import AnnouncementCard from "@/components/AnnouncementCard";
-import ViewAnnouncementPanel from "../../../components/ViewAnnouncementPanel";
+import AnnouncementCard from "@/components/cards/AnnouncementCard";
+import ViewAnnouncementPanel from "../../../components/views/ViewAnnouncementPanel";
 import InfiniteScroll from "react-infinite-scroll-component";
 
 const ViewAnnouncement = () => {

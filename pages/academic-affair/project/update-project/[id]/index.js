@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import Meta from "@/components/Meta";
+import Meta from "@/components/header/Meta";
 import { useRouter } from "next/router";
 import { toast } from "react-toastify";
 import { getTeacherData } from "@/services/teacherServices";

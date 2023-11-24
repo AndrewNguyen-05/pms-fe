@@ -1,5 +1,5 @@
 import React from "react";
-import Meta from "@/components/Meta";
+import Meta from "@/components/header/Meta";
 import {
   deleteScore,
   getScoreList,
@@ -7,8 +7,8 @@ import {
 } from "@/services/scoreServices";
 import { useState, useEffect } from "react";
 import { toast } from "react-toastify";
-import ScoreCard from "@/components/ScoreCard";
-import Footer from "@/components/Footer";
+import ScoreCard from "@/components/cards/ScoreCard";
+import Footer from "@/components/footer/Footer";
 import SearchBar from "@/components/SearchBar";
 
 const NewViewScore = () => {

@@ -33,6 +33,7 @@ const SearchBar = ({ placeholder, handleSearch, handleKeyDown }) => {
         />
         <button
           type="submit"
+          id="search-button"
           className="text-white absolute px-4 py-2 end-2.5 bottom-2 bg-blue-700 focus:ring-2 focus:outline-none focus:ring-blue-300  hover:bg-blue-800 font-medium rounded-3xl text-sm"
           onClick={() => {
             handleSearch(searchValue);

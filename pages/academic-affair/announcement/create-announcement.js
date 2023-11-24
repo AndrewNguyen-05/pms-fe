@@ -1,10 +1,10 @@
 import React from "react";
-import WarningModal from "@/components/WarningModal";
+import WarningModal from "@/components/modals/WarningModal";
 import { useState } from "react";
 import { useRouter } from "next/router";
 import { postCreateAnnouncement } from "@/services/announcementServices";
 import { toast } from "react-toastify";
-import Meta from "@/components/Meta";
+import Meta from "@/components/header/Meta";
 
 const CreateAnnouncement = () => {
   const defaultValidInput = {

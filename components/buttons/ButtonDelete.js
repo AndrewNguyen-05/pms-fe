@@ -3,6 +3,7 @@ import Link from "next/link";
 const ButtonDelete = ({ text, onClick }) => {
   return (
     <button
+      id="delete-button"
       type="button"
       className="w-[150px] border-[1px] border-red-400 text-red-600 bg-white hover:text-white hover:bg-red-600 focus:ring-1 focus:ring-red-200 font-medium rounded-3xl text-sm px-5 py-2.5 focus:outline-none flex items-center justify-center gap-3"
       onClick={() => {

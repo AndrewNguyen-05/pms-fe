@@ -1,19 +1,19 @@
 import { useState, useEffect } from "react";
-import Meta from "@/components/Meta";
+import Meta from "@/components/header/Meta";
 import {
   getProjectData,
   deleteProject,
   searchProject,
 } from "../../../services/projectServices";
-import ButtonCreate from "@/components/ButtonCreate";
+import ButtonCreate from "@/components/buttons/ButtonCreate";
 import {} from "../../../services/projectServices";
 import SearchBar from "@/components/SearchBar";
 import { toast } from "react-toastify";
-import WarningModal from "@/components/WarningModal";
-import ButtonDelete from "@/components/ButtonDelete";
-import ProjectCard from "@/components/ProjectCard";
-import Footer from "@/components/Footer";
-import ViewProjectModal from "@/components/ViewProjectModal";
+import WarningModal from "@/components/modals/WarningModal";
+import ButtonDelete from "@/components/buttons/ButtonDelete";
+import ProjectCard from "@/components/cards/ProjectCard";
+import Footer from "@/components/footer/Footer";
+import ViewProjectModal from "@/components/modals/ViewProjectModal";
 
 const ViewProject = () => {
   const [project_list, setProjectList] = useState([]);
