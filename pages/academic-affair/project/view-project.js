@@ -152,7 +152,7 @@ const ViewProject = () => {
         <div className="px-16 py-7">
           {project_list.map((project_item) => {
             return (
-              <>
+              <div key={project_item.id}>
                 <ProjectCard
                   project={project_item}
                   selectedItem={selectedProject}
@@ -163,7 +163,7 @@ const ViewProject = () => {
                     setSelectedProjectForModal(project_item);
                   }}
                 />
-              </>
+              </div>
             );
           })}
           <div className="flex items-center flex-row flex-wrap justify-between pt-4">
