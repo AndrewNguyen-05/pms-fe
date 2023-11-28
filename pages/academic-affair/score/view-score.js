@@ -29,6 +29,7 @@ const NewViewScore = () => {
     setScoreList(
       scoreData.scores.map((row) => {
         return {
+          id: row.id,
           projectName: row.Project.name,
           teacher: row.Project.Teacher.User.name,
           faculty: row.Project.faculty,
@@ -88,9 +89,9 @@ const NewViewScore = () => {
         <div className="px-16 py-7">
           {score_list.map((score_item) => {
             return (
-              <>
+              <div key={score_item.id}>
                 <ScoreCard scoreObj={score_item} />
-              </>
+              </div>
             );
           })}
           <div className="flex items-center flex-row flex-wrap justify-between pt-4">
