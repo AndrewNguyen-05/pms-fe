@@ -173,7 +173,6 @@ const ViewAnalysis = () => {
           <div className="w-full items-center rounded-lg shadow-lg bg-white flex justify-between">
             <button
               class="flex items-center justify-center h-full px-4 cursor-pointer group focus:outline-none"
-              data-carousel-prev
               onClick={handlePrev}
             >
               <span class="inline-flex items-center justify-center w-10 h-10 rounded-full bg-slate-400  group-hover:bg-slate-300 group-focus:ring-4 group-focus:ring-slate-200  group-focus:outline-none">
@@ -197,17 +196,13 @@ const ViewAnalysis = () => {
             </button>
             <div class="">
               <div
-                className={
-                  activeIndex === 0
-                    ? "duration-700 ease-in-out overflow-auto"
-                    : "hidden"
-                }
+                className={activeIndex === 0 ? "overflow-auto px-1" : "hidden"}
               >
                 <div className="font-semibold text-2xl ml-10 my-5">
                   Number of student and project
                 </div>
                 <BarChart
-                  width={1330}
+                  width={1320}
                   height={470}
                   data={numberOfStudentAndProject}
                   margin={{
@@ -216,7 +211,7 @@ const ViewAnalysis = () => {
                     left: 0,
                     bottom: 100,
                   }}
-                  className="bg-white rounded-lg"
+                  className="bg-white rounded-lg duration-700 ease-in-out opacity-100 "
                 >
                   <CartesianGrid strokeDasharray="3 3" />
                   <XAxis
@@ -228,11 +223,7 @@ const ViewAnalysis = () => {
                   <YAxis yAxisId="left" orientation="left" stroke="#0ea5e9" />
                   <YAxis yAxisId="right" orientation="right" stroke="#f59e0b" />
                   <Tooltip />
-                  <Legend
-                    layout="vertical"
-                    verticalAlign="middle"
-                    align="right"
-                  />
+                  <Legend layout="vertical" verticalAlign="top" align="right" />
                   <Bar yAxisId="left" dataKey="Project" fill="#93c5fd">
                     <LabelList
                       dataKey="Project"
@@ -251,9 +242,7 @@ const ViewAnalysis = () => {
                 </BarChart>
               </div>
               <div
-                className={
-                  activeIndex === 1 ? "duration-700 ease-in-out p-1" : "hidden"
-                }
+                className={activeIndex === 1 ? "overflow-auto px-1" : "hidden"}
               >
                 <div className="font-semibold text-2xl ml-10 my-5">
                   Register status
@@ -268,6 +257,7 @@ const ViewAnalysis = () => {
                     left: 0,
                     bottom: 100,
                   }}
+                  className="duration-700 ease-in-out opacity-100 bg-white"
                 >
                   <CartesianGrid strokeDasharray="3 3" />
                   <XAxis
@@ -278,11 +268,7 @@ const ViewAnalysis = () => {
                   />
                   <YAxis />
                   <Tooltip />
-                  <Legend
-                    layout="vertical"
-                    verticalAlign="middle"
-                    align="right"
-                  />
+                  <Legend layout="vertical" verticalAlign="top" align="right" />
                   <Bar dataKey="Registered" stackId="a" fill="#facc15">
                     <LabelList
                       dataKey="Registered"
