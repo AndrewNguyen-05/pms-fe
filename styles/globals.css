@@ -41,6 +41,14 @@
   .nav-default {
     @apply py-2 px-3 text-gray-300 rounded cursor-default;
   }
+
+  .main-page-card {
+    @apply bg-white w-[800px] flex flex-col rounded-lg p-2 m-4 shadow-lg;
+  }
+
+  .main-page-card-list {
+    @apply list-inside text-base m-5 flex flex-col gap-2;
+  }
 }
 
 .btn-create {

@@ -6,7 +6,7 @@ const NavItem = ({ name, href, active }) => {
       <Link
         href={href}
         className={
-          "nav-item mx-5 bg-blue-700 rounded md:bg-transparent text-black hover:text-blue-400 focus:text-blue-700 " +
+          "nav-item mx-5 rounded bg-transparent text-black hover:text-blue-400 focus:text-blue-700 " +
           (active ? "nav-item-actived" : "")
         }
       >
