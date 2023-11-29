@@ -16,6 +16,8 @@ import {
   getTeacherWithMostStudent,
   getProjectRegisterStatus,
   getTheMostRegisteredTeacher,
+  getAverageScore,
+  getHighestAverageScore,
 } from "@/services/analysisServices";
 import AnalysisCard from "@/components/cards/AnalysisCard";
 import Link from "next/link";
@@ -30,6 +32,8 @@ const ViewAnalysis = () => {
   const [teacherWithMostStudent, setTeacherWithMostStudent] = useState({});
   const [projectStatus, setProjectStatus] = useState([]);
   const [mostRegisteredTeacher, setMostRegisteredTeacher] = useState({});
+  const [averageScore, setAverageScore] = useState([]);
+  const [highestAverageScore, setHighestAverageScore] = useState({});
 
   const handlePrev = () => {
     setActiveIndex((prevIndex) => (prevIndex > 0 ? prevIndex - 1 : 2));
@@ -59,6 +63,12 @@ const ViewAnalysis = () => {
 
     let resMostRegisteredTeacher = await getTheMostRegisteredTeacher();
     setMostRegisteredTeacher(resMostRegisteredTeacher);
+
+    let resAverageScore = await getAverageScore();
+    setAverageScore(resAverageScore);
+
+    let resHighestAverageScore = await getHighestAverageScore();
+    setHighestAverageScore(resHighestAverageScore);
   };
 
   return (
@@ -147,7 +157,7 @@ const ViewAnalysis = () => {
           value={`${mostRegisteredTeacher["Registered"]} projects`}
         />
         <AnalysisCard
-          title="Teacher has the least student"
+          title="Teacher has the highest average score"
           icon={
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -164,8 +174,8 @@ const ViewAnalysis = () => {
               />
             </svg>
           }
-          name={teacherWithMostProject["Teacher.User.name"]}
-          value={`${teacherWithMostProject["projectCount"]} projects`}
+          name={highestAverageScore.teacherName}
+          value={`${highestAverageScore["averageScore"]} / 10`}
         />
       </div>
       {domLoaded && (
@@ -290,9 +300,39 @@ const ViewAnalysis = () => {
                   activeIndex === 2 ? "duration-700 ease-in-out p-1" : "hidden"
                 }
               >
-                <div className="bg-white h-[470px] font-bold text-3xl flex justify-center items-center">
-                  Underconstruction!
+                <div className="font-semibold text-2xl ml-10 my-5">
+                  Average score
                 </div>
+                <BarChart
+                  width={1300}
+                  height={470}
+                  data={averageScore}
+                  margin={{
+                    top: 25,
+                    right: 20,
+                    left: 0,
+                    bottom: 100,
+                  }}
+                  className="duration-700 ease-in-out opacity-100 bg-white"
+                >
+                  <CartesianGrid strokeDasharray="3 3" />
+                  <XAxis
+                    dataKey="Teacher's name"
+                    angle={50}
+                    tickMargin={50}
+                    className="font-semibold"
+                  />
+                  <YAxis />
+                  <Tooltip />
+                  <Legend layout="vertical" verticalAlign="top" align="right" />
+                  <Bar dataKey="Average score" stackId="a" fill="#93c5fd">
+                    <LabelList
+                      dataKey="Average score"
+                      position="top"
+                      className="text-green-200 text-lg font-semibold"
+                    />
+                  </Bar>
+                </BarChart>
               </div>
             </div>
             <button

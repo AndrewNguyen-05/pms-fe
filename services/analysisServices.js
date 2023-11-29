@@ -45,10 +45,30 @@ const getTheMostRegisteredTeacher = async () => {
   }
 };
 
+const getAverageScore = async () => {
+  const res = await axios.get(
+    "http://localhost:8888/api/v1/analysis/readTeacherAverageScore"
+  );
+  if (res && res.data.DT && res.data.EC === 0) {
+    return res.data.DT;
+  }
+};
+
+const getHighestAverageScore = async () => {
+  const res = await axios.get(
+    "http://localhost:8888/api/v1/analysis/readHighestAverageScore"
+  );
+  if (res && res.data.DT && res.data.EC === 0) {
+    return res.data.DT;
+  }
+};
+
 export {
   getStudentAndProject,
   getTeacherWithMostProject,
   getTeacherWithMostStudent,
   getProjectRegisterStatus,
   getTheMostRegisteredTeacher,
+  getAverageScore,
+  getHighestAverageScore,
 };

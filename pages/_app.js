@@ -3,7 +3,6 @@ import Layout from "@/components/Layout";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Roboto } from "next/font/google";
-import { SessionProvider } from "next-auth/react";
 
 const roboto = Roboto({
   weight: "400",
@@ -15,22 +14,20 @@ export default function App({
   pageProps: { session, ...pageProps },
 }) {
   return (
-    <SessionProvider session={session}>
-      <Layout className={roboto.className}>
-        <Component {...pageProps} />
-        <ToastContainer
-          position="bottom-center"
-          autoClose={5000}
-          hideProgressBar={false}
-          newestOnTop={false}
-          closeOnClick
-          rtl={false}
-          pauseOnFocusLoss
-          draggable
-          pauseOnHover
-          theme="light"
-        />
-      </Layout>
-    </SessionProvider>
+    <Layout className={roboto.className}>
+      <Component {...pageProps} />
+      <ToastContainer
+        position="bottom-center"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="light"
+      />
+    </Layout>
   );
 }
