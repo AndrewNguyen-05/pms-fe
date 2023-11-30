@@ -12,6 +12,7 @@
     "axios": "^1.6.2",
     "eslint": "8.53.0",
     "eslint-config-next": "14.0.2",
+    "jsonwebtoken": "^9.0.2",
     "lodash": "^4.17.21",
     "next": "^13.2.3",
     "next-auth": "^4.24.5",

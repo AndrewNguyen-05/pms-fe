@@ -1,9 +1,10 @@
 import NextAuth from "next-auth/next";
 import CredentialsProvider from "next-auth/providers/credentials";
+import jwt from "jsonwebtoken";
 
 async function refreshAccessToken(token) {
   try {
-    console.log(token);
+    console.log("refreshing: >>> ", token);
     const res = await fetch(process.env.BACKEND_API_URL + "/token", {
       method: "POST",
       headers: {
@@ -19,10 +20,16 @@ async function refreshAccessToken(token) {
       throw data;
     }
 
+    const decoded = jwt.verify(
+      data.DT.accessToken,
+      process.env.ACCESS_TOKEN_SECRET
+    );
+
     return {
       ...token,
       accessToken: data.accessToken,
-      accessTokenExpires: data.exp,
+      backEndExp: decoded.exp,
+      backEndIat: decoded.iat,
       refreshToken: data.refreshToken,
     };
   } catch (error) {
@@ -74,20 +81,30 @@ export const authOptions = {
         const data = await res.json();
         if (data.EC !== 0) return null;
         console.log("Data", data.DT);
-        return { ...data.DT };
+
+        const decoded = jwt.verify(
+          data.DT.accessToken,
+          process.env.ACCESS_TOKEN_SECRET
+        );
+        return { ...data.DT, iat: decoded.iat, exp: decoded.exp };
       },
     }),
   ],
   callbacks: {
     jwt: async ({ token, user }) => {
-      console.log(`token before`, token);
+      console.log(`token before`, user);
       if (user) {
         token.userId = user.id;
         token.accessToken = user.accessToken;
         token.refreshToken = user.refreshToken;
+        token.backEndIat = user.iat;
+        token.backEndExp = user.exp;
+      }
+      if (Date.now() < token.backEndExp) {
+        return token;
       }
       console.log(`token after`, token);
-      return token;
+      return refreshAccessToken(token);
     },
     session: async ({ session, token, user }) => {
       if (token) {

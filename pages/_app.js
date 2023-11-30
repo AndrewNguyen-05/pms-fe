@@ -16,7 +16,7 @@ export default function App({
   pageProps: { session, ...pageProps },
 }) {
   return (
-    <AuthProvider session={session}>
+    <SessionProvider session={session}>
       <Layout className={roboto.className}>
         <Component {...pageProps} />
         <ToastContainer
@@ -32,6 +32,6 @@ export default function App({
           theme="light"
         />
       </Layout>
-    </AuthProvider>
+    </SessionProvider>
   );
 }
