@@ -1,3 +1,4 @@
+import AuthProvider from "./auth/Provider";
 import Navbar from "./header/Navbar";
 
 const Layout = ({ children }) => {
