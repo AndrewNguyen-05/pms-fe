@@ -4,7 +4,7 @@ import jwt from "jsonwebtoken";
 
 async function refreshAccessToken(token) {
   try {
-    console.log("refreshing: >>> ", token);
+    console.log("refreshing: refresh token >>> ", token.refreshToken);
     const res = await fetch(process.env.BACKEND_API_URL + "/token", {
       method: "POST",
       headers: {
@@ -16,6 +16,8 @@ async function refreshAccessToken(token) {
 
     const data = await res.json();
 
+    console.log(data);
+
     if (!res.ok) {
       throw data;
     }
@@ -25,12 +27,17 @@ async function refreshAccessToken(token) {
       process.env.ACCESS_TOKEN_SECRET
     );
 
+    token.accessToken = data.DT.accessToken;
+    token.refreshToken = data.DT.refreshToken;
+    token.backEndExp = decoded.exp;
+    token.backEndIat = decoded.iat;
+
     return {
       ...token,
-      accessToken: data.accessToken,
+      accessToken: data.DT.accessToken,
+      refreshToken: data.DT.refreshToken,
       backEndExp: decoded.exp,
       backEndIat: decoded.iat,
-      refreshToken: data.refreshToken,
     };
   } catch (error) {
     console.log(error);
@@ -47,6 +54,7 @@ export const authOptions = {
     strategy: "jwt",
     maxAge: 1 * 12 * 60 * 60, // 12 hours
   },
+  secret: process.env.AUTH_SECRET,
   providers: [
     CredentialsProvider({
       name: "credentials",
@@ -62,7 +70,7 @@ export const authOptions = {
           username: credentials.username,
           password: credentials.password,
         };
-        console.log("im here");
+        console.log(">>>>> Authorized");
 
         const res = await fetch(process.env.BACKEND_API_URL + "/login", {
           method: "POST",
@@ -92,7 +100,7 @@ export const authOptions = {
   ],
   callbacks: {
     jwt: async ({ token, user }) => {
-      console.log(`token before`, user);
+      //console.log(`token before`, user);
       if (user) {
         token.userId = user.id;
         token.accessToken = user.accessToken;
@@ -103,8 +111,13 @@ export const authOptions = {
       if (Date.now() < token.backEndExp) {
         return token;
       }
-      console.log(`token after`, token);
-      return refreshAccessToken(token);
+      let temp = await refreshAccessToken(token);
+      token.accessToken = temp.accessToken;
+      token.refreshToken = temp.refreshToken;
+      token.backEndIat = temp.backEndIat;
+      token.backEndExp = temp.backEndExp;
+      console.log(`token after`, token.refreshToken, "\n");
+      return token;
     },
     session: async ({ session, token, user }) => {
       if (token) {
