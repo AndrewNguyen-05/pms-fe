@@ -1,19 +1,41 @@
-import { signOut, useSession } from "next-auth/react";
+import { signIn, signOut, useSession } from "next-auth/react";
 import { useRouter } from "next/router";
-import React from "react";
+import React, { useEffect } from "react";
 
 function AuthProvider({ children }) {
-  const { data: session } = useSession();
+  const { data: session, update } = useSession();
   const router = useRouter();
 
-  useEffect(() => {
+  const waitUpdate = async () => {
+    console.log("im in");
+    // check valid session
+    await update();
     // check if the error has occurred
-    if (session?.user.error === "invalid-version") {
+    if (session?.user.error === "RefreshAccessTokenError") {
       // Sign out here
       signOut();
     }
-  }, [session?.user.error, router]);
-  return <>{children}</>;
+  };
+
+  useEffect(() => {
+    waitUpdate();
+  }, [router]);
+
+  if (session) {
+    return (
+      <>
+        <button onClick={() => update()}>update</button>
+        <>{children}</>
+      </>
+    );
+  }
+
+  return (
+    <>
+      Not signed in <br />
+      <button onClick={() => signIn()}>Sign in</button>
+    </>
+  );
 }
 
 export default AuthProvider;

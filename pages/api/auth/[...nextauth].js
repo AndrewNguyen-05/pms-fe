@@ -4,7 +4,6 @@ import jwt from "jsonwebtoken";
 
 async function refreshAccessToken(token) {
   try {
-    console.log("refreshing: refresh token >>> ", token.refreshToken);
     const res = await fetch(process.env.BACKEND_API_URL + "/token", {
       method: "POST",
       headers: {
@@ -99,24 +98,31 @@ export const authOptions = {
     }),
   ],
   callbacks: {
-    jwt: async ({ token, user }) => {
-      //console.log(`token before`, user);
+    jwt: async ({ token, user, trigger }) => {
+      console.log("------ jwt callback-----");
+      console.log(`>>> token before \n`, token);
+      console.log(`>>> user before \n`, user);
+      console.log(`>>> trigger before: `, trigger);
+      if (trigger === "update") {
+        if (Date.now() / 1000 < token.backEndExp) {
+          console.log(Date.now() / 1000);
+          console.log(token.backEndExp);
+          return token;
+        }
+        let temp = await refreshAccessToken(token);
+        token.accessToken = temp.accessToken;
+        token.refreshToken = temp.refreshToken;
+        token.backEndIat = temp.backEndIat;
+        token.backEndExp = temp.backEndExp;
+      }
       if (user) {
         token.userId = user.id;
         token.accessToken = user.accessToken;
         token.refreshToken = user.refreshToken;
         token.backEndIat = user.iat;
         token.backEndExp = user.exp;
+        console.log(">>> token anew");
       }
-      if (Date.now() < token.backEndExp) {
-        return token;
-      }
-      let temp = await refreshAccessToken(token);
-      token.accessToken = temp.accessToken;
-      token.refreshToken = temp.refreshToken;
-      token.backEndIat = temp.backEndIat;
-      token.backEndExp = temp.backEndExp;
-      console.log(`token after`, token.refreshToken, "\n");
       return token;
     },
     session: async ({ session, token, user }) => {
