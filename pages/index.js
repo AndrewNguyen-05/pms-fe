@@ -13,28 +13,28 @@ export default function Home() {
         <div className="font-bold text-xl mt-3 text-white bg-gradient-to-r from-indigo-500 from-10% via-sky-500 via-30% to-emerald-500 to-90% p-2 rounded-lg">
           TRANG HƯỚNG DẪN WEBSITE QUẢN LÝ ĐỒ ÁN 1, 2
         </div>
-        <div className="main-page-card">
+        <div data-test="main-page-card" className="main-page-card">
           <div className="font-bold text-lg text-center text-blue-600 ">
             CÁC CHỨC NĂNG CHÍNH CỦA WEB
           </div>
           <div>
             <ol className="main-page-card-list list-decimal font-semibold ">
               <li className="hover:text-gray-500 cursor-pointer">
-                <Link href="#project">Quản lý danh sách đồ án</Link>
+                <Link data-test="project-link" href="#project">Quản lý danh sách đồ án</Link>
               </li>
               <li className="hover:text-gray-500 cursor-pointer">
-                <Link href="#announcement">Quản lý danh sách thông báo</Link>
+                <Link data-test="announcement-link" href="#announcement">Quản lý danh sách thông báo</Link>
               </li>
               <li className="hover:text-gray-500 cursor-pointer">
-                <Link href="#score">Quản lý điểm số sinh viên</Link>
+                <Link data-test="score-link" href="#score">Quản lý điểm số sinh viên</Link>
               </li>
               <li className="hover:text-gray-500 cursor-pointer">
-                <Link href="#analysis">Quản lý báo cáo, thống kê </Link>
+                <Link data-test="analysis-link" href="#analysis">Quản lý báo cáo, thống kê </Link>
               </li>
             </ol>
           </div>
         </div>
-        <div className="main-page-card">
+        <div data-test="project-management-card" className="main-page-card">
           <div
             className="font-bold text-lg text-center text-blue-600"
             id="project"
@@ -61,7 +61,7 @@ export default function Home() {
             </ul>
           </div>
         </div>
-        <div className="main-page-card">
+        <div data-test="announcement-management-card" className="main-page-card">
           <div
             className="font-bold text-lg text-center text-blue-600"
             id="announcement"
@@ -93,7 +93,7 @@ export default function Home() {
             </ul>
           </div>
         </div>
-        <div className="main-page-card">
+        <div data-test="score-management-card" className="main-page-card">
           <div
             className="font-bold text-lg text-center text-blue-600"
             id="score"
@@ -109,7 +109,7 @@ export default function Home() {
             </ul>
           </div>
         </div>
-        <div className="main-page-card">
+        <div data-test="analysis-management-card" className="main-page-card">
           <div
             className="font-bold text-lg text-center text-blue-600"
             id="analysis"
