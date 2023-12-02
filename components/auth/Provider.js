@@ -14,15 +14,6 @@ function AuthProvider({ children }) {
   }, [session]);
 
   useEffect(() => {
-    const visibilityHandler = () =>
-      document.visibilityState === "visible" && update();
-
-    window.addEventListener("visibilitychange", visibilityHandler, false);
-    return () =>
-      window.removeEventListener("visibilitychange", visibilityHandler, false);
-  }, [update]);
-
-  useEffect(() => {
     const waitUpdate = () => {
       console.log("im in");
       // check valid session
@@ -40,9 +31,12 @@ function AuthProvider({ children }) {
         router.push("/auth/signin");
       }
     }
-  }, [router, session]);
+  }, [session]);
 
-  if (session || router.asPath === "/auth/signin") {
+  if (
+    (session && router.asPath !== "/auth/signin") ||
+    (!session && router.asPath === "/auth/signin")
+  ) {
     return <>{children}</>;
   }
   return <></>;

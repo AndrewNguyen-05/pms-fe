@@ -51,7 +51,7 @@ async function refreshAccessToken(token) {
 export const authOptions = {
   session: {
     strategy: "jwt",
-    maxAge: 1 * 12 * 60 * 60, // 12 hours
+    maxAge: 3 * 24 * 60 * 60, // 72 hours
   },
   secret: process.env.AUTH_SECRET,
   providers: [

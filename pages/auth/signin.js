@@ -5,8 +5,8 @@ export default function SignInPage() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
-  const handleLoginButton = async () => {
-    const result = await signIn("credentials", {
+  const handleLoginButton = () => {
+    const result = signIn("credentials", {
       username: username,
       password: password,
       redirect: true,
@@ -44,7 +44,9 @@ export default function SignInPage() {
             <button
               className=" bg-blue-700 text-white rounded-md w-full mt-5"
               type="submit"
-              onClick={handleLoginButton}
+              onClick={() => {
+                handleLoginButton();
+              }}
             >
               Sign in
             </button>

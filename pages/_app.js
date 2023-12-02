@@ -4,7 +4,6 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Roboto } from "next/font/google";
 import { SessionProvider } from "next-auth/react";
-import AuthProvider from "@/components/auth/Provider";
 
 const roboto = Roboto({
   weight: "400",
