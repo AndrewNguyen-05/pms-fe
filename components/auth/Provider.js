@@ -3,7 +3,7 @@ import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
 
 function AuthProvider({ children }) {
-  const { data: session, update } = useSession();
+  const { data: session, update, loading } = useSession();
   const router = useRouter();
 
   useEffect(() => {
@@ -31,11 +31,21 @@ function AuthProvider({ children }) {
     waitUpdate();
   }, [router.asPath]);
 
-  if (session) {
+  useEffect(() => {
+    if (!loading) {
+      if (session && router.asPath === "/auth/signin") {
+        router.push("/");
+      }
+      if (!session && router.asPath !== "/auth/signin") {
+        router.push("/auth/signin");
+      }
+    }
+  }, [router, session]);
+
+  if (session || router.asPath === "/auth/signin") {
     return <>{children}</>;
-  } else {
-    return <>Unlogged in</>;
   }
+  return <></>;
 }
 
 export default AuthProvider;
