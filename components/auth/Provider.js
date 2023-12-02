@@ -1,41 +1,41 @@
 import { signIn, signOut, useSession } from "next-auth/react";
 import { useRouter } from "next/router";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 
 function AuthProvider({ children }) {
   const { data: session, update } = useSession();
   const router = useRouter();
 
-  const waitUpdate = async () => {
-    console.log("im in");
-    // check valid session
-    await update();
+  useEffect(() => {
     // check if the error has occurred
-    if (session?.user.error === "RefreshAccessTokenError") {
-      // Sign out here
+    if (session?.error === "RefreshAccessTokenError") {
       signOut();
     }
-  };
+  }, [session]);
 
   useEffect(() => {
+    const visibilityHandler = () =>
+      document.visibilityState === "visible" && update();
+
+    window.addEventListener("visibilitychange", visibilityHandler, false);
+    return () =>
+      window.removeEventListener("visibilitychange", visibilityHandler, false);
+  }, [update]);
+
+  useEffect(() => {
+    const waitUpdate = () => {
+      console.log("im in");
+      // check valid session
+      update();
+    };
     waitUpdate();
-  }, [router]);
+  }, [router.asPath]);
 
   if (session) {
-    return (
-      <>
-        <button onClick={() => update()}>update</button>
-        <>{children}</>
-      </>
-    );
+    return <>{children}</>;
+  } else {
+    return <>Unlogged in</>;
   }
-
-  return (
-    <>
-      Not signed in <br />
-      <button onClick={() => signIn()}>Sign in</button>
-    </>
-  );
 }
 
 export default AuthProvider;

@@ -2,9 +2,11 @@ import Link from "next/link";
 import NavItem from "./Navitem";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
+import { signOut, useSession } from "next-auth/react";
 const path = require("path");
 
 const Navbar = () => {
+  const { data: session } = useSession();
   const router = useRouter();
   const [activeIdx, setActiveIdx] = useState(-1);
   const items = [
@@ -81,6 +83,17 @@ const Navbar = () => {
               );
             })}
           </ul>
+          <div class="relative inline-block group">
+            <span>Mouse over me</span>
+            <button
+              class="hidden absolute bg-[#f9f9f9] min-w-[160px] z-[1] px-4 py-3 group-hover:block"
+              onClick={() => {
+                signOut();
+              }}
+            >
+              <p>Sign Out</p>
+            </button>
+          </div>
         </div>
       </nav>
     </>

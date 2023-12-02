@@ -3,14 +3,12 @@ import Navbar from "./header/Navbar";
 
 const Layout = ({ children }) => {
   return (
-    <AuthProvider>
+    <div>
+      <Navbar />
       <div>
-        <Navbar />
-        <div>
-          <main>{children}</main>
-        </div>
+        <main>{children}</main>
       </div>
-    </AuthProvider>
+    </div>
   );
 };
 

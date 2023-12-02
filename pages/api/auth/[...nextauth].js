@@ -98,22 +98,29 @@ export const authOptions = {
     }),
   ],
   callbacks: {
-    jwt: async ({ token, user, trigger }) => {
+    jwt: async ({ token, user, trigger, session }) => {
       console.log("------ jwt callback-----");
       console.log(`>>> token before \n`, token);
       console.log(`>>> user before \n`, user);
       console.log(`>>> trigger before: `, trigger);
+      console.log("session callled", session);
       if (trigger === "update") {
+        if (session) {
+        }
         if (Date.now() / 1000 < token.backEndExp) {
           console.log(Date.now() / 1000);
           console.log(token.backEndExp);
           return token;
         }
         let temp = await refreshAccessToken(token);
-        token.accessToken = temp.accessToken;
-        token.refreshToken = temp.refreshToken;
-        token.backEndIat = temp.backEndIat;
-        token.backEndExp = temp.backEndExp;
+        if (token.error) {
+          token.error = temp.error;
+        } else {
+          token.accessToken = temp.accessToken;
+          token.refreshToken = temp.refreshToken;
+          token.backEndIat = temp.backEndIat;
+          token.backEndExp = temp.backEndExp;
+        }
       }
       if (user) {
         token.userId = user.id;
@@ -133,6 +140,9 @@ export const authOptions = {
       }
       return session;
     },
+  },
+  pages: {
+    signIn: "/auth/signin",
   },
 };
 
