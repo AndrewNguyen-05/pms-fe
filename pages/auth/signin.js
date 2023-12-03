@@ -58,6 +58,7 @@ export default function SignInPage() {
             <label className="mx-6">
               <p>Username</p>
               <input
+                data-test="username-input"
                 name="username"
                 type="text"
                 className="bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  "
@@ -68,6 +69,7 @@ export default function SignInPage() {
             <div>
               <p>Password</p>
               <input
+                data-test="password-input"
                 name="password"
                 type="password"
                 className="bg-white border border-gray-300 text-gray-900 text-sm rounded-lg  focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
@@ -77,6 +79,7 @@ export default function SignInPage() {
             </div>
             <p></p>
             <button
+              data-test="login-button"
               className=" bg-blue-700 text-white rounded-lg w-full mt-10 h-12"
               onClick={handleLoginButton}
             >

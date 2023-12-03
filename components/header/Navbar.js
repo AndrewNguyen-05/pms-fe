@@ -72,7 +72,8 @@ const Navbar = () => {
           <ul className="font-medium text-[17px] flex flex-row p-4 gap-2 items-center rounded-lg bg-white">
             {items.map(({ name, href }, idx) => {
               return (
-                <div
+                <div 
+                  data-test={idx}
                   onClick={() => {
                     setActiveIdx(idx);
                   }}
