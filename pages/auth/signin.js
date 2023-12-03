@@ -2,24 +2,42 @@ import { signIn } from "next-auth/react";
 import { useRouter } from "next/router";
 import { useRef, useState } from "react";
 import Image from "next/image";
-
-const handleLoginButton = (event, router, window, username, password) => {
-  console.log("logging in");
-  const result = signIn("credentials", {
-    username: username,
-    password: password,
-    redirect: true,
-    callbackUrl:
-      router && router.query.callbackUrl
-        ? router.query.callbackUrl
-        : window.location.origin,
-  });
-};
+import { toast } from "react-toastify";
 
 export default function SignInPage() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const router = useRouter();
+
+  const handleLoginButton = (event) => {
+    console.log("logging in");
+    signIn("credentials", {
+      username: username,
+      password: password,
+      redirect: false,
+      callbackUrl:
+        router && router.query.callbackUrl
+          ? router.query.callbackUrl
+          : window.location.origin,
+    })
+      .then(({ ok, error }) => {
+        console.log("ok: ", ok);
+        console.log("error: ", error);
+        if (ok) {
+          toast.success("Login success");
+          return;
+        }
+        if (error === "CredentialsSignin") {
+          toast.error("Wrong username or password");
+        } else {
+          toast.error("Something went wrong");
+        }
+      })
+      .catch((error) => {
+        console.log("catch :", error);
+        toast.error("Something went wrong!");
+      });
+  };
 
   return (
     <>
@@ -60,10 +78,7 @@ export default function SignInPage() {
             <p></p>
             <button
               className=" bg-blue-700 text-white rounded-lg w-full mt-10 h-12"
-              type="submit"
-              onClick={(event) =>
-                handleLoginButton(event, router, window, username, password)
-              }
+              onClick={handleLoginButton}
             >
               Sign in
             </button>
