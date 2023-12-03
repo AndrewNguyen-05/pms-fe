@@ -104,6 +104,22 @@ const callbacks = {
   },
 };
 
+const events = {
+  signOut: async (message) => {
+    console.log("signing out");
+    console.log(message);
+    if (message.token) {
+      try {
+        await axios.delete(process.env.BACKEND_API_URL + "/logout", {
+          data: { refreshToken: message.token.refreshToken },
+        });
+      } catch (error) {
+        console.log(error);
+      }
+    }
+  },
+};
+
 export const options = {
   providers,
   callbacks,
@@ -111,6 +127,7 @@ export const options = {
     signIn: "/auth/signin",
   },
   secret: process.env.AUTH_SECRET,
+  events,
 };
 
 const Auth = (req, res) => NextAuth(req, res, options);
