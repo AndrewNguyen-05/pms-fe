@@ -4,6 +4,7 @@ describe('Testing Home Page User Interface', () => {
     cy.get('[data-test="username-input"]').type('SonQuan41');
     cy.get('[data-test="password-input"]').type('GMPsz2es2BPGPcn');
     cy.get('[data-test="login-button"]').click();
+    cy.wait(200);
   })
 
   it('Testing visibility of content', () => {

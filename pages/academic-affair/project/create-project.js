@@ -299,6 +299,7 @@ const CreateProject = () => {
             </div>
             <div className="flex gap-8 justify-end">
               <button
+                data-test="cancel-button"
                 className="items-center px-5 py-2.5 mt-4 text-base font-medium border-2 border-red-600 text-center text-red-600 bg-white  rounded-lg focus:ring-2 focus:ring-red-200 hover:bg-red-600 hover:text-white hover:border-red-600"
                 onClick={() => {
                   setIsModalOpen(true);
@@ -307,6 +308,7 @@ const CreateProject = () => {
                 Cancel
               </button>
               <button
+                data-test="create-button"
                 className="items-center px-5 py-2.5 mt-4 text-base font-medium border-2 border-blue-700 text-center text-blue-700 bg-white  rounded-lg focus:ring-2 focus:ring-blue-200 hover:bg-blue-700 hover:text-white"
                 onClick={() => {
                   handleCreateProject();

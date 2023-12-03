@@ -73,7 +73,6 @@ const Navbar = () => {
             {items.map(({ name, href }, idx) => {
               return (
                 <div 
-                  data-test={idx}
                   onClick={() => {
                     setActiveIdx(idx);
                   }}

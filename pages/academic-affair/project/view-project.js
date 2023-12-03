@@ -150,9 +150,9 @@ const ViewProject = () => {
           </div>
         </div>
         <div className="px-16 py-7">
-          {project_list.map((project_item) => {
+          {project_list.map((project_item, index) => {
             return (
-              <div key={project_item.id}>
+              <div data-test={index} key={project_item.id}>
                 <ProjectCard
                   project={project_item}
                   selectedItem={selectedProject}
