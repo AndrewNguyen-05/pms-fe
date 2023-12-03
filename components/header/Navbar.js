@@ -80,7 +80,7 @@ const Navbar = () => {
           </ul>
         </div>
         <button
-          className="w-[100px] h-[40px] mx-5 rounded-lg text-blue-700 font-semibold hover:bg-gradient-to-r hover:from-cyan-500 hover:to-blue-500 hover:text-white "
+          className="w-[100px] h-[40px] mx-5 rounded-full text-blue-700 font-semibold hover:bg-gradient-to-r hover:from-cyan-500 hover:to-blue-500 hover:text-white "
           onClick={() => {
             signOut();
           }}
