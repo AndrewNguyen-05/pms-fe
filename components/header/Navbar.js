@@ -86,7 +86,7 @@ const Navbar = () => {
           <div class="relative inline-block group">
             <span>Mouse over me</span>
             <button
-              class="hidden absolute bg-[#f9f9f9] min-w-[160px] z-[1] px-4 py-3 group-hover:block"
+              className="hidden absolute bg-[#f9f9f9] min-w-[160px] z-[1] px-4 py-3 group-hover:block"
               onClick={() => {
                 signOut();
               }}

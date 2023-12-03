@@ -11,7 +11,7 @@ function AuthProvider({ children }) {
     if (session?.error === "RefreshAccessTokenError") {
       signOut();
     }
-  }, [session]);
+  }, [session?.error]);
 
   useEffect(() => {
     const waitUpdate = () => {
@@ -19,24 +19,12 @@ function AuthProvider({ children }) {
       // check valid session
       update();
     };
-    waitUpdate();
+    if (session) {
+      waitUpdate();
+    }
   }, [router.asPath]);
 
-  useEffect(() => {
-    if (!loading) {
-      if (session && router.asPath === "/auth/signin") {
-        router.push("/");
-      }
-      if (!session && router.asPath !== "/auth/signin") {
-        router.push("/auth/signin");
-      }
-    }
-  }, [session]);
-
-  if (
-    (session && router.asPath !== "/auth/signin") ||
-    (!session && router.asPath === "/auth/signin")
-  ) {
+  if (session || router.asPath === "/auth/signin") {
     return <>{children}</>;
   }
   return <></>;

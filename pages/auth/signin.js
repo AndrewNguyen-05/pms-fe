@@ -1,56 +1,74 @@
 import { signIn } from "next-auth/react";
+import { useRouter } from "next/router";
 import { useRef, useState } from "react";
+import Image from "next/image";
+
+const handleLoginButton = (event, router, window, username, password) => {
+  console.log("logging in");
+  const result = signIn("credentials", {
+    username: username,
+    password: password,
+    redirect: true,
+    callbackUrl:
+      router && router.query.callbackUrl
+        ? router.query.callbackUrl
+        : window.location.origin,
+  });
+};
 
 export default function SignInPage() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-
-  const handleLoginButton = () => {
-    const result = signIn("credentials", {
-      username: username,
-      password: password,
-      redirect: true,
-      callbackUrl: "/",
-    });
-  };
+  const router = useRouter();
 
   return (
     <>
       <div className="flex justify-center items-center h-screen bg-slate-100">
-        <div className="bg-white rounded-md shadow-md flex items-center justify-center w-96	h-72">
-          <form method="post" action="/api/auth/callback/credentials">
+        <div className="bg-white rounded-md shadow-lg flex items-center justify-center w-[700px]	h-[600px]">
+          {/* <form method="post" action="/api/auth/callback/credentials"> */}
+
+          <div className="w-3/4 h-3/4">
+            <div className="w-full flex items-center justify-center">
+              <Image
+                src="/pms-logo.svg"
+                alt="PMS logo"
+                width={250}
+                height={250}
+              />
+            </div>
             <input name="csrfToken" type="hidden" />
-            <label>
+            <label className="mx-6">
               <p>Username</p>
               <input
                 name="username"
                 type="text"
-                className="border-2 border-blue-700 rounded-md"
+                className="bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  "
                 value={username}
                 onChange={(e) => setUsername(e.target.value)}
               />
             </label>
-            <label>
+            <div>
               <p>Password</p>
               <input
                 name="password"
                 type="password"
-                className="border-2 border-blue-700 rounded-md"
+                className="bg-white border border-gray-300 text-gray-900 text-sm rounded-lg  focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
               />
-            </label>
+            </div>
             <p></p>
             <button
-              className=" bg-blue-700 text-white rounded-md w-full mt-5"
+              className=" bg-blue-700 text-white rounded-lg w-full mt-10 h-12"
               type="submit"
-              onClick={() => {
-                handleLoginButton();
-              }}
+              onClick={(event) =>
+                handleLoginButton(event, router, window, username, password)
+              }
             >
               Sign in
             </button>
-          </form>
+          </div>
+          {/* </form> */}
         </div>
       </div>
     </>

@@ -1,36 +1,23 @@
-import NextAuth from "next-auth/next";
+import axios from "axios";
+import NextAuth from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import jwt from "jsonwebtoken";
 
 async function refreshAccessToken(token) {
   try {
-    const res = await fetch(process.env.BACKEND_API_URL + "/token", {
-      method: "POST",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ refreshToken: token.refreshToken }),
+    // Get new accessToken
+    const res = await axios.post(process.env.BACKEND_API_URL + "/token", {
+      refreshToken: token.refreshToken,
     });
 
-    const data = await res.json();
-
-    console.log(data);
-
-    if (!res.ok) {
-      throw data;
-    }
-
+    const data = res.data;
+    // Get the iat and exp time from backend token
     const decoded = jwt.verify(
       data.DT.accessToken,
       process.env.ACCESS_TOKEN_SECRET
     );
 
-    token.accessToken = data.DT.accessToken;
-    token.refreshToken = data.DT.refreshToken;
-    token.backEndExp = decoded.exp;
-    token.backEndIat = decoded.iat;
-
+    // Bind and return new change
     return {
       ...token,
       accessToken: data.DT.accessToken,
@@ -39,8 +26,8 @@ async function refreshAccessToken(token) {
       backEndIat: decoded.iat,
     };
   } catch (error) {
+    console.log("-------------------exception-----------------");
     console.log(error);
-
     return {
       ...token,
       error: "RefreshAccessTokenError",
@@ -48,102 +35,83 @@ async function refreshAccessToken(token) {
   }
 }
 
-export const authOptions = {
-  session: {
-    strategy: "jwt",
-    maxAge: 3 * 24 * 60 * 60, // 72 hours
-  },
-  secret: process.env.AUTH_SECRET,
-  providers: [
-    CredentialsProvider({
-      name: "credentials",
-      credentials: {
-        username: {
-          label: "Username",
-          type: "text",
-        },
-        password: { label: "Password", type: "password" },
-      },
-      async authorize(credentials) {
-        const credentialDetails = {
+const providers = [
+  CredentialsProvider({
+    id: "credentials",
+    name: "PMS-credential",
+    authorize: async (credentials) => {
+      try {
+        // Authenticate user with credentials
+        const res = await axios.post(process.env.BACKEND_API_URL + "/login", {
           username: credentials.username,
           password: credentials.password,
-        };
-        console.log(">>>>> Authorized");
-
-        const res = await fetch(process.env.BACKEND_API_URL + "/login", {
-          method: "POST",
-          headers: {
-            Accept: "application/json",
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(credentialDetails),
         });
 
-        if (!res.ok) {
+        console.log(res);
+        const data = res.data;
+        // EC == 0 mean normal
+        if (data.EC !== 0) {
           console.log("Something went wrong");
           return null;
         }
 
-        const data = await res.json();
-        if (data.EC !== 0) return null;
-        console.log("Data", data.DT);
-
-        const decoded = jwt.verify(
-          data.DT.accessToken,
-          process.env.ACCESS_TOKEN_SECRET
-        );
-        return { ...data.DT, iat: decoded.iat, exp: decoded.exp };
-      },
-    }),
-  ],
-  callbacks: {
-    jwt: async ({ token, user, trigger, session }) => {
-      console.log("------ jwt callback-----");
-      console.log(`>>> token before \n`, token);
-      console.log(`>>> user before \n`, user);
-      console.log(`>>> trigger before: `, trigger);
-      console.log("session callled", session);
-      if (trigger === "update") {
-        if (session) {
-        }
-        if (Date.now() / 1000 < token.backEndExp) {
-          console.log(Date.now() / 1000);
-          console.log(token.backEndExp);
-          return token;
-        }
-        let temp = await refreshAccessToken(token);
-        if (token.error) {
-          token.error = temp.error;
+        // If everything okay, decode to get the iat and exp time
+        if (data.DT.accessToken) {
+          const decoded = jwt.verify(
+            data.DT.accessToken,
+            process.env.ACCESS_TOKEN_SECRET
+          );
+          return { ...data.DT, iat: decoded.iat, exp: decoded.exp };
         } else {
-          token.accessToken = temp.accessToken;
-          token.refreshToken = temp.refreshToken;
-          token.backEndIat = temp.backEndIat;
-          token.backEndExp = temp.backEndExp;
+          console.log("Token not found");
+          return null;
         }
+      } catch (e) {
+        console.log(e);
+        return null;
       }
-      if (user) {
-        token.userId = user.id;
-        token.accessToken = user.accessToken;
-        token.refreshToken = user.refreshToken;
-        token.backEndIat = user.iat;
-        token.backEndExp = user.exp;
-        console.log(">>> token anew");
-      }
-      return token;
     },
-    session: async ({ session, token, user }) => {
-      if (token) {
-        session.user.id = token.userId;
-        session.accessToken = token.accessToken;
-        session.error = token.error;
-      }
-      return session;
-    },
+  }),
+];
+
+const callbacks = {
+  jwt: async ({ token, user }) => {
+    if (user) {
+      // The user will be null after first callback
+      token.userId = user.id;
+      token.accessToken = user.accessToken;
+      token.refreshToken = user.refreshToken;
+      token.backEndIat = user.iat;
+      token.backEndExp = user.exp;
+    }
+
+    // If the token is still valid, just return it.
+    if (Date.now() / 1000 < token.backEndExp - 60 * 60) {
+      return Promise.resolve(token);
+    }
+
+    // Else, get new token
+    token = refreshAccessToken(token);
+    return Promise.resolve(token);
   },
-  pages: {
-    signIn: "/auth/signin",
+  session: async ({ session, token }) => {
+    // The data to be used in client side for authentication
+    session.user.id = token.userId;
+    session.accessToken = token.accessToken;
+    session.error = token.error;
+
+    return Promise.resolve(session);
   },
 };
 
-export default NextAuth(authOptions);
+export const options = {
+  providers,
+  callbacks,
+  pages: {
+    signIn: "/auth/signin",
+  },
+  secret: process.env.AUTH_SECRET,
+};
+
+const Auth = (req, res) => NextAuth(req, res, options);
+export default Auth;
