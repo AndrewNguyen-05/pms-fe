@@ -1,9 +1,9 @@
 describe('Testing Home Page User Interface', () => {
   beforeEach(()=> {
     cy.visit('http://localhost:3000/');
-    cy.get(':nth-child(2) > .border-2').type('SonQuan41');
-    cy.get(':nth-child(3) > .border-2').type('GMPsz2es2BPGPcn');
-    cy.get('.bg-blue-700').click();
+    cy.get('[data-test="username-input"]').type('SonQuan41');
+    cy.get('[data-test="password-input"]').type('GMPsz2es2BPGPcn');
+    cy.get('[data-test="login-button"]').click();
   })
 
   it('Testing visibility of content', () => {
