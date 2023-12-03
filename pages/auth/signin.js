@@ -81,7 +81,7 @@ export default function SignInPage() {
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                 />
-                <div className="flex justify-between items-center mt-4 items-center">
+                <div className="flex justify-between items-center mt-4">
                   <button
                     className="flex cursor-pointer gap-2"
                     onClick={() => setShowPassword(!showPassword)}
