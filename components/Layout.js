@@ -17,7 +17,6 @@ const Layout = ({ children }) => {
   } else if (router.asPath === "/auth/signin") {
     return (
       <div>
-        <Navbar />
         <div>
           <main>{children}</main>
         </div>
