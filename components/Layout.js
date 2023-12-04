@@ -2,10 +2,12 @@ import { useRouter } from "next/router";
 import Navbar from "./header/Navbar";
 import useAuth from "./hook/useAuth";
 import { useSession } from "next-auth/react";
+import { useEffect, useState } from "react";
 
 const Layout = ({ children }) => {
   const session = useSession();
   const router = useRouter();
+  const [items, setItems] = useState([]);
   const aaItems = [
     {
       name: "Project",
@@ -48,13 +50,13 @@ const Layout = ({ children }) => {
     }
     return [];
   };
+
+  useEffect(() => {
+    setItems(chooseNavbarItem());
+  }, [session?.data?.user.role]);
   return (
     <div>
-      {session.status === "authenticated" ? (
-        <Navbar items={chooseNavbarItem()} />
-      ) : (
-        <></>
-      )}
+      {session.status === "authenticated" ? <Navbar items={items} /> : <></>}
 
       <div>
         <main>{children}</main>
