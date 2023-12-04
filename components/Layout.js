@@ -3,7 +3,6 @@ import Navbar from "./header/Navbar";
 import useAuth from "./hook/useAuth";
 
 const Layout = ({ children }) => {
-  //const isAuthenticated = useAuth(true);
   const router = useRouter();
   return (
     <div>
@@ -13,24 +12,6 @@ const Layout = ({ children }) => {
       </div>
     </div>
   );
-  // if (isAuthenticated) {
-  //   return (
-  //     <div>
-  //       <Navbar />
-  //       <div>
-  //         <main>{children}</main>
-  //       </div>
-  //     </div>
-  //   );
-  // } else if (router.asPath === "/auth/signin") {
-  //   return (
-  //     <div>
-  //       <div>
-  //         <main>{children}</main>
-  //       </div>
-  //     </div>
-  //   );
-  // }
 };
 
 export default Layout;

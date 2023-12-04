@@ -1,4 +1,4 @@
-import { signIn, useSession } from "next-auth/react";
+import { signIn, signOut, useSession } from "next-auth/react";
 import { useRouter } from "next/router";
 import { useRef, useState } from "react";
 import Image from "next/image";
@@ -8,6 +8,7 @@ export default function SignInPage() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
+  const [justLoggedin, setJustLoggedIn] = useState(false);
   const router = useRouter();
   const session = useSession();
 
@@ -27,6 +28,7 @@ export default function SignInPage() {
         console.log("ok: ", ok);
         console.log("error: ", error);
         if (ok) {
+          setJustLoggedIn(true);
           toast.success("Login success");
           router.replace(url);
           return;
@@ -42,6 +44,53 @@ export default function SignInPage() {
         toast.error("Something went wrong!");
       });
   };
+
+  if (session.status === "authenticated" && !justLoggedin) {
+    return (
+      <>
+        <div className="flex justify-center items-center h-screen bg-slate-100">
+          <div className="bg-white rounded-[20px] shadow-lg w-[350px] h-[350px]">
+            {/* <form method="post" action="/api/auth/callback/credentials"> */}
+            <div className="font-bold text-2xl text-center mt-4">
+              <span className="text-sky-500">UIT</span>
+              <span className="text-cyan-600">-</span>
+              <span className="text-blue-700">PMS</span>
+            </div>
+            <div className="font-bold text-xl ml-6 mb-4 mt-3 text-blue-700">
+              You have signed in, sign out?
+            </div>
+            <div className="w-full flex items-center justify-center">
+              <Image
+                alt="singed in before"
+                src="/418.jpg"
+                width={200}
+                height={200}
+              ></Image>
+            </div>
+            <div className="w-full flex flex-col items-center">
+              <div className="w-[300px] mt-3">
+                <div className="font-semibold">
+                  <div className="flex justify-between items-center mt-4">
+                    <button
+                      data-test="login-button"
+                      className="bg-gradient-to-r from-cyan-500 to-blue-500 text-white font-semibold rounded-lg h-10 w-full"
+                      onClick={() => {
+                        console.log(session);
+                        return signOut();
+                      }}
+                    >
+                      Sign out
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            {/* </form> */}
+          </div>
+        </div>
+      </>
+    );
+  }
 
   return (
     <>
