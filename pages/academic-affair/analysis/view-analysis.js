@@ -85,7 +85,7 @@ const ViewAnalysis = () => {
   };
 
   return (
-    <div className="w-full h-screen p-7 bg-slate-50">
+    <div className="w-full h-screen px-7 pb-7 pt-4 bg-slate-50">
       <div className="flex justify-between items-center">
         <div class="w-[575px] mb-3 shadow-lg rounded-lg" id="navbar-default">
           <ul class="font-medium flex gap-5 p-3 w-full border bg-white rounded-lg border-gray-100 rtl:space-x-reverse">
