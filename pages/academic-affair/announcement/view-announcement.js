@@ -146,7 +146,7 @@ const ViewAnnouncement = () => {
               }}
             />
           </div>
-          <div className="flex justify-end gap-8 w-full mr-16">
+          <div className="flex justify-end gap-4 w-full mr-16">
             <ButtonCreate
               text="Add new"
               href="/academic-affair/announcement/create-announcement"

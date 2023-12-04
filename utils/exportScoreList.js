@@ -3,49 +3,49 @@ import ExcelJS from "exceljs";
 
 const exportToExcel = (data) => {
   const workbook = new ExcelJS.Workbook();
-  const worksheet = workbook.addWorksheet("DanhSachDoAn");
+  const worksheet = workbook.addWorksheet("BangDiemDoAn");
 
   // Merge cells and set values
-  worksheet.mergeCells("A1:B1");
-  worksheet.getCell("A1").value = "TRƯỜNG ĐẠI HỌC CÔNG NGHỆ THÔNG TIN";
-  worksheet.getCell("A1").font = { name: "Times New Roman", size: 13 };
-  worksheet.getCell("A1").alignment = {
+  worksheet.mergeCells("B1:D1");
+  worksheet.getCell("B1").value = "TRƯỜNG ĐẠI HỌC CÔNG NGHỆ THÔNG TIN";
+  worksheet.getCell("B1").font = { name: "Times New Roman", size: 13 };
+  worksheet.getCell("B1").alignment = {
     horizontal: "center",
     vertical: "middle",
   };
 
-  worksheet.mergeCells("A2:B2");
-  worksheet.getCell("A2").value = "PHÒNG ĐÀO TẠO ĐẠI HỌC";
-  worksheet.getCell("A2").font = {
+  worksheet.mergeCells("B2:D2");
+  worksheet.getCell("B2").value = "PHÒNG ĐÀO TẠO ĐẠI HỌC";
+  worksheet.getCell("B2").font = {
     name: "Times New Roman",
     size: 13,
     bold: true,
   };
-  worksheet.getCell("A2").alignment = {
+  worksheet.getCell("B2").alignment = {
     horizontal: "center",
     vertical: "middle",
   };
 
-  worksheet.mergeCells("E1:G1");
-  worksheet.getCell("E1").value = "CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAM";
-  worksheet.getCell("E1").font = {
+  worksheet.mergeCells("H1:J1");
+  worksheet.getCell("H1").value = "CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAM";
+  worksheet.getCell("H1").font = {
     name: "Times New Roman",
     size: 13,
     bold: true,
   };
-  worksheet.getCell("E1").alignment = {
+  worksheet.getCell("H1").alignment = {
     horizontal: "center",
     vertical: "middle",
   };
 
-  worksheet.mergeCells("E2:G2");
-  worksheet.getCell("E2").value = "Độc lập – Tự do – Hạnh phúc";
-  worksheet.getCell("E2").font = {
+  worksheet.mergeCells("H2:J2");
+  worksheet.getCell("H2").value = "Độc lập – Tự do – Hạnh phúc";
+  worksheet.getCell("H2").font = {
     name: "Times New Roman",
     size: 13,
     bold: true,
   };
-  worksheet.getCell("E2").alignment = {
+  worksheet.getCell("H2").alignment = {
     horizontal: "center",
     vertical: "middle",
   };
@@ -53,10 +53,10 @@ const exportToExcel = (data) => {
   // Add an empty row
   worksheet.addRow([]);
 
-  // "DANH SÁCH ĐỒ ÁN" header
-  worksheet.mergeCells("A4:G4");
+  // "BẢNG ĐIỂM ĐỒ ÁN" header
+  worksheet.mergeCells("A4:J4");
   const danhSachDoAnRow = worksheet.getCell("A4");
-  danhSachDoAnRow.value = "DANH SÁCH ĐỒ ÁN 1, 2";
+  danhSachDoAnRow.value = "BẢNG ĐIỂM ĐỒ ÁN 1, 2";
   danhSachDoAnRow.font = {
     name: "Times New Roman",
     size: 16,
@@ -83,11 +83,15 @@ const exportToExcel = (data) => {
   // Add the table headers
   const headers = [
     "STT",
+    "Họ tên sinh viên 1",
+    "Mã sinh viên 1",
+    "Họ tên sinh viên 2",
+    "Mã sinh viên 2",
+    "Điểm số",
+    "GV hướng dẫn",
     "Tên đồ án",
     "Khoa",
     "Loại đồ án",
-    "Trạng thái",
-    "GV hướng dẫn",
   ];
   const headerRow = worksheet.addRow(headers);
   headerRow.eachCell((cell) => {
@@ -109,16 +113,21 @@ const exportToExcel = (data) => {
     };
     cell.alignment = { vertical: "middle", horizontal: "center" };
   });
+  headerRow.getCell(6).font.color = { argb: "FFFF0000" };
 
   // Add the data
   data.forEach((row) => {
     const dataRow = worksheet.addRow([
       row.id,
-      row.name,
-      row.faculty,
-      row.type,
-      row.isregistered === 1 ? "Đã đăng ký" : "Chưa đăng ký",
-      row.Teacher.User.name,
+      row.Student1.User.name === null ? "" : row.Student1.User.name,
+      row.Student1.studentCode === null ? "" : row.Student1.studentCode,
+      row.Student2.User.name === null ? "" : row.Student2.User.name,
+      row.Student2.studentCode === null ? "" : row.Student2.studentCode,
+      row.score,
+      row.Project.Teacher.User.name,
+      row.Project.name,
+      row.Project.faculty,
+      row.Project.type,
     ]);
     dataRow.eachCell((cell, colNumber) => {
       cell.font = { name: "Times New Roman", size: 12 };
@@ -129,26 +138,33 @@ const exportToExcel = (data) => {
         right: { style: "thin", color: { auto: 1 } },
       };
       // Align content to the middle for specific columns
-      if (colNumber === 1 || colNumber === 4) {
+      if (colNumber === 1 || colNumber === 6 || colNumber === 10) {
         cell.alignment = { vertical: "middle", horizontal: "center" };
+      }
+      if (colNumber === 6) {
+        cell.font = { name: "Times New Roman", size: 12, bold: true };
       }
     });
   });
 
   // Set column widths
-  worksheet.getColumn("A").width = 8; // Adjust these values as needed
-  worksheet.getColumn("B").width = 80;
-  worksheet.getColumn("C").width = 40;
-  worksheet.getColumn("D").width = 12;
-  worksheet.getColumn("E").width = 20;
-  worksheet.getColumn("F").width = 25;
+  worksheet.getColumn("A").width = 8; // Adjust these values as needed - STT
+  worksheet.getColumn("B").width = 25; // Ten sinh vien 1
+  worksheet.getColumn("C").width = 20; // Ma svien 1
+  worksheet.getColumn("D").width = 25; // Ten svien 2
+  worksheet.getColumn("E").width = 20; // Ma svien 2
+  worksheet.getColumn("F").width = 12; // Diem so
+  worksheet.getColumn("G").width = 25; // Giang vien
+  worksheet.getColumn("H").width = 60; // Ten do an
+  worksheet.getColumn("I").width = 40; // Khoa
+  worksheet.getColumn("J").width = 12; // Loai do an
 
   // Save the workbook
   workbook.xlsx.writeBuffer().then((buffer) => {
     const blob = new Blob([buffer], {
       type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
     });
-    const fileName = "DanhSachDoAn.xlsx";
+    const fileName = "BangDiemDoAn.xlsx";
     const link = document.createElement("a");
     link.href = window.URL.createObjectURL(blob);
     link.download = fileName;

@@ -1,6 +1,13 @@
 import axios from "axios";
 
-const getScoreList = async (page, limit) => {
+const getScoreList = async () => {
+  const res = await axios.get("http://localhost:8888/api/v1/score/read");
+  if (res && res.data.DT && res.data.EC === 0) {
+    return res.data.DT;
+  }
+};
+
+const getScoreData = async (page, limit) => {
   let apiHref = `http://localhost:8888/api/v1/score/read?page=${page}&&limit=${limit}`;
   const res = await axios.get(apiHref);
   if (res && res.data.DT && res.data.EC === 0) {
@@ -51,6 +58,7 @@ const deleteScore = async (ids) => {
 
 export {
   getScoreList,
+  getScoreData,
   postCreateScore,
   deleteScore,
   searchScore,
