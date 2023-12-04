@@ -2,6 +2,7 @@ import { signOut, useSession } from "next-auth/react";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 
+//DONT USE THIS, WE HAVE MIDDLEWARE INSTEAD
 // use this hook to display if not authenticated/ let the app redirect to login page
 export default function useAuth(shouldRedirect) {
   const { data: session } = useSession();

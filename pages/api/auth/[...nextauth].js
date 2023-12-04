@@ -3,6 +3,21 @@ import NextAuth from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import jwt from "jsonwebtoken";
 
+const getRole = async (id) => {
+  //check role
+  const roleRes = await axios.get(process.env.BACKEND_API_URL + "/role", {
+    data: { id: id },
+  });
+  //console.log(roleRes);
+
+  const userdata = roleRes.data;
+  if (userdata.EC !== 0) {
+    console.log("Something went wrong");
+    return null;
+  }
+  return userdata;
+};
+
 async function refreshAccessToken(token) {
   try {
     // Get new accessToken
@@ -17,9 +32,12 @@ async function refreshAccessToken(token) {
       process.env.ACCESS_TOKEN_SECRET
     );
 
+    const userdata = getRole(data.DT.id);
+    if (!userdata) throw "cant get role";
     // Bind and return new change
     return {
       ...token,
+      userdata: userdata,
       accessToken: data.DT.accessToken,
       refreshToken: data.DT.refreshToken,
       backEndExp: decoded.exp,
@@ -41,13 +59,14 @@ const providers = [
     name: "PMS-credential",
     authorize: async (credentials) => {
       try {
+        console.log("logging in");
         // Authenticate user with credentials
         const res = await axios.post(process.env.BACKEND_API_URL + "/login", {
           username: credentials.username,
           password: credentials.password,
         });
 
-        console.log(res);
+        //console.log(res.body);
         const data = res.data;
         // EC == 0 mean normal
         if (data.EC !== 0) {
@@ -61,7 +80,16 @@ const providers = [
             data.DT.accessToken,
             process.env.ACCESS_TOKEN_SECRET
           );
-          return { ...data.DT, iat: decoded.iat, exp: decoded.exp };
+
+          const userdata = await getRole(data.DT.id);
+          if (!userdata) return null;
+
+          return {
+            ...data.DT,
+            userdata: userdata.DT,
+            iat: decoded.iat,
+            exp: decoded.exp,
+          };
         } else {
           console.log("Token not found");
           return null;
@@ -76,9 +104,13 @@ const providers = [
 
 const callbacks = {
   jwt: async ({ token, user }) => {
+    console.log(">>> refresh token:", token.refreshToken);
+    console.log(">>> jti token:", token.jti);
+    //console.log(user);
     if (user) {
       // The user will be null after first callback
-      token.userId = user.id;
+      token.accountId = user.id;
+      token.userdata = user.userdata;
       token.accessToken = user.accessToken;
       token.refreshToken = user.refreshToken;
       token.backEndIat = user.iat;
@@ -96,7 +128,10 @@ const callbacks = {
   },
   session: async ({ session, token }) => {
     // The data to be used in client side for authentication
-    session.user.id = token.userId;
+    //console.log(token);
+    session.user.accountId = token.accountId;
+    session.user.role = token.userdata.role;
+    session.user.userId = token.userdata.userID;
     session.accessToken = token.accessToken;
     session.error = token.error;
 
