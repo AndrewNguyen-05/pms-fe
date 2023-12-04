@@ -1,7 +1,7 @@
 import React from "react";
 import ExcelJS from "exceljs";
 
-const exportToExcel = (data) => {
+const exportScoreList = (data) => {
   const workbook = new ExcelJS.Workbook();
   const worksheet = workbook.addWorksheet("BangDiemDoAn");
 
@@ -116,9 +116,10 @@ const exportToExcel = (data) => {
   headerRow.getCell(6).font.color = { argb: "FFFF0000" };
 
   // Add the data
+  let rowNumber = 1;
   data.forEach((row) => {
     const dataRow = worksheet.addRow([
-      row.id,
+      rowNumber++,
       row.Student1.User.name === null ? "" : row.Student1.User.name,
       row.Student1.studentCode === null ? "" : row.Student1.studentCode,
       row.Student2.User.name === null ? "" : row.Student2.User.name,
@@ -172,4 +173,4 @@ const exportToExcel = (data) => {
   });
 };
 
-export default exportToExcel;
+export default exportScoreList;

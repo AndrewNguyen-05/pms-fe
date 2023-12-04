@@ -1,7 +1,7 @@
 import React from "react";
 import ExcelJS from "exceljs";
 
-const exportToExcel = (data) => {
+const exportProjectList = (data) => {
   const workbook = new ExcelJS.Workbook();
   const worksheet = workbook.addWorksheet("DanhSachDoAn");
 
@@ -111,9 +111,10 @@ const exportToExcel = (data) => {
   });
 
   // Add the data
+  let rowNumber = 1;
   data.forEach((row) => {
     const dataRow = worksheet.addRow([
-      row.id,
+      rowNumber++,
       row.name,
       row.faculty,
       row.type,
@@ -156,4 +157,4 @@ const exportToExcel = (data) => {
   });
 };
 
-export default exportToExcel;
+export default exportProjectList;
