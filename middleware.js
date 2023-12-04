@@ -6,22 +6,28 @@ export default withAuth(
     console.log("in middleware");
     console.log(request.nextUrl.pathname);
     // console.log(request.nextauth.token);
-    if (request.nextUrl.pathname.startsWith("/auth/signin")) {
-      console.log("in");
-      return NextResponse.redirect(new URL("/", request.url));
+    // admin
+    if (
+      request.nextUrl.pathname.startsWith("/admin") &&
+      request.nextauth.token?.userdata.role !== "admin"
+    ) {
+      return NextResponse.rewrite(new URL("/404", request.url));
     }
+    // academic affair
     if (
       request.nextUrl.pathname.startsWith("/academic-affair") &&
       request.nextauth.token?.userdata.role !== "aa"
     ) {
       return NextResponse.rewrite(new URL("/404", request.url));
     }
+    // student
     if (
       request.nextUrl.pathname.startsWith("/student") &&
       request.nextauth.token?.userdata.role !== "student"
     ) {
       return NextResponse.rewrite(new URL("/404", request.url));
     }
+    // teacher
     if (
       request.nextUrl.pathname.startsWith("/teacher") &&
       request.nextauth.token?.userdata.role !== "teacher"
@@ -46,6 +52,7 @@ export const config = {
     "/academic-affair/:path*",
     `/student/:path*`,
     `/teacher/:path*`,
+    `/admin/:path*`,
     "/",
   ],
 };

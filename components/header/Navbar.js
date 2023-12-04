@@ -5,32 +5,10 @@ import { useRouter } from "next/router";
 import { signOut, useSession } from "next-auth/react";
 const path = require("path");
 
-const Navbar = () => {
+const Navbar = ({ items }) => {
   const { data: session } = useSession();
   const router = useRouter();
   const [activeIdx, setActiveIdx] = useState(-1);
-  const items = [
-    {
-      name: "Project",
-      href: "/academic-affair/project/view-project",
-      effectHref: "/academic-affair/project/",
-    },
-    {
-      name: "Announcement",
-      href: "/academic-affair/announcement/view-announcement",
-      effectHref: "/academic-affair/announcement/",
-    },
-    {
-      name: "Score",
-      href: "/academic-affair/score/view-score",
-      effectHref: "/academic-affair/score/",
-    },
-    {
-      name: "Analysis",
-      href: "/academic-affair/analysis/view-analysis",
-      effectHref: "/academic-affair/analysis/",
-    },
-  ];
 
   const checkRelatvie = (parent, dir) => {
     const relative = path.relative(parent, dir);
