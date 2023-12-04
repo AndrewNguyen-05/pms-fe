@@ -68,7 +68,7 @@ const exportProjectList = (data) => {
   worksheet.addRow([]);
 
   // Add the total number of projects
-  const totalProject = worksheet.getCell("A6");
+  const totalProject = worksheet.getCell("B6");
   totalProject.value = `Tổng số đề tài: ${data.length}`;
   totalProject.font = {
     name: "Times New Roman",
