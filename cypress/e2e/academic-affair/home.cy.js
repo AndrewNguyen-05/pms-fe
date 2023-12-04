@@ -1,3 +1,7 @@
+import { slowCypressDown } from 'cypress-slow-down'
+
+slowCypressDown(300);
+
 describe('Testing Home Page User Interface', () => {
   beforeEach(()=> {
     cy.visit('http://localhost:3000/');
