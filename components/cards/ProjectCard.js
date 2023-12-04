@@ -72,6 +72,7 @@ const ProjectCard = ({
           </div>
           <div className="col-span-1 flex items-center justify-center">
             <Link
+              data-test="edit-button"
               href={path.join(editHref, `[id]`)}
               as={path.join(editHref, "" + project.id)}
               className="font-medium text-blue-600 hover:underline text-lg"

@@ -30,11 +30,6 @@ const Navbar = () => {
       href: "/academic-affair/analysis/view-analysis",
       effectHref: "/academic-affair/analysis/",
     },
-    {
-      name: "Report",
-      href: "/academic-affair/report/view-report",
-      effectHref: "/academic-affair/report/",
-    },
   ];
 
   const checkRelatvie = (parent, dir) => {
@@ -54,7 +49,7 @@ const Navbar = () => {
 
   return (
     <>
-      <nav className="bg-white border-gray-200">
+      <div className="bg-white border-gray-200 flex justify-between items-center">
         <div className="w-full flex items-center justify-start px-5 py-1">
           <Link href="/">
             <button
@@ -72,8 +67,7 @@ const Navbar = () => {
           <ul className="font-medium text-[17px] flex flex-row p-4 gap-2 items-center rounded-lg bg-white">
             {items.map(({ name, href }, idx) => {
               return (
-                <div 
-                  data-test={idx}
+                <div
                   onClick={() => {
                     setActiveIdx(idx);
                   }}
@@ -84,19 +78,16 @@ const Navbar = () => {
               );
             })}
           </ul>
-          <div class="relative inline-block group">
-            <span>Mouse over me</span>
-            <button
-              className="hidden absolute bg-[#f9f9f9] min-w-[160px] z-[1] px-4 py-3 group-hover:block"
-              onClick={() => {
-                signOut();
-              }}
-            >
-              <p>Sign Out</p>
-            </button>
-          </div>
         </div>
-      </nav>
+        <button
+          className="w-[100px] h-[40px] mx-5 rounded-full text-blue-700 font-semibold hover:bg-gradient-to-r hover:from-cyan-500 hover:to-blue-500 hover:text-white "
+          onClick={() => {
+            signOut();
+          }}
+        >
+          Log out
+        </button>
+      </div>
     </>
   );
 };
