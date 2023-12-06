@@ -53,6 +53,14 @@ const ViewProject = () => {
             phone: row.Teacher.User.phone,
           },
           registerStatus: row.isregistered,
+          implementation: {
+            student1Id: row.Implementation.Student1.id,
+            student1Code: row.Implementation.Student1.studentCode,
+            student1Name: row.Implementation.Student1.User.name,
+            student2Id: row.Implementation.Student2.id,
+            student2Code: row.Implementation.Student2.studentCode,
+            student2Name: row.Implementation.Student2.User.name,
+          },
         };
       })
     );

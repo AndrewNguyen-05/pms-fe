@@ -30,7 +30,18 @@ const Layout = ({ children }) => {
       effectHref: "/academic-affair/analysis/",
     },
   ];
-  const studentItems = [];
+  const studentItems = [
+    {
+      name: "Project",
+      href: "/student/project/view-project",
+      effectHref: "/student/project/",
+    },
+    {
+      name: "Announcement",
+      href: "/student/announcement/view-announcement",
+      effectHref: "/student/announcement/",
+    },
+  ];
   const teacherItems = [];
   const adminItems = [];
 

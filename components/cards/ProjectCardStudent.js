@@ -1,36 +1,12 @@
 import Link from "next/link";
 const path = require("path");
 
-const ProjectCard = ({
-  project,
-  selectedItem,
-  setSelectedItem,
-  editHref,
-  onClickView,
-}) => {
-  console.log(">>> check pj:", project);
-  const onItemSelect = (project, isSelected) => {
-    if (isSelected) {
-      setSelectedItem((prev) => [...prev, project]);
-    } else {
-      setSelectedItem((prev) => prev.filter((p) => p.id !== project.id));
-    }
-  };
-
+const ProjectCard = ({ project, editHref, onClickView }) => {
   return (
     <>
       <div className="bg-white border-2 border-slate-100 rounded-2xl h-28 shadow-md flex items-center my-2 hover:bg-slate-50 cursor-pointer ">
         <div className="grid grid-cols-12 justify-between w-full">
-          <div className="col-span-1 flex items-center justify-center">
-            <input
-              type="checkbox"
-              className="w-5 h-5 text-blue-600 bg-gray-100 border-gray-300"
-              checked={selectedItem.some((item) => item.id === project.id)}
-              disabled={project.registerStatus === 1 ? true : false}
-              onChange={(event) => onItemSelect(project, event.target.checked)}
-            />
-          </div>
-          <div className="col-span-5 pr-4" onClick={onClickView}>
+          <div className="col-span-6 pr-4" onClick={onClickView}>
             <div className="flex flex-col">
               <div className="font-bold text-base text-blue-700">
                 {project.name}
