@@ -5,8 +5,8 @@ slowCypressDown(300);
 describe('Testing Project Page User Interface ', () => {
   beforeEach(()=> {
     cy.visit('http://localhost:3000/');
-    cy.get('[data-test="username-input"]').type('SonQuan41');
-    cy.get('[data-test="password-input"]').type('GMPsz2es2BPGPcn');
+    cy.get('[data-test="username-input"]').type('AnhThu16');
+    cy.get('[data-test="password-input"]').type('aU_0wtwgz60ja0m');
     cy.get('[data-test="login-button"]').click();
     cy.wait(200);
     cy.get('.nav-item').contains('Project').click();
@@ -60,16 +60,16 @@ describe('Testing Project Page User Interface ', () => {
     cy.get('input[id="default-search"]').clear();
   })
 
-  it('Testing add new project functionality', () => {
+  it.only('Testing add new project functionality', () => {
     cy.get('#create-button').click();
     cy.url().should('include', '/create-project');
 
     cy.get('#name').type('Dự án mới được tạo');
     cy.get('#faculty').select('Công nghệ Phần Mềm');
     cy.get('#project-type').select('1');
-    cy.get('#teacher-name').select('Vương Tú Sương');
-    cy.get(':nth-child(2) > #teacher-info').invoke('val').should('equal', 'TuSuong89@hotmail.com');
-    cy.get(':nth-child(3) > #teacher-info').invoke('val').should('equal', '0298 6621 0926');
+    cy.get('#teacher-name').select('Vương Kiều Giang');
+    cy.get(':nth-child(2) > #teacher-info').invoke('val').should('equal', 'KieuGiang.Vuong@gmail.com');
+    cy.get(':nth-child(3) > #teacher-info').invoke('val').should('equal', '0243 1484 0727');
     
     cy.get('[data-test="create-button"]').click();
 
@@ -79,7 +79,7 @@ describe('Testing Project Page User Interface ', () => {
     cy.get('[data-test="0"]').click();
   })
 
-  it('Testing edit project functionality', () => {
+  it.only('Testing edit project functionality', () => {
     cy.get('#default-search').type('Dự án mới được tạo');
     cy.get('#search-button').click();
 
@@ -90,7 +90,9 @@ describe('Testing Project Page User Interface ', () => {
     cy.get('#name').type('Dự án đang được cập nhật');
     cy.get('#faculty').select('Khoa học Máy tính');
     cy.get('#project-type').select('2');
-    cy.get('#teacher-name').select('Tô Hiền Mai');
+    cy.get('#teacher-name').select('Hà Thụy Trinh');
+    cy.get(':nth-child(2) > #teacher-info').invoke('val').should('equal', 'ThuyTrinh35@hotmail.com');
+    cy.get(':nth-child(3) > #teacher-info').invoke('val').should('equal', '024 3424 3779');
     cy.get('#requirement').type('Đã được sửa đổi 1 lần.');
     
     cy.get('[data-test="update-button"]').click();
@@ -101,7 +103,7 @@ describe('Testing Project Page User Interface ', () => {
     cy.get('[data-test="0"]').click();
   })
 
-  it('Testing delete existing project functionality', () => {
+  it.only('Testing delete existing project functionality', () => {
     cy.get('#default-search').type('Dự án đang được cập nhật');
     cy.get('#search-button').click();
 
