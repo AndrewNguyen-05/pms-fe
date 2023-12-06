@@ -1,12 +1,12 @@
 import { slowCypressDown } from 'cypress-slow-down'
 
-slowCypressDown(300);
+//slowCypressDown(300);
 
 describe('Testing Home Page User Interface', () => {
   beforeEach(()=> {
     cy.visit('http://localhost:3000/');
-    cy.get('[data-test="username-input"]').type('SonQuan41');
-    cy.get('[data-test="password-input"]').type('GMPsz2es2BPGPcn');
+    cy.get('[data-test="username-input"]').type('AnhThu16');
+    cy.get('[data-test="password-input"]').type('aU_0wtwgz60ja0m');
     cy.get('[data-test="login-button"]').click();
     cy.wait(200);
   })
