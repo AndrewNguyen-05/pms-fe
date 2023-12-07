@@ -2,6 +2,7 @@ import { Inter } from "next/font/google";
 import Meta from "@/components/header/Meta";
 import { useSession, signIn, signOut } from "next-auth/react";
 import AcademicAffairHome from "@/components/home/AcademicAffairHome";
+import StudentHome from "@/components/home/StudentHome";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -11,7 +12,7 @@ export default function Home() {
     case "aa":
       return <AcademicAffairHome />;
     case "student":
-      return <>student Home</>;
+      return <StudentHome />;
     case "teacher":
       return <>teacher Home</>;
     case "admin":
