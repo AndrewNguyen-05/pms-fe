@@ -35,10 +35,14 @@ const ViewAnnouncement = () => {
   const [initialSetup, setInitialSetup] = useState(false);
   const [hasMoreScorll, setHasMoreScroll] = useState(true);
 
+  // control deleted state
+  const [deleted, setDeleted] = useState(false);
+
   useEffect(() => {
+    setDeleted(false);
     getAnnouncementData();
     setCurrentOffset((currentPage - 1) * currentLimit + 1);
-  }, [currentPage, pageSearchValue]);
+  }, [currentPage, pageSearchValue, deleted]);
 
   const setAnnouncementListRaw = (announcementData) => {
     setAnnouncementList(
@@ -58,11 +62,6 @@ const ViewAnnouncement = () => {
   };
 
   async function getAnnouncementData() {
-    if (initialSetup == true && currentPage > totalPage) {
-      setHasMoreScroll(false);
-      return;
-    }
-    setInitialSetup(true);
     let announcementData;
     if (!pageSearchValue) {
       announcementData = await getAnnouncementList(currentPage, currentLimit);
@@ -73,8 +72,14 @@ const ViewAnnouncement = () => {
         pageSearchValue.toLowerCase()
       );
     }
-    setAnnouncementListRaw(announcementData);
     setTotalPage(announcementData.totalPage);
+    if (currentPage > announcementData.totalPage) {
+      setHasMoreScroll(false);
+      return;
+    } else {
+      setHasMoreScroll(true);
+    }
+    setAnnouncementListRaw(announcementData);
   }
 
   // btn DELETE events + modal for delete
@@ -93,13 +98,12 @@ const ViewAnnouncement = () => {
     let response = await deleteAnnouncement(announcementIds);
     setSelectedAnnouncement([]);
     setIsModalOpen(false);
+    handleSearch(pageSearchValue);
+    setDeleted(true);
     if (response && response.data && response.data.EC === 0) {
       toast.success(response.data.EM);
-      window.location.reload();
-      getAnnouncementData();
     } else {
       toast.error(response.data.EM);
-      getAnnouncementData();
     }
   };
 
@@ -108,7 +112,8 @@ const ViewAnnouncement = () => {
   };
 
   // search event
-  const handleSearch = async (searchValue) => {
+  const handleSearch = (searchValue) => {
+    setAnnouncementList([]);
     setCurrentPage(1);
     setPageSearchValue(searchValue);
   };
