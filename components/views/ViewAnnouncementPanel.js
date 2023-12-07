@@ -14,19 +14,20 @@ const ViewAnnouncementPanel = ({ announcement }) => {
         {Object.keys(announcement).length > 0 ? (
           <>
             <div className="flex flex-col">
-              <div className="text-red-700 font-semibold text-3xl my-5">
+              <div data-test="announcement-title" className="text-red-700 font-semibold text-3xl my-5">
                 {announcement.title}
               </div>
-              <div className="italic">
+              <div data-test="announcement-created-at" className="italic">
                 Created at {announcement.dateCreated}
               </div>
               <div
+                data-test="announcement-content"
                 className="text-lg my-3 flex-1"
                 dangerouslySetInnerHTML={{
                   __html: announcement.content.replace(/\n/g, "<br />"),
                 }}
               ></div>
-              <div className="flex justify-end italic">
+              <div data-test="announcement-last-modified" className="flex justify-end italic">
                 Last modifed {announcement.dateUpdated}
               </div>
             </div>
