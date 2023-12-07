@@ -36,7 +36,9 @@ describe('Testing Announcement Page User Interface', () => {
   })
 
   it('Testing search announcement functionality', () => {
-    
+    cy.get('#default-search').type('Pizza')
+    cy.get('#search-button').click()
+    cy.get('[data-test="announcement-card-title"]').should('contain', 'Pizza')
   })
 
   it('Testing infinite scroll functionality', () => {
