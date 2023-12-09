@@ -17,7 +17,7 @@ const AnnouncementCard = ({
     }
   };
   return (
-    <>
+    <div data-test="announcement-card">
       <div className="bg-white border-2 border-slate-100 rounded-2xl h-[115px] shadow-md flex items-center py-2 mb-4 hover:bg-slate-50 cursor-pointer">
         <div className="grid grid-cols-11 justify-between w-full">
           <div className="col-span-1 flex items-center justify-center">
@@ -33,7 +33,7 @@ const AnnouncementCard = ({
           <div className="col-span-9" onClick={onClickView}>
             <div className="flex flex-col">
               <div className="flex justify-between">
-                <div className="font-bold text-base mr-1 text-blue-700">
+                <div data-test="announcement-card-title" className="font-bold text-base mr-1 text-blue-700">
                   {trimText(announcement.title, 70)}
                 </div>
                 <div>
@@ -73,6 +73,7 @@ const AnnouncementCard = ({
           </div>
           <div className="col-span-1 flex items-center justify-center border-l-2 border-slate-200 mx-2">
             <Link
+              data-test="edit-button" 
               href={path.join(editHref, `[id]`)}
               as={path.join(editHref, "" + announcement.id)}
               className="font-medium text-blue-600 hover:underline text-base"
@@ -82,7 +83,7 @@ const AnnouncementCard = ({
           </div>
         </div>
       </div>
-    </>
+    </div>
   );
 };
 

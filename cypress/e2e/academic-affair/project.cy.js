@@ -60,7 +60,7 @@ describe('Testing Project Page User Interface ', () => {
     cy.get('input[id="default-search"]').clear();
   })
 
-  it.only('Testing add new project functionality', () => {
+  it('Testing add new project functionality', () => {
     cy.get('#create-button').click();
     cy.url().should('include', '/create-project');
 
@@ -79,7 +79,7 @@ describe('Testing Project Page User Interface ', () => {
     cy.get('[data-test="0"]').click();
   })
 
-  it.only('Testing edit project functionality', () => {
+  it('Testing edit project functionality', () => {
     cy.get('#default-search').type('Dự án mới được tạo');
     cy.get('#search-button').click();
 
@@ -103,7 +103,7 @@ describe('Testing Project Page User Interface ', () => {
     cy.get('[data-test="0"]').click();
   })
 
-  it.only('Testing delete existing project functionality', () => {
+  it('Testing delete existing project functionality', () => {
     cy.get('#default-search').type('Dự án đang được cập nhật');
     cy.get('#search-button').click();
 

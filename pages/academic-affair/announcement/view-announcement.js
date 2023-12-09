@@ -195,15 +195,15 @@ const ViewAnnouncement = () => {
                   </div>
                 }
                 endMessage={
-                  <div className="font-semibold my-3 text-center">
+                  <div data-test="end-message" className="font-semibold my-3 text-center">
                     Nothing more to show
                   </div>
                 }
                 scrollableTarget="scrollableAnnouncementDiv"
               >
-                {announcementList.map((announcement_item) => {
+                {announcementList.map((announcement_item, idx) => {
                   return (
-                    <div key={announcement_item.id}>
+                    <div data-test={`announcement-card-${idx}`} key={announcement_item.id}>
                       <AnnouncementCard
                         announcement={announcement_item}
                         selectedItem={selectedAnnouncement}
