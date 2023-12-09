@@ -87,6 +87,16 @@ const getProjectById = async (projectId) => {
   }
 };
 
+const registerProject = async (projectId, student) => {
+  const accountId = student.accountId;
+  const userId = student.userId;
+  let res = await axios.put(
+    `http://localhost:8888/api/v1/project/register/${projectId}`,
+    { accountId, userId }
+  );
+  return res;
+};
+
 export {
   getListProject,
   getProjectData,
@@ -95,4 +105,5 @@ export {
   putUpdateProject,
   getProjectById,
   searchProject,
+  registerProject,
 };

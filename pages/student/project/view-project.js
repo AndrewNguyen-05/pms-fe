@@ -12,10 +12,9 @@ import SearchBar from "@/components/SearchBar";
 import { toast } from "react-toastify";
 import WarningModal from "@/components/modals/WarningModal";
 import ButtonDelete from "@/components/buttons/ButtonDelete";
-import ProjectCard from "@/components/cards/ProjectCard";
+import ProjectCardStudent from "@/components/cards/ProjectCardStudent";
 import Footer from "@/components/footer/Footer";
 import ViewProjectModal from "@/components/modals/ViewProjectModal";
-import ProjectCardStudent from "@/components/cards/ProjectCardStudent";
 import { useSession } from "next-auth/react";
 
 const ViewProject = () => {
@@ -101,9 +100,8 @@ const ViewProject = () => {
     setPageSearchValue(searchValue);
   };
 
-  let dataUser = useSession().data;
-
-  console.log(">>> check data user:", dataUser);
+  let dataUser = useSession().data?.user;
+  console.log(">>> check user", dataUser);
 
   return (
     <>
@@ -145,9 +143,7 @@ const ViewProject = () => {
               <div data-test={index} key={project_item.id}>
                 <ProjectCardStudent
                   project={project_item}
-                  selectedItem={selectedProject}
-                  setSelectedItem={setSelectedProject}
-                  editHref={"/academic-affair/project/update-project/"}
+                  student={dataUser}
                   onClickView={() => {
                     setIsViewModalOpen(true);
                     setSelectedProjectForModal(project_item);
