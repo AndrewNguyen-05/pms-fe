@@ -43,7 +43,13 @@ const Layout = ({ children }) => {
     },
   ];
   const teacherItems = [];
-  const adminItems = [];
+  const adminItems = [
+    {
+      name: "Account",
+      href: "/admin/account/view-account",
+      effectHref: "/admin/account/",
+    },
+  ];
 
   const chooseNavbarItem = () => {
     console.log(session);
