@@ -5,16 +5,10 @@ import { useEffect, useState } from "react";
 
 const ProjectCardStudent = ({ swal, project, student, onClickView }) => {
   const { id } = project;
+  console.log(">>> check student", student);
   const [registered, setRegistered] = useState(false);
-  useEffect(() => {
-    if (registered) {
-      register();
-      setRegistered(false);
-    }
-  }, [registered]);
   const register = async () => {
     await registerProject(id, student);
-    setRegistered(true);
   };
   const handleRegister = () => {
     swal
@@ -41,8 +35,6 @@ const ProjectCardStudent = ({ swal, project, student, onClickView }) => {
         }
       });
   };
-
-  console.log(">>> checkkk:", student);
 
   return (
     <>
@@ -82,7 +74,7 @@ const ProjectCardStudent = ({ swal, project, student, onClickView }) => {
               </div>
             </div>
           </div>
-          <div className="col-span-3 flex">
+          <div className="col-span-3 flex" onClick={onClickView}>
             <div className="flex flex-col justify-center font-semibold ml-5">
               {project.implementation.student1Id === null ? (
                 <div></div>
