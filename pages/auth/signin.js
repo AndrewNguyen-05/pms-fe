@@ -13,7 +13,6 @@ export default function SignInPage() {
   const session = useSession();
 
   const handleLoginButton = (event) => {
-    console.log("logging in");
     signIn("credentials", {
       username: username,
       password: password,
@@ -132,6 +131,11 @@ export default function SignInPage() {
                   className="bg-white border border-gray-300 text-gray-900 text-sm rounded-lg  focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
+                  onKeyDown={(event) => {
+                    if (event.key === "Enter") {
+                      handleLoginButton();
+                    }
+                  }}
                 />
                 <div className="flex justify-between items-center mt-4">
                   <button

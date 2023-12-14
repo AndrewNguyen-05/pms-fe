@@ -215,8 +215,8 @@ const CreateProject = () => {
                       <option value={"DEFAULT"} disabled={true}>
                         Select teacher
                       </option>
-                      {teacher_list.map((teacher) => (
-                        <option value={teacher.User.name}>
+                      {teacher_list.map((teacher, index) => (
+                        <option key={index} value={teacher.User.name}>
                           {teacher.User.name}
                         </option>
                       ))}

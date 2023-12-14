@@ -10,11 +10,8 @@ const MySwal = withReactContent(Swal);
 
 const ProjectCardStudent = ({ project, student, refreshProjects }) => {
   const { id } = project;
-  console.log(">>> check student", student);
-  const [registered, setRegistered] = useState(false);
   const register = async () => {
     const res = await registerProject(id, student);
-    console.log(">>> check register:", res);
     if (res && res.data && res.data.EC === 0) {
       MySwal.fire({
         icon: "success",

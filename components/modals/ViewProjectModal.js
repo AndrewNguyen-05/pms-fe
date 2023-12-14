@@ -7,13 +7,13 @@ const ViewProjectModal = ({ project }) => {
   MySwal.fire({
     width: "50%",
     title: (
-      <div class="flex items-center justify-start font-bold text-2xl pb-3 border-b border-gray-300 text-blue-700">
+      <div className="flex items-center justify-start font-bold text-2xl pb-3 border-b border-gray-300 text-blue-700">
         {project.name}
       </div>
     ),
     html: (
       <div className="text-left">
-        <div class="text-lg leading-relaxed text-gray-500 flex flex-col gap-3 mt-3">
+        <div className="text-lg leading-relaxed text-gray-500 flex flex-col gap-3 mt-3">
           <div className="flex gap-2">
             <span className="font-bold text-gray-700">Requirement:</span>{" "}
             <div

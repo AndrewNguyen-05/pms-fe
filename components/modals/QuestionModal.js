@@ -6,11 +6,10 @@ const MySwal = withReactContent(Swal);
 const QuestionModal = ({ project, register }) => {
   const handleRegister = () => {
     MySwal.fire({
-      // title: "Are you sure?",
       html: `Do you want to register <b>${project.name}</b> ?`,
       showCancelButton: true,
       icon: "question",
-      cancelButtonTitle: "Cancel",
+      cancelButtonText: "Cancel",
       cancelButtonColor: "#10b981",
       confirmButtonText: "Yes, register!",
       confirmButtonColor: "#3b82f6",
