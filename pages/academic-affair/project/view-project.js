@@ -29,6 +29,7 @@ const ViewProject = () => {
 
   useEffect(() => {
     getProjectsData();
+    getListProject();
     setCurrentOffset((currentPage - 1) * currentLimit + 1);
   }, [currentPage, pageSearchValue]);
 
@@ -101,6 +102,7 @@ const ViewProject = () => {
   //export excel
   const handleExport = async () => {
     const data = await getListProject();
+    console.log(">>> check data", data);
     ExportExcel(data);
   };
 

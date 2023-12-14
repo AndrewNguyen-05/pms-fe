@@ -10,6 +10,7 @@ import {
 } from "@/services/accountServices";
 import React, { useEffect, useState } from "react";
 import { toast } from "react-toastify";
+import Meta from "@/components/header/Meta";
 
 const ViewAccount = () => {
   const [accountList, setAccountList] = useState([]);
@@ -100,48 +101,54 @@ const ViewAccount = () => {
   };
 
   return (
-    <div className="bg-slate-50 min-h-full h-screen pt-6 px-20 ">
-      <div className="flex items-center mb-6">
-        <div className="">
-          <SearchBar
-            placeholder="Search Account..."
-            handleSearch={handleSearch}
-            handleKeyDown={(event) => {
-              if (event.key === "Enter") {
-                handleSearch(event.target.value);
-              }
-            }}
-          />
-        </div>
-        <div className="flex justify-end gap-4 w-full">
-          <ButtonCreate text="Add new" href="/admin/account/create-account" />
-          <DeleteModal
-            item="account"
-            selectedItem={selectedAccount}
-            handleConfirmDelete={handleConfirmDelete}
-          />
-        </div>
-      </div>
-      <div className="flex flex-col h-full">
-        <div className="flex flex-col gap-5">
-          {accountList.map((account) => (
-            <AccountCard
-              account={account}
-              key={account.id}
-              selectedItem={selectedAccount}
-              setSelectedItem={setSelectedAccount}
+    <>
+      <Meta title={"View account"} />
+      <div className="bg-slate-50 min-h-full h-screen pt-6 px-20 ">
+        <div className="flex items-center mb-6">
+          <div className="">
+            <SearchBar
+              placeholder="Search Account..."
+              handleSearch={handleSearch}
+              handleKeyDown={(event) => {
+                if (event.key === "Enter") {
+                  handleSearch(event.target.value);
+                }
+              }}
             />
-          ))}
+          </div>
+          <div className="flex justify-end gap-4 w-full">
+            <ButtonCreate text="Add new" href="/admin/account/create-account" />
+            <DeleteModal
+              item="account"
+              selectedItem={selectedAccount}
+              handleConfirmDelete={handleConfirmDelete}
+            />
+          </div>
         </div>
-        <div className="px-5 py-8 h-full flex flex-row-reverse">
-          <div className="self-end">
-            {totalPage > 0 && (
-              <Footer totalPage={totalPage} handlePageClick={handlePageClick} />
-            )}
+        <div className="flex flex-col h-full">
+          <div className="flex flex-col gap-5">
+            {accountList.map((account) => (
+              <AccountCard
+                account={account}
+                key={account.id}
+                selectedItem={selectedAccount}
+                setSelectedItem={setSelectedAccount}
+              />
+            ))}
+          </div>
+          <div className="px-5 py-8 h-full flex flex-row-reverse">
+            <div className="self-end">
+              {totalPage > 0 && (
+                <Footer
+                  totalPage={totalPage}
+                  handlePageClick={handlePageClick}
+                />
+              )}
+            </div>
           </div>
         </div>
       </div>
-    </div>
+    </>
   );
 };
 
