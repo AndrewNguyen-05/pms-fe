@@ -3,6 +3,7 @@ import { useRouter } from "next/router";
 import { useRef, useState } from "react";
 import Image from "next/image";
 import { toast } from "react-toastify";
+import Meta from "@/components/header/Meta";
 
 export default function SignInPage() {
   const [username, setUsername] = useState("");
@@ -93,6 +94,7 @@ export default function SignInPage() {
 
   return (
     <>
+      <Meta title={"Login"} />
       <div className="flex justify-center items-center h-screen bg-slate-100">
         <div className="bg-white rounded-[20px] shadow-lg w-[350px] h-[320px]">
           {/* <form method="post" action="/api/auth/callback/credentials"> */}
