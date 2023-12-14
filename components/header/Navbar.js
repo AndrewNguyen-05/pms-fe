@@ -10,7 +10,7 @@ const Navbar = ({ items }) => {
   const router = useRouter();
   const [activeIdx, setActiveIdx] = useState(-1);
 
-  const checkRelatvie = (parent, dir) => {
+  const checkRelative = (parent, dir) => {
     const relative = path.relative(parent, dir);
     return relative && !relative.startsWith("..") && !path.isAbsolute(relative);
   };
@@ -18,12 +18,12 @@ const Navbar = ({ items }) => {
     let currentPath = router.pathname;
     console.log(currentPath);
     items.forEach((item, index) => {
-      if (checkRelatvie(item.effectHref, currentPath)) {
+      if (checkRelative(item.effectHref, currentPath)) {
         setActiveIdx(index);
         return;
       }
     });
-  }, []);
+  }, [items]);
 
   return (
     <>
