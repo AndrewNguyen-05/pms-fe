@@ -10,11 +10,9 @@ import ButtonCreate from "@/components/buttons/ButtonCreate";
 import {} from "../../../services/projectServices";
 import SearchBar from "@/components/SearchBar";
 import { toast } from "react-toastify";
-import WarningModal from "@/components/modals/WarningModal";
-import ButtonDelete from "@/components/buttons/ButtonDelete";
+import DeleteModal from "@/components/modals/DeleteModal";
 import ProjectCard from "@/components/cards/ProjectCard";
 import Footer from "@/components/footer/Footer";
-import ViewProjectModal from "@/components/modals/ViewProjectModal";
 import ExportExcel from "@/utils/exportProjectList";
 
 const ViewProject = () => {
@@ -26,15 +24,12 @@ const ViewProject = () => {
   const [pageSearchValue, setPageSearchValue] = useState("");
   const [selectedProjectForModal, setSelectedProjectForModal] = useState({});
 
-  //control the state of open modal
-  const [isWarningModalOpen, setIsWarningModalOpen] = useState(false);
-  const [isViewModalOpen, setIsViewModalOpen] = useState(false);
-
   //list of project that is selected
   const [selectedProject, setSelectedProject] = useState([]);
 
   useEffect(() => {
     getProjectsData();
+    getListProject();
     setCurrentOffset((currentPage - 1) * currentLimit + 1);
   }, [currentPage, pageSearchValue]);
 
@@ -85,18 +80,10 @@ const ViewProject = () => {
     setCurrentPage(+event.selected + 1);
   };
 
-  const handleDeleteClick = () => {
-    if (selectedProject.length === 0) {
-      toast.error("Please select at least one project to delete");
-    } else if (selectedProject.length > 0) {
-      setIsWarningModalOpen(true);
-    }
-  };
   const handleConfirmDelete = async () => {
     const projectIds = selectedProject.map((project) => project.id);
     let response = await deleteProject(projectIds);
     setSelectedProject([]);
-    setIsWarningModalOpen(false);
     if (response && response.data && response.data.EC === 0) {
       toast.success(response.data.EM);
       getProjectsData();
@@ -104,14 +91,6 @@ const ViewProject = () => {
       toast.error(response.data.EM);
       getProjectsData();
     }
-  };
-
-  const handleCloseWarningModal = () => {
-    setIsWarningModalOpen(false);
-  };
-
-  const handleCloseViewModal = () => {
-    setIsViewModalOpen(false);
   };
 
   // search event
@@ -123,6 +102,7 @@ const ViewProject = () => {
   //export excel
   const handleExport = async () => {
     const data = await getListProject();
+    console.log(">>> check data", data);
     ExportExcel(data);
   };
 
@@ -130,22 +110,6 @@ const ViewProject = () => {
     <>
       <Meta title={"View project"} />
       <div className="bg-slate-50 h-full w-full overflow-auto flex flex-col justify-between pt-6">
-        {isWarningModalOpen && (
-          <WarningModal
-            question="Are you sure you want to delete ?"
-            btnYesText="Yes, I'm sure"
-            btnNoText="No, cancel"
-            handleConfirmDelete={handleConfirmDelete}
-            handleCloseModal={handleCloseWarningModal}
-          />
-        )}
-        {isViewModalOpen && (
-          <ViewProjectModal
-            btnBackText="Back"
-            handleCloseModal={handleCloseViewModal}
-            project={selectedProjectForModal}
-          />
-        )}
         <div className="flex items-start flex-shrink">
           <div className="px-16">
             <SearchBar
@@ -180,7 +144,11 @@ const ViewProject = () => {
               text="Add new"
               href="/academic-affair/project/create-project"
             />
-            <ButtonDelete text="Delete" onClick={handleDeleteClick} />
+            <DeleteModal
+              item="project"
+              selectedItem={selectedProject}
+              handleConfirmDelete={handleConfirmDelete}
+            />
           </div>
         </div>
         <div className="px-16 py-7">
@@ -193,7 +161,6 @@ const ViewProject = () => {
                   setSelectedItem={setSelectedProject}
                   editHref={"/academic-affair/project/update-project/"}
                   onClickView={() => {
-                    setIsViewModalOpen(true);
                     setSelectedProjectForModal(project_item);
                   }}
                 />

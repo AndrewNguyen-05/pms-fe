@@ -1,47 +1,46 @@
-import Link from "next/link";
 import { registerProject } from "@/services/projectServices";
-import { withSwal } from "react-sweetalert2";
+import { toast } from "react-toastify";
 import { useEffect, useState } from "react";
+import ViewProjectModal from "../modals/ViewProjectModal";
+import QuestionModal from "../modals/QuestionModal";
+import withReactContent from "sweetalert2-react-content";
+import Swal from "sweetalert2";
 
-const ProjectCardStudent = ({ swal, project, student, onClickView }) => {
+const MySwal = withReactContent(Swal);
+
+const ProjectCardStudent = ({ project, student, refreshProjects }) => {
   const { id } = project;
-  console.log(">>> check student", student);
-  const [registered, setRegistered] = useState(false);
   const register = async () => {
-    await registerProject(id, student);
-  };
-  const handleRegister = () => {
-    swal
-      .fire({
-        title: "Are you sure?",
-        text: `Do you want to register ${project.name}?`,
-        showCancelButton: true,
-        cancelButtonTitle: "Cancel",
-        cancelButtonColor: "#10b981",
-        confirmButtonText: "Yes, register!",
-        confirmButtonColor: "#3b82f6",
-        customClass: {
-          confirmButton: "rounded-lg",
-          cancelButton: "rounded-lg",
-        },
-        didOpen: () => {},
-        didClose: () => {},
-      })
-      .then(async (result) => {
-        if (result.isConfirmed) {
-          register();
-          //   fetchCategories();
-          console.log(">>> check id", id);
-        }
+    const res = await registerProject(id, student);
+    if (res && res.data && res.data.EC === 0) {
+      MySwal.fire({
+        icon: "success",
+        title: `${res.data.EM}`,
+        showConfirmButton: false,
+        timer: 1500,
       });
+      refreshProjects();
+    } else if (res && res.data && res.data.EC === 1) {
+      MySwal.fire({
+        icon: "warning",
+        title: "Register failed!",
+        html: `${res.data.EM}`,
+        showConfirmButton: true,
+      });
+    }
+    return res;
+  };
+
+  const onClickView = () => {
+    ViewProjectModal({ project });
   };
 
   return (
     <>
-      <div className="bg-white border-2 border-slate-100 rounded-2xl h-28 shadow-md flex items-center my-2 hover:bg-slate-50 cursor-pointer ">
-        <div className="grid grid-cols-12 justify-between w-full">
-          <div className="col-span-6 ml-5" onClick={onClickView}>
-            <div className="flex flex-col">
+      <div className="bg-white border-1 border-slate-100 rounded-2xl h-28 shadow-md flex items-center my-2 hover:bg-slate-50 cursor-pointer ">
+        <div className="grid grid-cols-12 justify-between w-full h-full">
+          <div className="col-span-6 ml-5 w-full pr-4" onClick={onClickView}>
+            <div className="flex flex-col h-full justify-center">
               <div className="font-bold text-base text-blue-700">
                 {project.name}
               </div>
@@ -105,13 +104,7 @@ const ProjectCardStudent = ({ swal, project, student, onClickView }) => {
             <div>{project.teacherInformation.phone}</div>
           </div>
           <div className="col-span-1 flex items-center justify-center">
-            <button
-              data-test="edit-button"
-              className="font-medium text-blue-600 hover:underline"
-              onClick={handleRegister}
-            >
-              Register
-            </button>
+            <QuestionModal project={project} register={register} />
           </div>
         </div>
       </div>
@@ -119,11 +112,4 @@ const ProjectCardStudent = ({ swal, project, student, onClickView }) => {
   );
 };
 
-export default withSwal(({ swal, project, student, onClickView }) => (
-  <ProjectCardStudent
-    swal={swal}
-    project={project}
-    student={student}
-    onClickView={onClickView}
-  />
-));
+export default ProjectCardStudent;

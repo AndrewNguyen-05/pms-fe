@@ -2,61 +2,67 @@
 @tailwind components;
 @tailwind utilities;
 
-@layer utilities {
-  .nav-item {
-    @apply relative font-semibold;
-  }
+.nav-item {
+  @apply relative font-semibold;
+}
 
-  .nav-item::after {
-    @apply content-[''] bg-sky-600 h-[2px] w-[0%] left-0 -bottom-[5px] rounded-xl absolute duration-200;
-  }
+.nav-item::after {
+  @apply content-[''] bg-sky-600 h-[2px] w-[0%] left-0 -bottom-[5px] rounded-xl absolute duration-200;
+}
 
-  .nav-item:focus::after {
-    @apply w-[100%] bg-sky-600 font-semibold;
-  }
+.nav-item:focus::after {
+  @apply w-[100%] bg-sky-600 font-semibold;
+}
 
-  .nav-item:hover::after {
-    @apply w-[100%] bg-blue-400 font-semibold;
-  }
+.nav-item:hover::after {
+  @apply w-[100%] bg-blue-400 font-semibold;
+}
 
-  .nav-item-actived {
-    @apply text-sky-600 font-semibold;
-  }
-  .nav-item-actived::after {
-    @apply w-[100%] bg-sky-600 font-semibold;
-  }
+.nav-item-actived {
+  @apply text-sky-600 font-semibold;
+}
+.nav-item-actived::after {
+  @apply w-[100%] bg-sky-600 font-semibold;
+}
 
-  .circular-progress {
-    @apply relative w-16 h-16 rounded-full bg-blue-700 grid place-items-center;
-  }
+.circular-progress {
+  @apply relative w-16 h-16 rounded-full bg-blue-700 grid place-items-center;
+}
 
-  .circular-progress::before {
-    @apply absolute content-[''] h-[84%] w-[84%] bg-white rounded-full;
-  }
+.circular-progress::before {
+  @apply absolute content-[''] h-[84%] w-[84%] bg-white rounded-full;
+}
 
-  .nav-active {
-    @apply bg-slate-50 rounded-lg text-gray-500 shadow-md py-2 px-3 cursor-default;
-  }
+.nav-active {
+  @apply bg-slate-50 rounded-lg text-gray-500 shadow-md py-2 px-3 cursor-default;
+}
 
-  .nav-default {
-    @apply py-2 px-3 text-gray-300 rounded cursor-default;
-  }
+.nav-default {
+  @apply py-2 px-3 text-gray-300 rounded cursor-default;
+}
 
-  .main-page-card {
-    @apply bg-white w-[800px] flex flex-col rounded-lg p-2 m-4 shadow-lg;
-  }
+.main-page-card {
+  @apply bg-white w-[800px] flex flex-col rounded-lg p-2 m-4 shadow-lg;
+}
 
-  .main-page-card-list {
-    @apply list-inside text-base m-5 flex flex-col gap-2;
-  }
+.main-page-card-list {
+  @apply list-inside text-base m-5 flex flex-col gap-2;
 }
 
 .btn-create {
-  @apply w-[150px] border-[1px] border-sky-400 text-blue-700 bg-white hover:text-white hover:bg-blue-700 focus:ring-1 focus:ring-blue-300 font-medium rounded-3xl text-sm px-5 py-2.5 focus:outline-none flex items-center justify-center gap-3;
+  @apply w-[150px] border-[1px] shadow-md border-sky-200 text-blue-600 bg-white hover:text-white hover:bg-blue-600 focus:ring-1 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 focus:outline-none flex items-center justify-center gap-3;
 }
 
 .btn-delete {
-  @apply w-[150px] border-[1px] border-red-400 text-red-600 bg-white hover:text-white hover:bg-red-600 focus:ring-1 focus:ring-red-200 font-medium rounded-3xl text-sm px-5 py-2.5 focus:outline-none flex items-center justify-center gap-3;
+  @apply w-[150px] border-[1px] shadow-md border-red-200 text-red-600 bg-white hover:text-white hover:bg-red-600 focus:ring-1 focus:ring-red-200 font-medium rounded-lg text-sm px-5 py-2.5 focus:outline-none flex items-center justify-center gap-3;
+}
+
+.search-bar {
+  @apply w-[500px] shadow-md p-4 ps-10 text-sm text-gray-900 border border-gray-200 rounded-lg bg-white focus:ring-1 focus:outline-none focus:ring-blue-300;
+}
+
+.search-btn {
+  @apply text-white absolute px-4 py-2 end-2.5 bottom-2 bg-blue-600 focus:ring-2 focus:outline-none focus:ring-blue-300  hover:bg-blue-700 font-medium rounded-lg text-sm;
 }
 
 html,

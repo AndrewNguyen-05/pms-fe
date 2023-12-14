@@ -39,10 +39,17 @@ const putUpdateAccount = async (id, data) => {
   });
 };
 
+const deleteAccount = async (accountIds) => {
+  return await axios.delete("http://localhost:8888/api/v1/account/delete", {
+    data: { accountIds },
+  });
+};
+
 export {
   getAccountList,
   getAccountById,
   searchAccount,
   postCreateAccount,
+  deleteAccount,
   putUpdateAccount,
 };

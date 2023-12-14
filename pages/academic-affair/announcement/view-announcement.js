@@ -9,11 +9,11 @@ import {
   searchAnnouncement,
 } from "@/services/announcementServices";
 import { useState, useEffect } from "react";
-import WarningModal from "@/components/modals/WarningModal";
 import { toast } from "react-toastify";
 import AnnouncementCard from "@/components/cards/AnnouncementCard";
 import ViewAnnouncementPanel from "../../../components/views/ViewAnnouncementPanel";
 import InfiniteScroll from "react-infinite-scroll-component";
+import DeleteModal from "@/components/modals/DeleteModal";
 
 const ViewAnnouncement = () => {
   const [announcementList, setAnnouncementList] = useState([]);
@@ -82,15 +82,6 @@ const ViewAnnouncement = () => {
     setAnnouncementListRaw(announcementData);
   }
 
-  // btn DELETE events + modal for delete
-  const handleDeleteClick = () => {
-    if (selectedAnnouncement.length === 0) {
-      toast.error("Please select at least one announcement to delete");
-    } else if (selectedAnnouncement.length > 0) {
-      setIsModalOpen(true);
-    }
-  };
-
   const handleConfirmDelete = async () => {
     const announcementIds = selectedAnnouncement.map(
       (announcement) => announcement.id
@@ -107,10 +98,6 @@ const ViewAnnouncement = () => {
     }
   };
 
-  const handleCloseModal = () => {
-    setIsModalOpen(false);
-  };
-
   // search event
   const handleSearch = (searchValue) => {
     setAnnouncementList([]);
@@ -118,10 +105,10 @@ const ViewAnnouncement = () => {
     setPageSearchValue(searchValue);
   };
 
-  const handleAnnouncementClick = (announcement) => {
-    setSelectedAnnouncementForModal(announcement);
-    setIsModalOpen(true);
-  };
+  // const handleAnnouncementClick = (announcement) => {
+  //   setSelectedAnnouncementForModal(announcement);
+  //   setIsModalOpen(true);
+  // };
 
   const handleScroll = async (event) => {
     setCurrentPage(currentPage + 1);
@@ -130,15 +117,6 @@ const ViewAnnouncement = () => {
     <>
       <Meta title={"View announcement"} />
       <div className="bg-slate-50 h-full pt-6">
-        {isModalOpen && (
-          <WarningModal
-            question="Are you sure you want to delete ?"
-            btnYesText="Yes, I'm sure"
-            btnNoText="No, cancel"
-            handleConfirmDelete={handleConfirmDelete}
-            handleCloseModal={handleCloseModal}
-          />
-        )}
         <div className="flex items-center">
           <div className="px-16">
             <SearchBar
@@ -156,11 +134,10 @@ const ViewAnnouncement = () => {
               text="Add new"
               href="/academic-affair/announcement/create-announcement"
             />
-            <ButtonDelete
-              text="Delete"
-              onClick={() => {
-                handleDeleteClick();
-              }}
+            <DeleteModal
+              item="announcement"
+              selectedItem={selectedAnnouncement}
+              handleConfirmDelete={handleConfirmDelete}
             />
           </div>
         </div>
@@ -195,7 +172,10 @@ const ViewAnnouncement = () => {
                   </div>
                 }
                 endMessage={
-                  <div data-test="end-message" className="font-semibold my-3 text-center">
+                  <div
+                    data-test="end-message"
+                    className="font-semibold my-3 text-center"
+                  >
                     Nothing more to show
                   </div>
                 }
@@ -203,7 +183,10 @@ const ViewAnnouncement = () => {
               >
                 {announcementList.map((announcement_item, idx) => {
                   return (
-                    <div data-test={`announcement-card-${idx}`} key={announcement_item.id}>
+                    <div
+                      data-test={`announcement-card-${idx}`}
+                      key={announcement_item.id}
+                    >
                       <AnnouncementCard
                         announcement={announcement_item}
                         selectedItem={selectedAnnouncement}

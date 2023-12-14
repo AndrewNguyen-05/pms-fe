@@ -1,6 +1,19 @@
 import React from "react";
 
-const AccountCard = ({ account, editOnClick }) => {
+const AccountCard = ({
+  account,
+  editOnClick,
+  selectedItem,
+  setSelectedItem,
+}) => {
+  const onItemSelect = (account, isSelected) => {
+    if (isSelected) {
+      setSelectedItem((prev) => [...prev, account]);
+    } else {
+      setSelectedItem((prev) => prev.filter((p) => p.id !== account.id));
+    }
+  };
+
   // card data functionality
   const convertToFullRole = (role) => {
     switch (role) {
@@ -75,7 +88,12 @@ const AccountCard = ({ account, editOnClick }) => {
   return (
     <div className="bg-white rounded-lg shadow-md px-4 py-5 flex flex-row gap-2">
       <div className="flex content-center justify-center w-16">
-        <input type="checkbox" className="w-4 h-4 m-auto" />
+        <input
+          type="checkbox"
+          className="w-4 h-4 m-auto"
+          checked={selectedItem.some((item) => item.id === account.id)}
+          onChange={(event) => onItemSelect(account, event.target.checked)}
+        />
       </div>
       <div className="flex flex-col gap-2 w-1/3">
         <div className="flex flex-col ">

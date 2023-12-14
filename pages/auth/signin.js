@@ -3,6 +3,7 @@ import { useRouter } from "next/router";
 import { useRef, useState } from "react";
 import Image from "next/image";
 import { toast } from "react-toastify";
+import Meta from "@/components/header/Meta";
 
 export default function SignInPage() {
   const [username, setUsername] = useState("");
@@ -13,7 +14,6 @@ export default function SignInPage() {
   const session = useSession();
 
   const handleLoginButton = (event) => {
-    console.log("logging in");
     signIn("credentials", {
       username: username,
       password: password,
@@ -94,6 +94,7 @@ export default function SignInPage() {
 
   return (
     <>
+      <Meta title={"Login"} />
       <div className="flex justify-center items-center h-screen bg-slate-100">
         <div className="bg-white rounded-[20px] shadow-lg w-[350px] h-[320px]">
           {/* <form method="post" action="/api/auth/callback/credentials"> */}
@@ -132,6 +133,11 @@ export default function SignInPage() {
                   className="bg-white border border-gray-300 text-gray-900 text-sm rounded-lg  focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
+                  onKeyDown={(event) => {
+                    if (event.key === "Enter") {
+                      handleLoginButton();
+                    }
+                  }}
                 />
                 <div className="flex justify-between items-center mt-4">
                   <button
