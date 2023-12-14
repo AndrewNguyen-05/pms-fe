@@ -1,7 +1,7 @@
 import React from "react";
-import ViewProject from "./view-project";
+import ViewProject from "../../../pages/academic-affair/project/view-project";
 import "../../../styles/globals.css";
-import "../../_app";
+import "../../../pages/_app";
 
 describe("Testing the function to view project list", () => {
   it("Testing the function renders", () => {

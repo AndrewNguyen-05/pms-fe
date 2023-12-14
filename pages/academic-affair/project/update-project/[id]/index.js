@@ -203,7 +203,7 @@ const UpdateProject = () => {
               </div>
               <fieldset className="col-span-2 border border-solid border-gray-300 p-3 rounded-lg">
                 <legend className="font-semibold">
-                  Teacher's Information{" "}
+                  Teacher&#39;s Information{" "}
                   <span className="text-red-600">(*)</span>
                 </legend>
                 <div className="grid grid-cols-3 gap-4">

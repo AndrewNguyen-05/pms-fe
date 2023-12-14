@@ -38,7 +38,7 @@ const ViewProjectModal = ({ project }) => {
           <div>
             <fieldset className="col-span-2 border border-solid border-gray-300 py-2 px-3 rounded-lg">
               <legend className="font-bold text-gray-700">
-                Teacher's Information
+                Teacher&#39;s Information
               </legend>
               <div className="mb-1">
                 <span className="font-bold text-gray-700">Name:</span>{" "}
