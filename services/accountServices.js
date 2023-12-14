@@ -16,4 +16,10 @@ const searchAccount = async (page, limit, search = "") => {
   }
 };
 
-export { getAccountList, searchAccount };
+const postCreateAccount = async (data) => {
+  return await axios.post("http://localhost:8888/api/v1/account/create", {
+    ...data,
+  });
+};
+
+export { getAccountList, searchAccount, postCreateAccount };

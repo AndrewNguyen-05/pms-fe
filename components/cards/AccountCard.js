@@ -50,22 +50,22 @@ const AccountCard = ({ account }) => {
       case "aa":
         return (
           <>
-            <div>{accountInfo.aa.aaCode}</div>
-            <div>{accountInfo.aa.faculty}</div>
+            <div>{accountInfo.aa?.aaCode}</div>
+            <div>{accountInfo.aa?.faculty}</div>
           </>
         );
       case "teacher":
         return (
           <>
-            <div>{accountInfo.teacher.teacherCode}</div>
-            <div>{accountInfo.teacher.faculty}</div>
+            <div>{accountInfo.teacher?.teacherCode}</div>
+            <div>{accountInfo.teacher?.faculty}</div>
           </>
         );
       case "student":
         return (
           <>
-            <div>{accountInfo.student.studentCode}</div>
-            <div>{accountInfo.student.major}</div>
+            <div>{accountInfo.student?.studentCode}</div>
+            <div>{accountInfo.student?.major}</div>
           </>
         );
       case "admin":

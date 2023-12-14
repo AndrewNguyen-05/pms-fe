@@ -1,3 +1,4 @@
+import { postCreateAccount } from "@/services/accountServices";
 import React, { useState } from "react";
 
 const InputFiled = ({
@@ -56,13 +57,13 @@ const GetRoleInput = ({ role, setRole }) => {
             title={"Academic Affair ID"}
             content={role}
             setContent={setRole}
-            propertyChangeName={["aa", "Code"]}
+            propertyChangeName={["aa", "code"]}
           />
           <InputFiled
             title={"Faculty"}
             content={role}
             setContent={setRole}
-            propertyChangeName={["aa", "Faculty"]}
+            propertyChangeName={["aa", "faculty"]}
           />
         </>
       );
@@ -73,13 +74,19 @@ const GetRoleInput = ({ role, setRole }) => {
             title={"Teacher ID"}
             content={role}
             setContent={setRole}
-            propertyChangeName={["teacher", "Code"]}
+            propertyChangeName={["teacher", "code"]}
           />
           <InputFiled
             title={"Faculty"}
             content={role}
             setContent={setRole}
-            propertyChangeName={["teacher", "Faculty"]}
+            propertyChangeName={["teacher", "faculty"]}
+          />
+          <InputFiled
+            title={"Academic Degree"}
+            content={role}
+            setContent={setRole}
+            propertyChangeName={["teacher", "academicDegree"]}
           />
         </>
       );
@@ -90,19 +97,19 @@ const GetRoleInput = ({ role, setRole }) => {
             title={"Student ID"}
             content={role}
             setContent={setRole}
-            propertyChangeName={["student", "Code"]}
+            propertyChangeName={["student", "code"]}
           />
           <InputFiled
             title={"Class"}
             content={role}
             setContent={setRole}
-            propertyChangeName={["student", "Class"]}
+            propertyChangeName={["student", "class"]}
           />
           <InputFiled
             title={"Major"}
             content={role}
             setContent={setRole}
-            propertyChangeName={["student", "Major"]}
+            propertyChangeName={["student", "major"]}
           />
         </>
       );
@@ -114,13 +121,23 @@ const GetRoleInput = ({ role, setRole }) => {
 const CreateAccount = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const [role, setRole] = useState({});
+  const [role, setRole] = useState({
+    value: "",
+    aa: { code: "", faculty: "" },
+    teacher: { code: "", faculty: "", academicDegree: "" },
+    student: { code: "", class: "", major: "" },
+  });
   const [email, setEmail] = useState("");
   const [name, setName] = useState("");
   const [dateOfBirth, setDateOfBirth] = useState("");
   const [phone, setPhone] = useState("");
 
-  async function createAccount() {}
+  async function createAccount() {
+    let account = { username, password };
+    let user = { email, name, dateOfBirth, phone };
+    let data = { account, user, role };
+    await postCreateAccount(data);
+  }
 
   return (
     <div className="h-screen bg-slate-50 px-20 py-8">
@@ -142,6 +159,7 @@ const CreateAccount = () => {
               title={"Password"}
               content={password}
               setContent={setPassword}
+              inputType="password"
             />
           </div>
 
