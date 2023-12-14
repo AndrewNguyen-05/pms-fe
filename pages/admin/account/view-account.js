@@ -4,9 +4,12 @@ import ButtonDelete from "@/components/buttons/ButtonDelete";
 import AccountCard from "@/components/cards/AccountCard";
 import Footer from "@/components/footer/Footer";
 import { getAccountList, searchAccount } from "@/services/accountServices";
+import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
 
 const ViewAccount = () => {
+  const router = useRouter();
+
   const [accountList, setAccountList] = useState([]);
   const [totalPage, setTotalPage] = useState(0);
   const [currentPage, setCurrentPage] = useState(1);
@@ -105,7 +108,13 @@ const ViewAccount = () => {
       <div className="flex flex-col h-full">
         <div className="flex flex-col gap-5">
           {accountList.map((account) => (
-            <AccountCard account={account} key={account.id} />
+            <AccountCard
+              account={account}
+              key={account.id}
+              editOnClick={() => {
+                router.push(`/admin/account/update-account/${account.id}`);
+              }}
+            />
           ))}
         </div>
         <div className="px-5 py-8 h-full flex flex-row-reverse">

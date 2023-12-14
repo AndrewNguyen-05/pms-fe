@@ -1,6 +1,6 @@
 import React from "react";
 
-const AccountCard = ({ account }) => {
+const AccountCard = ({ account, editOnClick }) => {
   // card data functionality
   const convertToFullRole = (role) => {
     switch (role) {
@@ -93,6 +93,9 @@ const AccountCard = ({ account }) => {
         <div>{account.phone}</div>
       </div>
       <div className={getRoleText(account.role)}>{getInfo(account)}</div>
+      <button className="text-blue-700 font-bold mr-10 " onClick={editOnClick}>
+        Edit
+      </button>
     </div>
   );
 };
