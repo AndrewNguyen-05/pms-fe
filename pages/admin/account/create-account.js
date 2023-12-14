@@ -1,5 +1,7 @@
 import { postCreateAccount } from "@/services/accountServices";
+import { useRouter } from "next/router";
 import React, { useState } from "react";
+import { toast } from "react-toastify";
 
 const InputFiled = ({
   title,
@@ -119,6 +121,7 @@ const GetRoleInput = ({ role, setRole }) => {
 };
 
 const CreateAccount = () => {
+  const router = useRouter();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [role, setRole] = useState({
@@ -136,7 +139,13 @@ const CreateAccount = () => {
     let account = { username, password };
     let user = { email, name, dateOfBirth, phone };
     let data = { account, user, role };
-    await postCreateAccount(data);
+    let result = await postCreateAccount(data);
+    if (result.data.EC === 0) {
+      toast.success(result.data.EM);
+      router.push("/admin/account/view-account");
+    } else {
+      toast.error(result.data.EM);
+    }
   }
 
   return (
