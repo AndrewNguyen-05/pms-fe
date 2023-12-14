@@ -19,8 +19,6 @@ const QuestionModal = ({ project, register }) => {
     }).then(async (result) => {
       if (result.isConfirmed) {
         register();
-        //   fetchCategories();
-        console.log(">>> check id", id);
       }
     });
   };

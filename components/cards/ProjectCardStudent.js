@@ -1,9 +1,14 @@
 import { registerProject } from "@/services/projectServices";
 import { toast } from "react-toastify";
 import { useEffect, useState } from "react";
+import ViewProjectModal from "../modals/ViewProjectModal";
 import QuestionModal from "../modals/QuestionModal";
+import withReactContent from "sweetalert2-react-content";
+import Swal from "sweetalert2";
 
-const ProjectCardStudent = ({ project, student, onClickView }) => {
+const MySwal = withReactContent(Swal);
+
+const ProjectCardStudent = ({ project, student, refreshProjects }) => {
   const { id } = project;
   console.log(">>> check student", student);
   const [registered, setRegistered] = useState(false);
@@ -11,22 +16,34 @@ const ProjectCardStudent = ({ project, student, onClickView }) => {
     const res = await registerProject(id, student);
     console.log(">>> check register:", res);
     if (res && res.data && res.data.EC === 0) {
-      toast.success(res.data.EM);
+      MySwal.fire({
+        icon: "success",
+        title: `${res.data.EM}`,
+        showConfirmButton: false,
+        timer: 1500,
+      });
+      refreshProjects();
     } else if (res && res.data && res.data.EC === 1) {
-      toast.error(res.data.EM);
+      MySwal.fire({
+        icon: "warning",
+        title: "Register failed!",
+        html: `${res.data.EM}`,
+        showConfirmButton: true,
+      });
     }
     return res;
+  };
+
+  const onClickView = () => {
+    ViewProjectModal({ project });
   };
 
   return (
     <>
       <div className="bg-white border-1 border-slate-100 rounded-2xl h-28 shadow-md flex items-center my-2 hover:bg-slate-50 cursor-pointer ">
         <div className="grid grid-cols-12 justify-between w-full h-full">
-          <div
-            className="col-span-6 ml-5 flex items-center"
-            onClick={onClickView}
-          >
-            <div className="flex flex-col">
+          <div className="col-span-6 ml-5 w-full pr-4" onClick={onClickView}>
+            <div className="flex flex-col h-full justify-center">
               <div className="font-bold text-base text-blue-700">
                 {project.name}
               </div>

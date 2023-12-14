@@ -26,13 +26,6 @@ const ViewProject = () => {
   const [pageSearchValue, setPageSearchValue] = useState("");
   const [selectedProjectForModal, setSelectedProjectForModal] = useState({});
 
-  //control the state of open modal
-  const [isWarningModalOpen, setIsWarningModalOpen] = useState(false);
-  const [isViewModalOpen, setIsViewModalOpen] = useState(false);
-
-  //list of project that is selected
-  const [selectedProject, setSelectedProject] = useState([]);
-
   useEffect(() => {
     getProjectsData();
     setCurrentOffset((currentPage - 1) * currentLimit + 1);
@@ -86,14 +79,6 @@ const ViewProject = () => {
     setCurrentPage(+event.selected + 1);
   };
 
-  const handleCloseWarningModal = () => {
-    setIsWarningModalOpen(false);
-  };
-
-  const handleCloseViewModal = () => {
-    setIsViewModalOpen(false);
-  };
-
   // search event
   const handleSearch = async (searchValue) => {
     setCurrentPage(1);
@@ -101,27 +86,11 @@ const ViewProject = () => {
   };
 
   let dataUser = useSession().data?.user;
-  console.log(">>> check user", dataUser);
 
   return (
     <>
       <Meta title={"View project"} />
       <div className="bg-slate-50 h-full w-full overflow-auto flex flex-col justify-between pt-6">
-        {isWarningModalOpen && (
-          <WarningModal
-            question="Are you sure you want to delete ?"
-            btnYesText="Yes, I'm sure"
-            btnNoText="No, cancel"
-            handleConfirmDelete={handleConfirmDelete}
-            handleCloseModal={handleCloseWarningModal}
-          />
-        )}
-        {isViewModalOpen && (
-          <ViewProjectModal
-            handleCloseModal={handleCloseViewModal}
-            project={selectedProjectForModal}
-          />
-        )}
         <div className="flex items-start flex-shrink">
           <div className="px-16">
             <SearchBar
@@ -143,10 +112,7 @@ const ViewProject = () => {
                 <ProjectCardStudent
                   project={project_item}
                   student={dataUser}
-                  onClickView={() => {
-                    setIsViewModalOpen(true);
-                    setSelectedProjectForModal(project_item);
-                  }}
+                  refreshProjects={getProjectsData}
                 />
               </div>
             );
