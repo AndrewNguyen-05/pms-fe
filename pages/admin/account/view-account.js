@@ -1,10 +1,15 @@
 import SearchBar from "@/components/SearchBar";
 import ButtonCreate from "@/components/buttons/ButtonCreate";
-import ButtonDelete from "@/components/buttons/ButtonDelete";
+import DeleteModal from "@/components/modals/DeleteModal";
 import AccountCard from "@/components/cards/AccountCard";
 import Footer from "@/components/footer/Footer";
-import { getAccountList, searchAccount } from "@/services/accountServices";
+import {
+  deleteAccount,
+  getAccountList,
+  searchAccount,
+} from "@/services/accountServices";
 import React, { useEffect, useState } from "react";
+import { toast } from "react-toastify";
 
 const ViewAccount = () => {
   const [accountList, setAccountList] = useState([]);
@@ -13,6 +18,9 @@ const ViewAccount = () => {
   const [currentLimit, setCurrentLimit] = useState(10);
   const [currentOffset, setCurrentOffset] = useState(0);
   const [pageSearchValue, setPageSearchValue] = useState("");
+
+  //list of project that is selected
+  const [selectedAccount, setSelectedAccount] = useState([]);
 
   useEffect(() => {
     getAccountInfo();
@@ -72,6 +80,19 @@ const ViewAccount = () => {
     setCurrentPage(+event.selected + 1);
   };
 
+  const handleConfirmDelete = async () => {
+    const accountIds = selectedAccount.map((account) => account.id);
+    let response = await deleteAccount(accountIds);
+    setSelectedAccount([]);
+    if (response && response.data && response.data.EC === 0) {
+      toast.success(response.data.EM);
+      getAccountInfo();
+    } else {
+      toast.error(response.data.EM);
+      getAccountInfo();
+    }
+  };
+
   // search event
   const handleSearch = async (searchValue) => {
     setCurrentPage(1);
@@ -94,18 +115,22 @@ const ViewAccount = () => {
         </div>
         <div className="flex justify-end gap-4 w-full">
           <ButtonCreate text="Add new" href="/admin/account/create-account" />
-          <ButtonDelete
-            text="Delete"
-            onClick={() => {
-              handleDeleteClick();
-            }}
+          <DeleteModal
+            item="account"
+            selectedItem={selectedAccount}
+            handleConfirmDelete={handleConfirmDelete}
           />
         </div>
       </div>
       <div className="flex flex-col h-full">
         <div className="flex flex-col gap-5">
           {accountList.map((account) => (
-            <AccountCard account={account} key={account.id} />
+            <AccountCard
+              account={account}
+              key={account.id}
+              selectedItem={selectedAccount}
+              setSelectedItem={setSelectedAccount}
+            />
           ))}
         </div>
         <div className="px-5 py-8 h-full flex flex-row-reverse">

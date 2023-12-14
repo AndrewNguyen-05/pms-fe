@@ -22,4 +22,10 @@ const postCreateAccount = async (data) => {
   });
 };
 
-export { getAccountList, searchAccount, postCreateAccount };
+const deleteAccount = async (accountIds) => {
+  return await axios.delete("http://localhost:8888/api/v1/account/delete", {
+    data: { accountIds },
+  });
+};
+
+export { getAccountList, searchAccount, postCreateAccount, deleteAccount };
