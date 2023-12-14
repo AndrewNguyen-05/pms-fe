@@ -1,14 +1,8 @@
 import Link from "next/link";
+import ViewProjectModal from "../modals/ViewProjectModal";
 const path = require("path");
 
-const ProjectCard = ({
-  project,
-  selectedItem,
-  setSelectedItem,
-  editHref,
-  onClickView,
-}) => {
-  console.log(">>> check pj:", project);
+const ProjectCard = ({ project, selectedItem, setSelectedItem, editHref }) => {
   const onItemSelect = (project, isSelected) => {
     if (isSelected) {
       setSelectedItem((prev) => [...prev, project]);
@@ -17,10 +11,14 @@ const ProjectCard = ({
     }
   };
 
+  const onClickView = () => {
+    ViewProjectModal({ project });
+  };
+
   return (
     <>
-      <div className="bg-white border-2 border-slate-100 rounded-2xl h-28 shadow-md flex items-center my-2 hover:bg-slate-50 cursor-pointer ">
-        <div className="grid grid-cols-12 justify-between w-full">
+      <div className="bg-white border-1 border-slate-100 rounded-xl h-28 shadow-md flex items-center my-2 hover:bg-slate-50 cursor-pointer">
+        <div className="grid grid-cols-12 justify-between w-full h-full">
           <div className="col-span-1 flex items-center justify-center">
             <input
               type="checkbox"
@@ -30,8 +28,8 @@ const ProjectCard = ({
               onChange={(event) => onItemSelect(project, event.target.checked)}
             />
           </div>
-          <div className="col-span-5 pr-4" onClick={onClickView}>
-            <div className="flex flex-col">
+          <div className="col-span-5 pr-4 w-full" onClick={onClickView}>
+            <div className="flex flex-col h-full justify-center">
               <div className="font-bold text-base text-blue-700">
                 {project.name}
               </div>
@@ -64,7 +62,7 @@ const ProjectCard = ({
               </div>
             </div>
           </div>
-          <div className="col-span-3 flex">
+          <div className="col-span-3 flex" onClick={onClickView}>
             <div className="flex flex-col justify-center font-semibold ml-5">
               {project.implementation.student1Id === null ? (
                 <div></div>

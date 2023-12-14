@@ -11,7 +11,7 @@ import {
 } from "@/services/scoreServices";
 import { useState, useEffect } from "react";
 import ReactPaginate from "react-paginate";
-import WarningModal from "@/components/modals/WarningModal";
+import WarningModal from "@/components/modals/DeleteModal";
 import { toast } from "react-toastify";
 
 const ViewScore = () => {

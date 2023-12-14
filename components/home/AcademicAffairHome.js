@@ -7,7 +7,7 @@ const AcademicAffairHome = () => {
     <>
       <Meta title={"Project Management System"} />
       <div className="bg-slate-50 w-full h-full flex flex-col items-center">
-        <div className="font-bold rounded-full text-xl px-5 py-3 mt-3 text-white bg-gradient-to-r from-blue-600 to-cyan-500 ">
+        <div className="font-bold rounded-md text-xl px-5 py-3 mt-3 text-white bg-gradient-to-r from-blue-600 to-cyan-500 ">
           TRANG HƯỚNG DẪN WEBSITE QUẢN LÝ ĐỒ ÁN 1, 2
         </div>
         <div data-test="main-page-card" className="main-page-card">

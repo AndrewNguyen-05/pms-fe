@@ -1,5 +1,4 @@
 import React, { useEffect } from "react";
-import WarningModal from "@/components/modals/WarningModal";
 import { useState } from "react";
 import { useRouter } from "next/router";
 import {
@@ -8,6 +7,7 @@ import {
 } from "@/services/announcementServices";
 import { toast } from "react-toastify";
 import Meta from "@/components/header/Meta";
+import CancelModal from "@/components/modals/CancelModal";
 
 const Index = () => {
   const defaultValidInput = {
@@ -17,7 +17,6 @@ const Index = () => {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
   const [isPublic, setIsPublic] = useState(false);
-  const [isModalOpen, setIsModalOpen] = useState(false);
   const [objCheckInput, setObjCheckInput] = useState(defaultValidInput);
   const router = useRouter();
 
@@ -72,27 +71,10 @@ const Index = () => {
     }
   };
 
-  const handleCancelClick = () => {
-    router.push("/academic-affair/announcement/view-announcement");
-  };
-
-  const handleCloseModal = () => {
-    setIsModalOpen(false);
-  };
-
   return (
     <>
       <Meta title={"Update announcement"} />
       <div className="bg-slate-100 min-w-full min-h-screen h-0 py-6">
-        {isModalOpen && (
-          <WarningModal
-            question="Are you sure you want to quit ?"
-            btnYesText="Yes, I'm sure"
-            btnNoText="No, cancel"
-            handleConfirmDelete={handleCancelClick}
-            handleCloseModal={handleCloseModal}
-          />
-        )}
         <section className="bg-white mx-20 rounded-2xl py-4 px-6 h-max ">
           <h1 className="mb-4 text-xl font-bold text-blue-700">
             Update announcement
@@ -156,15 +138,7 @@ const Index = () => {
           <br />
 
           <div className="flex gap-8 justify-end">
-            <button
-              data-test="cancel-button"
-              className="items-center px-5 py-2.5 mt-4 text-base font-medium border-2 border-red-600 text-center text-red-600 bg-white  rounded-lg focus:ring-2 focus:ring-red-200 hover:bg-red-600 hover:text-white hover:border-red-600"
-              onClick={() => {
-                setIsModalOpen(true);
-              }}
-            >
-              Cancel
-            </button>
+            <CancelModal hrefConfirm="/academic-affair/announcement/view-announcement" />
             <button
               data-test="update-button"
               className="items-center px-5 py-2.5 mt-4 text-base font-medium border-2 border-blue-700 text-center text-blue-700 bg-white  rounded-lg focus:ring-2 focus:ring-blue-200 hover:bg-blue-700 hover:text-white"

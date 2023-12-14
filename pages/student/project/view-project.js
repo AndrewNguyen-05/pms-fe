@@ -10,7 +10,7 @@ import ButtonCreate from "@/components/buttons/ButtonCreate";
 import {} from "../../../services/projectServices";
 import SearchBar from "@/components/SearchBar";
 import { toast } from "react-toastify";
-import WarningModal from "@/components/modals/WarningModal";
+import WarningModal from "@/components/modals/DeleteModal";
 import ButtonDelete from "@/components/buttons/ButtonDelete";
 import ProjectCardStudent from "@/components/cards/ProjectCardStudent";
 import Footer from "@/components/footer/Footer";
@@ -118,7 +118,6 @@ const ViewProject = () => {
         )}
         {isViewModalOpen && (
           <ViewProjectModal
-            btnBackText="Back"
             handleCloseModal={handleCloseViewModal}
             project={selectedProjectForModal}
           />

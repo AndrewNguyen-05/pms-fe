@@ -4,7 +4,7 @@ import { getTeacherData } from "@/services/teacherServices";
 import { useState, useEffect } from "react";
 import { toast } from "react-toastify";
 import { useRouter } from "next/router";
-import WarningModal from "@/components/modals/WarningModal";
+import CancelModal from "@/components/modals/CancelModal";
 
 const CreateProject = () => {
   const [teacher_list, setTeacherList] = useState([]);
@@ -29,9 +29,6 @@ const CreateProject = () => {
   const [projectType, setProjectType] = useState("");
   const [projectRequirement, setProjectRequirement] = useState("");
   const [teacherId, setTeacherId] = useState("");
-
-  //control the state of open modal
-  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const router = useRouter();
 
@@ -94,27 +91,10 @@ const CreateProject = () => {
     }
   };
 
-  const handleCancelClick = () => {
-    router.push("/academic-affair/project/view-project");
-  };
-
-  const handleCloseModal = () => {
-    setIsModalOpen(false);
-  };
-
   return (
     <>
       <Meta title={"Create new project"} />
       <div className="bg-slate-100 h-full py-6 ">
-        {isModalOpen && (
-          <WarningModal
-            question="Are you sure you want to quit ?"
-            btnYesText="Yes, I'm sure"
-            btnNoText="No, cancel"
-            handleConfirmDelete={handleCancelClick}
-            handleCloseModal={handleCloseModal}
-          />
-        )}
         <section className="bg-white mx-20 rounded-2xl">
           <div className="py-4 px-6">
             <h2 className="mb-4 text-xl font-bold text-blue-700 ">
@@ -298,15 +278,7 @@ const CreateProject = () => {
               </div>
             </div>
             <div className="flex gap-8 justify-end">
-              <button
-                data-test="cancel-button"
-                className="items-center px-5 py-2.5 mt-4 text-base font-medium border-2 border-red-600 text-center text-red-600 bg-white  rounded-lg focus:ring-2 focus:ring-red-200 hover:bg-red-600 hover:text-white hover:border-red-600"
-                onClick={() => {
-                  setIsModalOpen(true);
-                }}
-              >
-                Cancel
-              </button>
+              <CancelModal hrefConfirm="/academic-affair/project/view-project" />
               <button
                 data-test="create-button"
                 className="items-center px-5 py-2.5 mt-4 text-base font-medium border-2 border-blue-700 text-center text-blue-700 bg-white  rounded-lg focus:ring-2 focus:ring-blue-200 hover:bg-blue-700 hover:text-white"
