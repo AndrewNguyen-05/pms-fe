@@ -36,13 +36,13 @@ const CreateAccount = () => {
   return (
     <div className="min-h-screen h-max bg-slate-50 py-8 flex justify-center ">
       <div className="w-max h-max bg-white px-9 py-6 rounded-xl shadow-md">
-        <div className="text-blue-700 font-bold text-lg ml-3 mb-3 text-center">
+        <div className="text-blue-600 font-bold text-2xl ml-3 mb-3 text-center">
           Add new account
         </div>
         <div className="flex flex-row gap-2 h-fit w-[1000px]">
           <div className="flex flex-col gap-3 w-1/2">
             <div className="bg-white shadow-md rounded-xl px-10 py-5 flex flex-col gap-2 ">
-              <div className="mb-1 text-center text-blue-700 font-semibold">
+              <div className="mb-1 text-center text-blue-600 font-semibold">
                 Authentication information
               </div>
               <InputField

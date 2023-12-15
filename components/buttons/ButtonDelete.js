@@ -4,7 +4,7 @@ const ButtonDelete = ({ text, onClick }) => {
     <button
       id="delete-button"
       type="button"
-      className="btn-delete"
+      className="btn-red"
       onClick={() => {
         onClick();
       }}
