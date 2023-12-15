@@ -32,7 +32,7 @@ const DeleteModal = ({ item, selectedItem, handleConfirmDelete }) => {
     <button
       id="delete-button"
       type="button"
-      className="btn-delete"
+      className="btn-red"
       onClick={() => {
         handleDelete();
       }}

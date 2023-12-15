@@ -1,5 +1,4 @@
 import SearchBar from "@/components/SearchBar";
-import ButtonCreate from "@/components/buttons/ButtonCreate";
 import DeleteModal from "@/components/modals/DeleteModal";
 import AccountCard from "@/components/cards/AccountCard";
 import Footer from "@/components/footer/Footer";
@@ -12,6 +11,7 @@ import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import Meta from "@/components/header/Meta";
+import AddAccountModal from "@/components/modals/AddAccountModal";
 
 const ViewAccount = () => {
   const router = useRouter();
@@ -75,7 +75,6 @@ const ViewAccount = () => {
         pageSearchValue.toLowerCase()
       );
     }
-    console.log(accountData);
     setAccountListRaw(accountData);
     setTotalPage(accountData.totalPage);
   };
@@ -96,7 +95,6 @@ const ViewAccount = () => {
       getAccountInfo();
     }
   };
-
   // search event
   const handleSearch = async (searchValue) => {
     setCurrentPage(1);
@@ -106,7 +104,7 @@ const ViewAccount = () => {
   return (
     <>
       <Meta title={"View account"} />
-      <div className="bg-slate-50 min-h-full h-screen pt-6 px-20 ">
+      <div className="bg-slate-50 min-h-full pt-6 px-20 ">
         <div className="flex items-center mb-6">
           <div className="">
             <SearchBar
@@ -120,7 +118,7 @@ const ViewAccount = () => {
             />
           </div>
           <div className="flex justify-end gap-4 w-full">
-            <ButtonCreate text="Add new" href="/admin/account/create-account" />
+            <AddAccountModal />
             <DeleteModal
               item="account"
               selectedItem={selectedAccount}
@@ -129,7 +127,7 @@ const ViewAccount = () => {
           </div>
         </div>
         <div className="flex flex-col h-full">
-          <div className="flex flex-col gap-5">
+          <div className="flex flex-col gap-1.5">
             {accountList.map((account) => (
               <AccountCard
                 account={account}

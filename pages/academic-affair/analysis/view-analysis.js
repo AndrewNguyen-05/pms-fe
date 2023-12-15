@@ -119,7 +119,7 @@ const ViewAnalysis = () => {
             </ul>
           </div>
           <div className="flex justify-end gap-4 h-min mb-3">
-            <button className="btn-create" onClick={() => handleExport()}>
+            <button className="btn-blue" onClick={() => handleExport()}>
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"

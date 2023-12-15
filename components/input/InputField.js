@@ -28,10 +28,10 @@ export const InputField = ({
 
   return (
     <div className="flex flex-col">
-      <label>{title} </label>
+      <label className="text-left font-semibold">{title} </label>
       <input
         type={inputType}
-        className="border border-slate-200 rounded px-2 py-1"
+        className="border border-gray-200 rounded px-2 py-1"
         value={viewContent}
         onChange={(e) => {
           changeContent(e);
