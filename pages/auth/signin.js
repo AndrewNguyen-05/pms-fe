@@ -30,7 +30,7 @@ export default function SignInPage() {
         if (ok) {
           setJustLoggedIn(true);
           toast.success("Login success");
-          router.replace(url);
+          router.replace(new URL(url).origin);
           return;
         }
         if (error === "CredentialsSignin") {
