@@ -1,6 +1,7 @@
 import { GetRoleInput } from "@/components/input/GetRoleInput";
 import { InputField } from "@/components/input/InputField";
 import { postCreateAccount } from "@/services/accountServices";
+import { postNewClass } from "@/services/classServices";
 import { useRouter } from "next/router";
 import React, { useState } from "react";
 import { toast } from "react-toastify";
@@ -13,7 +14,7 @@ const CreateAccount = () => {
     value: "",
     aa: { code: "", faculty: "" },
     teacher: { code: "", faculty: "", academicDegree: "" },
-    student: { code: "", class: null, major: "" },
+    student: { code: "", class: null, newClass: null, major: "" },
   });
   const [email, setEmail] = useState("");
   const [name, setName] = useState("");
@@ -21,6 +22,13 @@ const CreateAccount = () => {
   const [phone, setPhone] = useState("");
 
   async function createAccount() {
+    if (role.student.class === "#Custom") {
+      let newClassData = await postNewClass(role.student.newClass);
+      let tmp = role;
+      tmp["student"]["class"] = newClassData.id;
+      setRole({ ...tmp });
+      console.log("creating>>", role);
+    }
     let account = { username, password };
     let user = { email, name, dateOfBirth, phone };
     let data = { account, user, role };
