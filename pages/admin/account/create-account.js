@@ -13,7 +13,7 @@ const CreateAccount = () => {
     value: "",
     aa: { code: "", faculty: "" },
     teacher: { code: "", faculty: "", academicDegree: "" },
-    student: { code: "", class: "", major: "" },
+    student: { code: "", class: null, major: "" },
   });
   const [email, setEmail] = useState("");
   const [name, setName] = useState("");
@@ -86,7 +86,7 @@ const CreateAccount = () => {
               Role information
             </div>
             <div className="flex flex-col">
-              <label>Role</label>
+              <label className="font-semibold">Role</label>
               <select
                 className="border border-slate-200 rounded px-2 py-1"
                 value={role.value}

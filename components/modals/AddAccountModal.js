@@ -27,7 +27,7 @@ const AddAccountModal = () => {
       value: "",
       aa: { code: "", faculty: "" },
       teacher: { code: "", faculty: "", academicDegree: "" },
-      student: { code: "", class: "", major: "" },
+      student: { code: "", class: null, major: "" },
     });
     setEmail("");
     setName("");
@@ -128,7 +128,7 @@ const AddAccountModal = () => {
                   Role information
                 </legend>
                 <div className="flex flex-col">
-                  <label className="text-left">Role</label>
+                  <label className="text-left font-semibold">Role</label>
                   <select
                     className="border border-gray-200 rounded px-2 py-1"
                     value={role.value}

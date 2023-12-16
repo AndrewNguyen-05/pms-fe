@@ -32,7 +32,7 @@ const UpdateAccount = ({ accountInfo }) => {
     },
     student: {
       code: studentInfo.studentCode ?? "",
-      class: studentInfo.class ?? "",
+      class: studentInfo.classID ?? null,
       major: studentInfo.major ?? "",
       id: studentInfo.id,
     },
@@ -122,7 +122,7 @@ const UpdateAccount = ({ accountInfo }) => {
                 Role information
               </legend>
               <div className="flex flex-col">
-                <label>Role</label>
+                <label className="font-semibold">Role</label>
                 <select
                   className="border border-slate-200 rounded px-2 py-1"
                   value={role.value}

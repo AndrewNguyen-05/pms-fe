@@ -1,6 +1,16 @@
+import { useEffect, useState } from "react";
 import { InputField } from "./InputField";
+import { getClassList } from "@/services/classServices";
 
 export const GetRoleInput = ({ role, setRole }) => {
+  const [classList, setClassList] = useState([]);
+  useEffect(() => {
+    getClassListData();
+  }, []);
+  const getClassListData = async () => {
+    let result = await getClassList();
+    setClassList(result);
+  };
   console.log("role input", role);
   switch (role.value) {
     case "aa":
@@ -52,12 +62,25 @@ export const GetRoleInput = ({ role, setRole }) => {
             setContent={setRole}
             propertyChangeName={["student", "code"]}
           />
-          <InputField
-            title={"Class"}
-            content={role}
-            setContent={setRole}
-            propertyChangeName={["student", "class"]}
-          />
+
+          <label className="font-semibold">Class</label>
+          <select
+            className="border border-slate-200 rounded px-2 py-1"
+            value={role.student.class}
+            onChange={(e) => {
+              let tmp = role;
+              tmp["student"]["class"] = e.target.value;
+              setRole({ ...tmp });
+            }}
+          >
+            <option value={null}>Not selected...</option>
+            {classList.map((classItem, index) => (
+              <option key={index} value={classItem.id}>
+                {classItem.className}
+              </option>
+            ))}
+          </select>
+
           <InputField
             title={"Major"}
             content={role}
