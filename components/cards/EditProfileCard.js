@@ -43,7 +43,11 @@ const EditProfileCard = ({ userData }) => {
     setUsername(userData?.username);
     setPhone(userData?.User?.phone);
     setDateOfBirth(userData?.User?.dateOfBirth.slice(0, 10));
-    setImages([userData?.User?.avatarLink]);
+    setImages([
+      userData?.User?.avatarLink === null
+        ? "https://ecommercenextjs.blob.core.windows.net/ecommerceadmin/1702836414429.png"
+        : userData?.User?.avatarLink,
+    ]);
   };
 
   const handleUpdateUser = async () => {

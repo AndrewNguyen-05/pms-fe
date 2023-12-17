@@ -28,7 +28,12 @@ const ProfileCard = ({ userData }) => {
             }}
           >
             <div className="w-64 rounded-full ring ring-sky-300 ring-offset-base-100 ring-offset-2 hover:cursor-pointer">
-              <img src={userData?.User?.avatarLink} />
+              <img
+                src={
+                  userData?.User?.avatarLink ||
+                  "https://ecommercenextjs.blob.core.windows.net/ecommerceadmin/1702836414429.png"
+                }
+              />
             </div>
           </div>
           <div>

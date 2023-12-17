@@ -81,7 +81,10 @@ const Navbar = ({ items }) => {
                     <div className="w-8 rounded-full ring ring-sky-500 ring-offset-base-100 ring-offset-2">
                       <img
                         alt="Tailwind CSS Navbar component"
-                        src={userData?.User?.avatarLink}
+                        src={
+                          userData?.User?.avatarLink ||
+                          "https://ecommercenextjs.blob.core.windows.net/ecommerceadmin/1702836414429.png"
+                        }
                       />
                     </div>
                     {userData?.User?.name}
