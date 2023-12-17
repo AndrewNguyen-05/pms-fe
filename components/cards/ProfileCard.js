@@ -1,13 +1,32 @@
 import formatRole from "@/utils/formatRole";
 import dayjs from "dayjs";
+import { useRouter } from "next/router";
 
 const ProfileCard = ({ userData }) => {
   console.log(">>> check userdata: ", userData);
+  const router = useRouter();
   return (
     <>
       <div className="bg-white rounded-md flex flex-col justify-center items-center w-1/3 py-3 m-5 shadow-md">
         <div>
-          <div className="avatar tooltip" data-tip="Change your avatar">
+          <div
+            className="avatar tooltip"
+            data-tip="Change your avatar"
+            onClick={() => {
+              switch (userData?.role) {
+                case "student":
+                  return router.push(
+                    `/student/profile/edit-profile/${userData?.User.name}`
+                  );
+                case "teacher":
+                  return router.push("/teacher/profile/edit-profile");
+                case "aa":
+                  return router.push("/aa/profile/edit-profile");
+                default:
+                  return null;
+              }
+            }}
+          >
             <div className="w-64 rounded-full ring ring-primary ring-offset-base-100 ring-offset-2 hover:cursor-pointer">
               <img src="https://daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg" />
             </div>
@@ -118,7 +137,12 @@ const ProfileCard = ({ userData }) => {
                   d="M17.982 18.725A7.488 7.488 0 0012 15.75a7.488 7.488 0 00-5.982 2.975m11.963 0a9 9 0 10-11.963 0m11.963 0A8.966 8.966 0 0112 21a8.966 8.966 0 01-5.982-2.275M15 9.75a3 3 0 11-6 0 3 3 0 016 0z"
                 />
               </svg>
-              {formatRole(userData?.role)}
+              {formatRole(userData?.role)} -{" "}
+              {userData?.role === "student"
+                ? userData?.studentCode
+                : userData?.role === "teacher"
+                ? userData?.teacherCode
+                : userData?.aaCode}
             </div>
             <div className="flex gap-3 items-center">
               <svg
@@ -143,7 +167,9 @@ const ProfileCard = ({ userData }) => {
               onClick={() => {
                 switch (userData?.role) {
                   case "student":
-                    return router.push("/student/profile/edit-profile");
+                    return router.push(
+                      `/student/profile/edit-profile/${userData?.User.name}`
+                    );
                   case "teacher":
                     return router.push("/teacher/profile/edit-profile");
                   case "aa":

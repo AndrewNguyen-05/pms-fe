@@ -14,11 +14,11 @@ const ViewProjectModal = ({ project }) => {
     html: (
       <div className="text-left">
         <div className="text-lg leading-relaxed text-gray-500 flex flex-col gap-3 mt-3">
-          <div className="flex gap-2">
-            <span className="font-bold text-gray-700">Requirement:</span>{" "}
+          <div className="flex flex-col gap-2">
+            <div className="font-bold text-gray-700">Requirement:</div>
             <div
               dangerouslySetInnerHTML={{
-                __html: project.requirement.replace(/\n/g, "<br />"),
+                __html: project.requirement?.replace(/\n/g, "<br />"),
               }}
             ></div>
           </div>

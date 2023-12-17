@@ -9,9 +9,9 @@ const MySwal = withReactContent(Swal);
 
 const CancelModal = ({
   hrefConfirm,
-  text,
-  title,
-  content,
+  text = "Cancel",
+  title = "Are you sure?",
+  content = "You won't be able to revert this!",
   disabled,
   isCancelRegister = false,
   projectId,

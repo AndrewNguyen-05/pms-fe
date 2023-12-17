@@ -15,7 +15,7 @@ const StudentProfile = () => {
     const getUser = async () => {
       if (session?.user?.userId) {
         let data = await getUserByID(session?.user.userId);
-        setUserData(data);
+        setUserData({ ...data, userId: session?.user?.userId });
       }
     };
 
