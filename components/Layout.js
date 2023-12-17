@@ -53,7 +53,6 @@ const Layout = ({ children }) => {
   const [items, setItems] = useState([]);
 
   const chooseNavbarItem = () => {
-    console.log(session);
     if (session.status === "authenticated") {
       switch (session.data.user.role) {
         case "aa":

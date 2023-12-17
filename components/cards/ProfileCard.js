@@ -2,6 +2,7 @@ import formatRole from "@/utils/formatRole";
 import dayjs from "dayjs";
 
 const ProfileCard = ({ userData }) => {
+  console.log(">>> check userdata: ", userData);
   return (
     <>
       <div className="bg-white rounded-md flex flex-col justify-center items-center w-1/3 py-3 m-5 shadow-md">
@@ -138,7 +139,21 @@ const ProfileCard = ({ userData }) => {
             </div>
           </div>
           <div className="w-64">
-            <button className="w-full border-[1px] shadow-md border-sky-200 text-blue-600 bg-white hover:text-white hover:bg-blue-600 focus:ring-1 focus:ring-blue-300 font-medium rounded-lg text-sm px-2 py-2.5 focus:outline-none flex items-center justify-center gap-3">
+            <button
+              onClick={() => {
+                switch (userData?.role) {
+                  case "student":
+                    return router.push("/student/profile/edit-profile");
+                  case "teacher":
+                    return router.push("/teacher/profile/edit-profile");
+                  case "aa":
+                    return router.push("/aa/profile/edit-profile");
+                  default:
+                    return null;
+                }
+              }}
+              className="w-full border-[1px] shadow-md border-sky-200 text-blue-600 bg-white hover:text-white hover:bg-blue-600 focus:ring-1 focus:ring-blue-300 font-medium rounded-lg text-sm px-2 py-2.5 focus:outline-none flex items-center justify-center gap-3"
+            >
               Edit profile
             </button>
           </div>

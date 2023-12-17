@@ -90,12 +90,20 @@ const getProjectById = async (projectId) => {
 const registerProject = async (projectId, student) => {
   const accountId = student?.accountId;
   const userId = student?.userId;
-  console.log(">>> check student", student, ", check project: ", projectId);
   let res = await axios.put(
     `http://localhost:8888/api/v1/project/register/${projectId}`,
     { accountId, userId }
   );
   return res;
+};
+
+const unregisterProject = async (projectId, studentId) => {
+  let res = await axios.put(
+    `http://localhost:8888/api/v1/project/unregister?projectId=${projectId}&studentId=${studentId}`
+  );
+  if (res && res.data.DT && res.data.EC === 0) {
+    return res.data.DT;
+  }
 };
 
 export {
@@ -107,4 +115,5 @@ export {
   getProjectById,
   searchProject,
   registerProject,
+  unregisterProject,
 };
