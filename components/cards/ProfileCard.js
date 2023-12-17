@@ -16,7 +16,7 @@ const ProfileCard = ({ userData }) => {
               switch (userData?.role) {
                 case "student":
                   return router.push(
-                    `/student/profile/edit-profile/${userData?.id}`
+                    `/student/profile/edit-profile/${userData?.User?.name}`
                   );
                 case "teacher":
                   return router.push("/teacher/profile/edit-profile");
@@ -173,7 +173,7 @@ const ProfileCard = ({ userData }) => {
                 switch (userData?.role) {
                   case "student":
                     return router.push(
-                      `/student/profile/edit-profile/${userData?.id}`
+                      `/student/profile/edit-profile/${userData?.User?.name}`
                     );
                   case "teacher":
                     return router.push("/teacher/profile/edit-profile");
