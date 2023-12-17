@@ -83,7 +83,7 @@ const Navbar = ({ items }) => {
                         alt="Tailwind CSS Navbar component"
                         src={
                           userData?.User?.avatarLink ||
-                          "https://ecommercenextjs.blob.core.windows.net/ecommerceadmin/1702836414429.png"
+                          "https://ecommercenextjs.blob.core.windows.net/ecommerceadmin/1702837258987.png"
                         }
                       />
                     </div>
