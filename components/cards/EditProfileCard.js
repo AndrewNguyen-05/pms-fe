@@ -87,7 +87,7 @@ const EditProfileCard = ({ userData }) => {
                 <input
                   type="text"
                   className="bg-gray-100 rounded-md my-2 p-2 w-11/12"
-                  defaultValue={userData?.username}
+                  defaultValue={username}
                   onChange={(e) => setUsername(e.target.value)}
                 />
               </div>
@@ -97,7 +97,7 @@ const EditProfileCard = ({ userData }) => {
                   <input
                     type="text"
                     className="bg-gray-100 rounded-md my-2 p-2 w-full"
-                    defaultValue={userData?.User?.phone}
+                    defaultValue={phone}
                     onChange={(e) => setPhone(e.target.value)}
                   />
                 </div>
@@ -106,7 +106,7 @@ const EditProfileCard = ({ userData }) => {
                   <input
                     type="date"
                     className="bg-gray-100 rounded-md my-2 p-2 w-full"
-                    value={userData?.User?.dateOfBirth.slice(0, 10)}
+                    value={dateOfBirth}
                     onChange={(e) => setDateOfBirth(e.target.value)}
                   />
                 </div>
@@ -116,7 +116,7 @@ const EditProfileCard = ({ userData }) => {
                 <input
                   type="text"
                   className="bg-gray-100 rounded-md my-2 p-2 w-11/12"
-                  defaultValue={userData?.User?.email}
+                  defaultValue={email}
                   onChange={(e) => setEmail(e.target.value)}
                 />
               </div>
@@ -164,7 +164,7 @@ const EditProfileCard = ({ userData }) => {
                       <Spinner />
                     </div>
                   )}
-                  <img src={userData?.User?.avatarLink} />
+                  <img src={images} />
                 </div>
               </div>
               <label
