@@ -78,7 +78,7 @@ const Navbar = ({ items }) => {
                   className="btn btn-ghost btn-square w-max py-1 px-3"
                 >
                   <div className="avatar flex items-center gap-4">
-                    <div className="w-8 rounded-full ring ring-sky-500 ring-offset-base-100 ring-offset-2">
+                    <div className="w-8 rounded-full ring ring-sky-300 ring-offset-base-100 ring-offset-2">
                       <img
                         alt="Tailwind CSS Navbar component"
                         src={
