@@ -23,6 +23,9 @@ const ViewAccount = () => {
   const [currentOffset, setCurrentOffset] = useState(0);
   const [pageSearchValue, setPageSearchValue] = useState("");
 
+  //for reload data
+  const [needReload, setNeedReload] = useState(false);
+
   //list of project that is selected
   const [selectedAccount, setSelectedAccount] = useState([]);
 
@@ -30,6 +33,14 @@ const ViewAccount = () => {
     getAccountInfo();
     setCurrentOffset((currentPage - 1) * currentLimit + 1);
   }, [currentPage, pageSearchValue]);
+
+  useEffect(() => {
+    if (needReload) {
+      getAccountInfo();
+      setCurrentOffset((currentPage - 1) * currentLimit + 1);
+      setNeedReload(false);
+    }
+  }, [needReload]);
 
   const setAccountListRaw = (accountData) => {
     setAccountList(
@@ -118,7 +129,7 @@ const ViewAccount = () => {
             />
           </div>
           <div className="flex justify-end gap-4 w-full">
-            <AddAccountModal />
+            <AddAccountModal setNeedReload={setNeedReload} />
             <DeleteModal
               item="account"
               selectedItem={selectedAccount}
@@ -137,6 +148,7 @@ const ViewAccount = () => {
                 }}
                 selectedItem={selectedAccount}
                 setSelectedItem={setSelectedAccount}
+                setNeedReload={setNeedReload}
               />
             ))}
           </div>

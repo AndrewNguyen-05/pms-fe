@@ -4,8 +4,9 @@ import { useRouter } from "next/router";
 import React, { useState } from "react";
 import { postCreateAccount } from "@/services/accountServices";
 import { toast } from "react-toastify";
+import { postNewClass } from "@/services/classServices";
 
-const AddAccountModal = () => {
+const AddAccountModal = ({ setNeedReload }) => {
   const router = useRouter();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -27,7 +28,7 @@ const AddAccountModal = () => {
       value: "",
       aa: { code: "", faculty: "" },
       teacher: { code: "", faculty: "", academicDegree: "" },
-      student: { code: "", class: null, major: "" },
+      student: { code: "", class: null, newClass: null, major: "" },
     });
     setEmail("");
     setName("");
@@ -36,14 +37,24 @@ const AddAccountModal = () => {
   };
 
   const createAccount = async () => {
+    if (role.student.class === "#Custom") {
+      let newClassData = await postNewClass(role.student.newClass);
+      let tmp = role;
+      tmp["student"]["class"] = newClassData.id;
+      setRole({ ...tmp });
+    }
+
+    console.log("creating>>", role);
+
     let account = { username, password };
     let user = { email, name, dateOfBirth, phone };
     let data = { account, user, role };
+
     let result = await postCreateAccount(data);
 
     if (result.data.EC === 0) {
       toast.success(result.data.EM);
-      window.location.reload();
+      setNeedReload(true);
     } else {
       toast.error(result.data.EM);
     }

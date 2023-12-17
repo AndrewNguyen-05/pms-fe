@@ -38,7 +38,18 @@ const studentItems = [
     effectHref: "/student/announcement/",
   },
 ];
-const teacherItems = [];
+const teacherItems = [
+  {
+    name: "Project",
+    href: "/teacher/project/view-project",
+    effectHref: "/teacher/project/",
+  },
+  {
+    name: "Announcement",
+    href: "/teacher/announcement/view-announcement",
+    effectHref: "/teacher/announcement/",
+  },
+];
 const adminItems = [
   {
     name: "Account",

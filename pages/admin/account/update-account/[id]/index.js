@@ -7,6 +7,7 @@ import {
   postCreateAccount,
   putUpdateAccount,
 } from "@/services/accountServices";
+import { postNewClass } from "@/services/classServices";
 import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
 import { toast } from "react-toastify";
@@ -50,6 +51,14 @@ const UpdateAccount = ({ accountInfo }) => {
   const [phone, setPhone] = useState(userInfo.phone ?? "");
 
   async function updateAccount() {
+    if (role.student.class === "#Custom") {
+      let newClassData = await postNewClass(role.student.newClass);
+      let tmp = role;
+      tmp["student"]["class"] = newClassData.id;
+      setRole({ ...tmp });
+      console.log("creating>>", role);
+    }
+
     let account = { username, password, id: accountInfo.id };
     let user = { email, name, dateOfBirth, phone, id: accountInfo.userID };
     let data = { account, user, role };

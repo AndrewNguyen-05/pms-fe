@@ -4,6 +4,7 @@ export const InputField = ({
   setContent,
   inputType = "text",
   propertyChangeName = null,
+  isHidden = false,
 }) => {
   let changeContent;
   let viewContent;
@@ -27,9 +28,12 @@ export const InputField = ({
   }
 
   return (
-    <div className="flex flex-col">
-      <label className="text-left font-semibold">{title} </label>
+    <div className="flex flex-col" hidden={isHidden}>
+      <label className="text-left font-semibold" hidden={isHidden}>
+        {title}
+      </label>
       <input
+        hidden={isHidden}
         type={inputType}
         className="border border-gray-200 rounded px-2 py-1"
         value={viewContent}

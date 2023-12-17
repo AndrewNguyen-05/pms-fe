@@ -1,10 +1,13 @@
 import React from "react";
+import UpdateAccount from "../modals/UpdateAccountModal";
+import UpdateAccountModal from "../modals/UpdateAccountModal";
 
 const AccountCard = ({
   account,
   editOnClick,
   selectedItem,
   setSelectedItem,
+  setNeedReload,
 }) => {
   const onItemSelect = (account, isSelected) => {
     if (isSelected) {
@@ -126,12 +129,13 @@ const AccountCard = ({
           {getInfo(account)}
         </div>
         <div className="col-span-1 flex items-center">
-          <button
+          {/* <button
             className="text-blue-600 text-lg w-max font-semibold hover:underline mr-10 "
             onClick={editOnClick}
           >
             Edit
-          </button>
+          </button> */}
+          <UpdateAccountModal id={account.id} setNeedReload={setNeedReload} />
         </div>
       </div>
     </>
