@@ -3,7 +3,6 @@ import withReactContent from "sweetalert2-react-content";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { unregisterProject } from "@/services/projectServices";
-import { set } from "lodash";
 
 const MySwal = withReactContent(Swal);
 
@@ -39,6 +38,7 @@ const CancelModal = ({
           });
           router.push(hrefConfirm);
         } else {
+          console.log(">>> check link: ", hrefConfirm);
           router.push(hrefConfirm);
         }
       }

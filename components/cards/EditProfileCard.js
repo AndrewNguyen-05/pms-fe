@@ -98,7 +98,16 @@ const EditProfileCard = ({ userData }) => {
                 <button className="w-[90px] border-2 border-blue-700 px-5 py-2.5 mt-4 shadow-md text-blue-600 bg-white hover:text-white hover:bg-blue-600 focus:ring-1 focus:ring-blue-300 font-medium rounded-lg text-sm focus:outline-none flex items-center justify-center gap-3">
                   Save
                 </button>
-                <CancelModal />
+                <CancelModal
+                  content="You will lost all your unsaved works!"
+                  hrefConfirm={
+                    userData?.role === "student"
+                      ? `/student/profile/view-profile/`
+                      : userData?.role === "teacher"
+                      ? `/teacher/profile/view-profile/`
+                      : `/aa/profile/view-profile/`
+                  }
+                />
               </div>
             </div>
             <div className="col-span-1">
