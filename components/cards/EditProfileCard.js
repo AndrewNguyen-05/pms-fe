@@ -1,12 +1,20 @@
 import { useState, useEffect } from "react";
 import CancelModal from "../modals/CancelModal";
+import Spinner from "../Spinner";
+import axios from "axios";
+import { updateUserData } from "@/services/userServices";
+import { toast } from "react-toastify";
+import { useRouter } from "next/router";
 
 const EditProfileCard = ({ userData }) => {
   console.log(">>> check userData", userData);
+  const router = useRouter();
   const [email, setEmail] = useState("");
   const [username, setUsername] = useState("");
   const [phone, setPhone] = useState("");
   const [isUploading, setIsUploading] = useState(false);
+  const [images, setImages] = useState([]);
+  const [dateOfBirth, setDateOfBirth] = useState("");
 
   async function uploadImages(ev) {
     const files = ev.target?.files;
@@ -17,12 +25,45 @@ const EditProfileCard = ({ userData }) => {
         data.append("file", file);
       }
       const res = await axios.post("/api/upload", data);
-      setImages((oldImages) => {
-        return [...oldImages, ...res.data.links];
-      });
+      setImages(res.data.links);
+      console.log(">>>> res.data.links", res.data.links);
       setIsUploading(false);
     }
   }
+  //get data
+  useEffect(() => {
+    if (userData) {
+      getUserData();
+      console.log(">>> check data", userData.username);
+    }
+  }, [userData]);
+
+  const getUserData = () => {
+    setEmail(userData?.User?.email);
+    setUsername(userData?.username);
+    setPhone(userData?.User?.phone);
+    setDateOfBirth(userData?.User?.dateOfBirth.slice(0, 10));
+    setImages([userData?.User?.avatarLink]);
+  };
+
+  const handleUpdateUser = async () => {
+    let data = {
+      username,
+      email,
+      phone,
+      dateOfBirth,
+      avatarLink: images[0],
+    };
+    console.log(">>> check data", data);
+    const res = await updateUserData(userData?.userId, data);
+    let serverData = res.data;
+    if (+serverData.EC === 0) {
+      toast.success(serverData.EM);
+      router.push("/student/profile/view-profile");
+    } else {
+      toast.error(serverData.EM);
+    }
+  };
 
   return (
     <>
@@ -65,7 +106,8 @@ const EditProfileCard = ({ userData }) => {
                   <input
                     type="date"
                     className="bg-gray-100 rounded-md my-2 p-2 w-full"
-                    value={userData?.User?.dateOfBirth}
+                    value={userData?.User?.dateOfBirth.slice(0, 10)}
+                    onChange={(e) => setDateOfBirth(e.target.value)}
                   />
                 </div>
               </div>
@@ -95,7 +137,10 @@ const EditProfileCard = ({ userData }) => {
                 />
               </div>
               <div className="flex gap-2 justify-end w-11/12">
-                <button className="w-[90px] border-2 border-blue-700 px-5 py-2.5 mt-4 shadow-md text-blue-600 bg-white hover:text-white hover:bg-blue-600 focus:ring-1 focus:ring-blue-300 font-medium rounded-lg text-sm focus:outline-none flex items-center justify-center gap-3">
+                <button
+                  onClick={handleUpdateUser}
+                  className="w-[90px] border-2 text-base border-blue-700 px-5 py-2.5 mt-4 shadow-md text-blue-600 bg-white hover:text-white hover:bg-blue-600 focus:ring-1 focus:ring-blue-300 font-medium rounded-lg focus:outline-none flex items-center justify-center gap-3"
+                >
                   Save
                 </button>
                 <CancelModal
@@ -114,14 +159,19 @@ const EditProfileCard = ({ userData }) => {
               <div className="font-semibold mb-2">Profile picture</div>
               <div className="avatar flex flex-col">
                 <div className="w-52 rounded-full mb-2">
-                  <img src="https://daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg" />
+                  {isUploading && (
+                    <div className="w-full h-full flex items-center justify-center">
+                      <Spinner />
+                    </div>
+                  )}
+                  <img src={userData?.User?.avatarLink} />
                 </div>
               </div>
               <label
                 htmlFor="fileUpload"
-                className="px-3 py-1 bg-white text-blue-700 hover:bg-blue-500 hover:text-white shadow-md rounded cursor-pointer  overflow-hidden"
+                className="px-3 py-1 bg-white text-blue-700 border-2 border-blue-600 hover:bg-blue-600 hover:text-white shadow-md rounded-md cursor-pointer  overflow-hidden"
               >
-                Choose File
+                Choose Image
               </label>
               <input
                 type="file"

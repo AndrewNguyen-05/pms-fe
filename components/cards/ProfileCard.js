@@ -16,7 +16,7 @@ const ProfileCard = ({ userData }) => {
               switch (userData?.role) {
                 case "student":
                   return router.push(
-                    `/student/profile/edit-profile/${userData?.User.name}`
+                    `/student/profile/edit-profile/${userData?.id}`
                   );
                 case "teacher":
                   return router.push("/teacher/profile/edit-profile");
@@ -27,8 +27,8 @@ const ProfileCard = ({ userData }) => {
               }
             }}
           >
-            <div className="w-64 rounded-full ring ring-primary ring-offset-base-100 ring-offset-2 hover:cursor-pointer">
-              <img src="https://daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg" />
+            <div className="w-64 rounded-full ring ring-sky-300 ring-offset-base-100 ring-offset-2 hover:cursor-pointer">
+              <img src={userData?.User?.avatarLink} />
             </div>
           </div>
           <div>
@@ -168,7 +168,7 @@ const ProfileCard = ({ userData }) => {
                 switch (userData?.role) {
                   case "student":
                     return router.push(
-                      `/student/profile/edit-profile/${userData?.User.name}`
+                      `/student/profile/edit-profile/${userData?.id}`
                     );
                   case "teacher":
                     return router.push("/teacher/profile/edit-profile");

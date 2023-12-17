@@ -92,7 +92,7 @@ const UpdateProject = () => {
     return true;
   };
 
-  //handle create project
+  //handle update project
   const handleUpdateProject = async () => {
     let check = isValidateInput();
     if (check) {
