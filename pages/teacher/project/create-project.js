@@ -5,8 +5,10 @@ import { useState, useEffect } from "react";
 import { toast } from "react-toastify";
 import { useRouter } from "next/router";
 import CancelModal from "@/components/modals/CancelModal";
+import { useSession } from "next-auth/react";
 
 const CreateProject = () => {
+  const session = useSession();
   const [teacher_list, setTeacherList] = useState([]);
   let defaultTeacherInformation = {
     name: "",
@@ -37,10 +39,15 @@ const CreateProject = () => {
     async function getData() {
       //get teacher data
       let teachersData = await getTeacherData();
-      setTeacherList(teachersData);
+      let currentTeacher = teachersData.filter((teacher) => {
+        if (teacher.User.id === session?.data?.user.userId) {
+          return teacher;
+        }
+      });
+      setTeacherList(currentTeacher);
     }
     getData();
-  }, []);
+  }, [session]);
 
   //validate the input
   const isValidateInput = () => {

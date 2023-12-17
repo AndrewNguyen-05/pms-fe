@@ -29,7 +29,7 @@ const ViewProject = () => {
   const [currentOffset, setCurrentOffset] = useState(0);
   const [pageSearchValue, setPageSearchValue] = useState("");
   const [selectedProjectForModal, setSelectedProjectForModal] = useState({});
-  const [myProject, setMyProject] = useState(false);
+  const [myProject, setMyProject] = useState(true);
 
   //list of project that is selected
   const [selectedProject, setSelectedProject] = useState([]);

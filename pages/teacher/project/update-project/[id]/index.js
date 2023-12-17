@@ -42,16 +42,27 @@ const UpdateProject = () => {
       getProjectsData();
       getData();
     }
-  }, [router.query.id]);
+  }, [router.query.id, session?.data?.user.userId]);
 
   const getData = async () => {
     //get teacher data
     let teachersData = await getTeacherData();
-    setTeacherList(teachersData);
+    let currentTeacher = teachersData.filter((teacher) => {
+      if (teacher.User.id === session?.data?.user.userId) {
+        return teacher;
+      }
+    });
+    setTeacherList(currentTeacher);
   };
 
   const getProjectsData = async () => {
     const projectData = await getProjectById(router.query.id);
+
+    if (session.status === "authenticated") {
+      if (session?.data?.user.userId !== projectData.Teacher.User.id) {
+        await router.replace("/404");
+      }
+    }
     setProject(projectData);
     setProjectId(projectData.id);
     setProjectName(projectData.name);
