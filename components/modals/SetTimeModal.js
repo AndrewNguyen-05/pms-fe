@@ -8,7 +8,12 @@ import {
   setProjectTime,
 } from "@/services/projectServices";
 
-const SetTimeModal = ({ selectedProject, aaData, selectedItem }) => {
+const SetTimeModal = ({
+  selectedProject,
+  aaData,
+  selectedItem,
+  setParentTimeData,
+}) => {
   const [isNewTime, setIsNewTime] = useState(false);
   const [isEditTime, setIsEditTime] = useState(false);
   const [timeData, setTimeData] = useState([]);
@@ -19,6 +24,12 @@ const SetTimeModal = ({ selectedProject, aaData, selectedItem }) => {
   const [newSemester, setNewSemester] = useState("");
   const [newStart, setNewStart] = useState("");
   const [newEnd, setNewEnd] = useState("");
+
+  useEffect(() => {
+    if (setParentTimeData) {
+      setParentTimeData(timeData);
+    }
+  }, [timeData]);
 
   useEffect(() => {
     getTimeData();
@@ -152,26 +163,28 @@ const SetTimeModal = ({ selectedProject, aaData, selectedItem }) => {
                   New
                 </button>{" "}
                 {timeId != "" ? (
-                  <button
-                    onClick={() => {
-                      setIsNewTime(true);
-                      setIsEditTime(true);
-                    }}
-                    className="self-end px-5 py-1 text-base font-medium border-2 border-blue-700 text-center text-blue-700 bg-white  rounded-lg focus:ring-2 focus:ring-blue-200 hover:bg-blue-700 hover:text-white"
-                  >
-                    Edit
-                  </button>
+                  <>
+                    <button
+                      onClick={() => {
+                        setIsNewTime(true);
+                        setIsEditTime(true);
+                      }}
+                      className="self-end px-5 py-1 text-base font-medium border-2 border-blue-700 text-center text-blue-700 bg-white  rounded-lg focus:ring-2 focus:ring-blue-200 hover:bg-blue-700 hover:text-white"
+                    >
+                      Edit
+                    </button>
+                    <button
+                      onClick={() => {
+                        handleDeleteTime();
+                      }}
+                      className="self-end px-5 py-1 text-base font-medium border-2 border-red-700 text-center text-red-700 bg-white  rounded-lg focus:ring-2 focus:ring-blue-200 hover:bg-red-700 hover:text-white"
+                    >
+                      Delete
+                    </button>
+                  </>
                 ) : (
                   <></>
                 )}
-                <button
-                  onClick={() => {
-                    handleDeleteTime();
-                  }}
-                  className="self-end px-5 py-1 text-base font-medium border-2 border-red-700 text-center text-red-700 bg-white  rounded-lg focus:ring-2 focus:ring-blue-200 hover:bg-red-700 hover:text-white"
-                >
-                  Delete
-                </button>
               </div>
             ) : (
               <div className="flex flex-col gap-2">

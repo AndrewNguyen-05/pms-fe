@@ -5,6 +5,7 @@ import {
   getProjectData,
   deleteProject,
   searchProject,
+  searchProjectWithTime,
 } from "../../../services/projectServices";
 import ButtonCreate from "@/components/buttons/ButtonCreate";
 import {} from "../../../services/projectServices";
@@ -33,13 +34,19 @@ const ViewProject = () => {
   //list of project that is selected
   const [selectedProject, setSelectedProject] = useState([]);
 
+  //Time data
+  const [timeData, setTimeData] = useState([]);
+  const [selectedTime, setSelectedTime] = useState("");
+
   useEffect(() => {
     getCurrentUserData();
-
     getProjectsData();
-    getListProject();
     setCurrentOffset((currentPage - 1) * currentLimit + 1);
-  }, [currentPage, pageSearchValue, session]);
+  }, [currentPage, pageSearchValue, session, selectedTime]);
+
+  useEffect(() => {
+    setSelectedProject([]);
+  }, [selectedTime]);
 
   const getCurrentUserData = async () => {
     if (session.status === "authenticated") {
@@ -79,15 +86,12 @@ const ViewProject = () => {
 
   async function getProjectsData() {
     let projectsData;
-    if (!pageSearchValue) {
-      projectsData = await getProjectData(currentPage, currentLimit);
-    } else {
-      projectsData = await searchProject(
-        currentPage,
-        currentLimit,
-        pageSearchValue.toLowerCase()
-      );
-    }
+    projectsData = await searchProjectWithTime(
+      currentPage,
+      currentLimit,
+      pageSearchValue?.toLowerCase(),
+      selectedTime === "" ? null : selectedTime
+    );
     setProjectListRaw(projectsData);
     setTotalPage(projectsData.totalPage);
   }
@@ -139,10 +143,28 @@ const ViewProject = () => {
             />
           </div>
           <div className="flex justify-end gap-4 w-full mr-16">
+            <select
+              className="select select-info w-full max-w-xs"
+              value={selectedTime}
+              onChange={(e) => {
+                setSelectedTime(e.target.value);
+              }}
+            >
+              <option value="">All</option>
+              {timeData.map((timeValue, index) => {
+                return (
+                  <option value={timeValue.id} key={index}>
+                    {timeValue.semester} - {timeValue.year}
+                  </option>
+                );
+              })}
+              <option value="#NotSetted">Not setted</option>
+            </select>
             <SetTimeModal
               selectedProject={selectedProject}
               aaData={aaData}
               selectedItem={selectedProject}
+              setParentTimeData={setTimeData}
             />
             <button className="btn-blue" onClick={() => handleExport()}>
               <svg
