@@ -1,7 +1,11 @@
 import axios from "axios";
 
-const getListProject = async () => {
-  const res = await axios.get("http://localhost:8888/api/v1/project/read");
+const getListProject = async (timeId = null) => {
+  const res = await axios.get("http://localhost:8888/api/v1/project/read", {
+    params: {
+      timeId,
+    },
+  });
   if (res && res.data.DT && res.data.EC === 0) {
     return res.data.DT;
   }

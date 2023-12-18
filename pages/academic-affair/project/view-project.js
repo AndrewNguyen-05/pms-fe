@@ -121,7 +121,7 @@ const ViewProject = () => {
 
   //export excel
   const handleExport = async () => {
-    const data = await getListProject();
+    const data = await getListProject(selectedTime);
     console.log(">>> check data", data);
     ExportExcel(data);
   };
