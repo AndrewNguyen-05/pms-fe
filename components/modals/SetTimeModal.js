@@ -5,6 +5,7 @@ import {
   getListTime,
   postCreateTime,
   putUpdateTime,
+  setProjectTime,
 } from "@/services/projectServices";
 
 const SetTimeModal = ({ selectedProject, aaData, selectedItem }) => {
@@ -56,6 +57,7 @@ const SetTimeModal = ({ selectedProject, aaData, selectedItem }) => {
     console.log("create time result >>> ", result);
     await getTimeData();
     setIsNewTime(false);
+    setTimeId(result.data.DT.id);
   };
 
   const editTime = async () => {
@@ -79,6 +81,8 @@ const SetTimeModal = ({ selectedProject, aaData, selectedItem }) => {
     } else if (isNewTime) {
       await createNewTime();
     }
+    const data = { selectedProject, timeId };
+    await setProjectTime(data);
   };
 
   const handleDeleteTime = async () => {

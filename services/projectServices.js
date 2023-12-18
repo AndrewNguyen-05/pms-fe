@@ -165,6 +165,15 @@ const deleteTime = async (id) => {
   );
 };
 
+const setProjectTime = async (data) => {
+  return await axios.put(
+    "http://localhost:8888/api/v1/project/set-project-time",
+    {
+      ...data,
+    }
+  );
+};
+
 export {
   getListProject,
   getProjectData,
@@ -181,4 +190,5 @@ export {
   postCreateTime,
   putUpdateTime,
   deleteTime,
+  setProjectTime,
 };
