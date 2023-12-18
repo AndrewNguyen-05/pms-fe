@@ -103,9 +103,10 @@ const providers = [
 ];
 
 const callbacks = {
-  jwt: async ({ token, user }) => {
+  jwt: async ({ token, user, trigger }) => {
     console.log(">>> refresh token:", token.refreshToken);
     console.log(">>> jti token:", token.jti);
+    console.log(">>>trigger: ", trigger);
     //console.log(user);
     if (user) {
       // The user will be null after first callback

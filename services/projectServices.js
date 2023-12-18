@@ -130,6 +130,40 @@ const unregisterProject = async (projectId, studentId) => {
     return res.data.DT;
   }
 };
+const getListTime = async () => {
+  const res = await axios.get("http://localhost:8888/api/v1/project/read-time");
+  if (res && res.data.DT && res.data.EC === 0) {
+    return res.data.DT;
+  }
+};
+const postCreateTime = async (data) => {
+  return await axios.post("http://localhost:8888/api/v1/project/create-time", {
+    ...data,
+  });
+};
+
+const putUpdateTime = async (data) => {
+  try {
+    const response = await axios.put(
+      `http://localhost:8888/api/v1/project/update-time/${data.id}`,
+      {
+        ...data,
+      }
+    );
+    return response;
+  } catch (error) {
+    console.log(">>> check error", error);
+  }
+};
+
+const deleteTime = async (id) => {
+  return await axios.delete(
+    "http://localhost:8888/api/v1/project/delete-time",
+    {
+      data: { id },
+    }
+  );
+};
 
 export {
   getListProject,
@@ -143,4 +177,8 @@ export {
   unregisterProject,
   getProjectDataTeacher,
   getListProjectTeacher,
+  getListTime,
+  postCreateTime,
+  putUpdateTime,
+  deleteTime,
 };

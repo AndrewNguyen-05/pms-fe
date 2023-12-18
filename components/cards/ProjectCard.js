@@ -24,7 +24,7 @@ const ProjectCard = ({ project, selectedItem, setSelectedItem, editHref }) => {
               type="checkbox"
               className="w-5 h-5 text-blue-600 bg-gray-100 border-gray-300"
               checked={selectedItem.some((item) => item.id === project.id)}
-              disabled={project.registerStatus === 1 ? true : false}
+              // disabled={project.registerStatus === 1 ? true : false}
               onChange={(event) => onItemSelect(project, event.target.checked)}
             />
           </div>

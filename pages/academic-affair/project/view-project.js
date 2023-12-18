@@ -14,8 +14,14 @@ import DeleteModal from "@/components/modals/DeleteModal";
 import ProjectCard from "@/components/cards/ProjectCard";
 import Footer from "@/components/footer/Footer";
 import ExportExcel from "@/utils/exportProjectList";
+import SetTimeModal from "@/components/modals/SetTimeModal";
+import { useSession } from "next-auth/react";
+import { getUserByID } from "@/services/userServices";
 
 const ViewProject = () => {
+  const session = useSession();
+  const [aaData, setAAData] = useState({});
+
   const [project_list, setProjectList] = useState([]);
   const [totalPage, setTotalPage] = useState(0);
   const [currentPage, setCurrentPage] = useState(1);
@@ -28,10 +34,20 @@ const ViewProject = () => {
   const [selectedProject, setSelectedProject] = useState([]);
 
   useEffect(() => {
+    getCurrentUserData();
+
     getProjectsData();
     getListProject();
     setCurrentOffset((currentPage - 1) * currentLimit + 1);
-  }, [currentPage, pageSearchValue]);
+  }, [currentPage, pageSearchValue, session]);
+
+  const getCurrentUserData = async () => {
+    if (session.status === "authenticated") {
+      let result = await getUserByID(session?.data?.user.userId);
+      console.log(result);
+      setAAData(result);
+    }
+  };
 
   const setProjectListRaw = (projectsData) => {
     setProjectList(
@@ -123,6 +139,11 @@ const ViewProject = () => {
             />
           </div>
           <div className="flex justify-end gap-4 w-full mr-16">
+            <SetTimeModal
+              selectedProject={selectedProject}
+              aaData={aaData}
+              selectedItem={selectedProject}
+            />
             <button className="btn-blue" onClick={() => handleExport()}>
               <svg
                 xmlns="http://www.w3.org/2000/svg"
