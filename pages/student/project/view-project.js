@@ -5,6 +5,7 @@ import {
   getProjectData,
   deleteProject,
   searchProject,
+  searchProjectStudent,
 } from "../../../services/projectServices";
 import ButtonCreate from "@/components/buttons/ButtonCreate";
 import {} from "../../../services/projectServices";
@@ -62,15 +63,11 @@ const ViewProject = () => {
 
   async function getProjectsData() {
     let projectsData;
-    if (!pageSearchValue) {
-      projectsData = await getProjectData(currentPage, currentLimit);
-    } else {
-      projectsData = await searchProject(
-        currentPage,
-        currentLimit,
-        pageSearchValue.toLowerCase()
-      );
-    }
+    projectsData = await searchProjectStudent(
+      currentPage,
+      currentLimit,
+      pageSearchValue?.toLowerCase()
+    );
     setProjectListRaw(projectsData);
     setTotalPage(projectsData.totalPage);
   }
