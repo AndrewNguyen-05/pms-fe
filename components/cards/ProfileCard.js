@@ -16,7 +16,7 @@ const ProfileCard = ({ userData }) => {
               switch (userData?.role) {
                 case "student":
                   return router.push(
-                    `/student/profile/edit-profile/${userData?.id}`
+                    `/student/profile/edit-profile/${userData?.User?.name}`
                   );
                 case "teacher":
                   return router.push("/teacher/profile/edit-profile");
@@ -31,7 +31,7 @@ const ProfileCard = ({ userData }) => {
               <img
                 src={
                   userData?.User?.avatarLink ||
-                  "https://ecommercenextjs.blob.core.windows.net/ecommerceadmin/1702836414429.png"
+                  "https://ecommercenextjs.blob.core.windows.net/ecommerceadmin/1702837258987.png"
                 }
               />
             </div>
@@ -173,7 +173,7 @@ const ProfileCard = ({ userData }) => {
                 switch (userData?.role) {
                   case "student":
                     return router.push(
-                      `/student/profile/edit-profile/${userData?.id}`
+                      `/student/profile/edit-profile/${userData?.User?.name}`
                     );
                   case "teacher":
                     return router.push("/teacher/profile/edit-profile");

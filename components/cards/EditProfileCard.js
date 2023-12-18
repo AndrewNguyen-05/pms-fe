@@ -45,7 +45,7 @@ const EditProfileCard = ({ userData }) => {
     setDateOfBirth(userData?.User?.dateOfBirth.slice(0, 10));
     setImages([
       userData?.User?.avatarLink === null
-        ? "https://ecommercenextjs.blob.core.windows.net/ecommerceadmin/1702836414429.png"
+        ? "https://ecommercenextjs.blob.core.windows.net/ecommerceadmin/1702837258987.png"
         : userData?.User?.avatarLink,
     ]);
   };
