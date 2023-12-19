@@ -174,8 +174,8 @@ const ViewProject = () => {
             />
           </div>
 
-          <div className="flex justify-end gap-4 w-full mr-16">
-            <div className="flex gap-3">
+          <div className="flex flex-col-reverse justify-end gap-4 w-full mr-16">
+            <div className="flex gap-3 justify-end">
               <select
                 className="select select-info w-full max-w-xs"
                 value={selectedTime}
@@ -200,11 +200,11 @@ const ViewProject = () => {
                 setParentTimeData={setTimeData}
                 setParentPageReload={setPageReload}
               />
-            </div>
-            <div className="flex gap-3">
               <button className="btn-blue" onClick={() => handleMyProject()}>
                 {myProject ? "All Project" : "My Project"}
               </button>
+            </div>
+            <div className="flex gap-3 justify-end">
               <button className="btn-blue" onClick={() => handleExport()}>
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
