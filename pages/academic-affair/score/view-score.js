@@ -12,6 +12,8 @@ import ScoreCard from "@/components/cards/ScoreCard";
 import Footer from "@/components/footer/Footer";
 import SearchBar from "@/components/SearchBar";
 import ExportExcel from "@/utils/exportScoreList";
+import SelectTime from "@/components/select/SelectTime";
+import { getListTime } from "@/services/projectServices";
 
 const NewViewScore = () => {
   const [score_list, setScoreList] = useState([]);
@@ -21,11 +23,25 @@ const NewViewScore = () => {
   const [currentOffset, setCurrentOffset] = useState(0);
   const [pageSearchValue, setPageSearchValue] = useState("");
 
+  const [timeData, setTimeData] = useState([]);
+  const [selectedTime, setSelectedTime] = useState("");
+
   // use effect
   useEffect(() => {
     getScoreInfo();
     setCurrentOffset((currentPage - 1) * currentLimit + 1);
-  }, [currentPage, pageSearchValue]);
+  }, [currentPage, pageSearchValue, selectedTime]);
+
+  // get time data
+  useEffect(() => {
+    getTimeData();
+  }, []);
+
+  const getTimeData = async () => {
+    let timedata = await getListTime();
+    console.log("timedata", timedata);
+    setTimeData(timedata);
+  };
 
   const setScoreListRaw = (scoreData) => {
     setScoreList(
@@ -48,15 +64,12 @@ const NewViewScore = () => {
 
   async function getScoreInfo() {
     let scoreData;
-    if (!pageSearchValue) {
-      scoreData = await getScoreData(currentPage, currentLimit);
-    } else {
-      scoreData = await searchScore(
-        currentPage,
-        currentLimit,
-        pageSearchValue.toLowerCase()
-      );
-    }
+    scoreData = await searchScore(
+      currentPage,
+      currentLimit,
+      pageSearchValue?.toLowerCase(),
+      selectedTime === "" ? null : selectedTime
+    );
     setScoreListRaw(scoreData);
     setTotalPage(scoreData.totalPage);
   }
@@ -73,8 +86,15 @@ const NewViewScore = () => {
 
   // export event
   const handleExport = async () => {
-    const data = await getScoreList();
+    const data = await getScoreList(selectedTime);
     ExportExcel(data);
+  };
+
+  //select time event
+  const handleSelectTime = (e) => {
+    setSelectedTime(e.target.value);
+    setCurrentPage(1);
+    setPageSearchValue(pageSearchValue);
   };
 
   return (
@@ -94,6 +114,11 @@ const NewViewScore = () => {
             />
           </div>
           <div className="flex justify-end gap-4 w-full mr-16">
+            <SelectTime
+              timeData={timeData}
+              selectedTime={selectedTime}
+              handleSelectTime={handleSelectTime}
+            />
             <button className="btn-blue" onClick={() => handleExport()}>
               <svg
                 xmlns="http://www.w3.org/2000/svg"

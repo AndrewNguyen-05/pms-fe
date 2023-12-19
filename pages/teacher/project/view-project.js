@@ -21,6 +21,7 @@ import ProjectCardTeacher from "@/components/cards/ProjectCardTeacher";
 import { useSession } from "next-auth/react";
 import SetTimeModal from "@/components/modals/SetTimeModal";
 import { getUserByID } from "@/services/userServices";
+import SelectTime from "@/components/select/SelectTime";
 
 const ViewProject = () => {
   const session = useSession();
@@ -164,7 +165,7 @@ const ViewProject = () => {
       <Meta title={"View project"} />
       <div className="bg-slate-50 h-full w-full overflow-auto flex flex-col justify-between pt-6">
         <div className="flex items-start flex-shrink">
-          <div className="px-16">
+          <div className="px-16 flex flex-col gap-4">
             <SearchBar
               placeholder="Search Project..."
               handleSearch={handleSearch}
@@ -174,27 +175,18 @@ const ViewProject = () => {
                 }
               }}
             />
+            <label className="text-blue-700 font-semibold text-lg">
+              {myProject ? "My Project" : "All Project"}
+            </label>
           </div>
 
           <div className="flex flex-col-reverse justify-end gap-4 w-full mr-16">
             <div className="flex gap-3 justify-end">
-              <select
-                className="select select-info w-full max-w-xs"
-                value={selectedTime}
-                onChange={(e) => {
-                  handleSelectTime(e);
-                }}
-              >
-                <option value="">All</option>
-                {timeData.map((timeValue, index) => {
-                  return (
-                    <option value={timeValue.id} key={index}>
-                      {timeValue.semester} - {timeValue.year}
-                    </option>
-                  );
-                })}
-                <option value="#NotSetted">Not setted</option>
-              </select>
+              <SelectTime
+                timeData={timeData}
+                selectedTime={selectedTime}
+                handleSelectTime={handleSelectTime}
+              />
               <SetTimeModal
                 selectedProject={selectedProject}
                 teacherData={teacherData}

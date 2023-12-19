@@ -18,6 +18,7 @@ import ExportExcel from "@/utils/exportProjectList";
 import SetTimeModal from "@/components/modals/SetTimeModal";
 import { useSession } from "next-auth/react";
 import { getUserByID } from "@/services/userServices";
+import SelectTime from "@/components/select/SelectTime";
 
 const ViewProject = () => {
   const session = useSession();
@@ -154,23 +155,11 @@ const ViewProject = () => {
           </div>
           <div className="flex justify-end gap-4 w-full mr-16">
             <div className="flex gap-3">
-              <select
-                className="select select-info w-full max-w-xs"
-                value={selectedTime}
-                onChange={(e) => {
-                  handleSelectTime(e);
-                }}
-              >
-                <option value="">All</option>
-                {timeData.map((timeValue, index) => {
-                  return (
-                    <option value={timeValue.id} key={index}>
-                      {timeValue.semester} - {timeValue.year}
-                    </option>
-                  );
-                })}
-                <option value="#NotSetted">Not setted</option>
-              </select>
+              <SelectTime
+                timeData={timeData}
+                selectedTime={selectedTime}
+                handleSelectTime={handleSelectTime}
+              />
               <SetTimeModal
                 selectedProject={selectedProject}
                 aaData={aaData}

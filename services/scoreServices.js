@@ -1,7 +1,11 @@
 import axios from "axios";
 
-const getScoreList = async () => {
-  const res = await axios.get("http://localhost:8888/api/v1/score/read");
+const getScoreList = async (timeId = null) => {
+  const res = await axios.get("http://localhost:8888/api/v1/score/read", {
+    params: {
+      timeId,
+    },
+  });
   if (res && res.data.DT && res.data.EC === 0) {
     return res.data.DT;
   }
@@ -26,9 +30,16 @@ const getScoreById = async (id) => {
   }
 };
 
-const searchScore = async (page, limit, search = "") => {
-  let apiHref = `http://localhost:8888/api/v1/score/read?page=${page}&&limit=${limit}&&search=${search}`;
-  const res = await axios.get(apiHref);
+const searchScore = async (page, limit, search = "", timeId = null) => {
+  let apiHref = `http://localhost:8888/api/v1/score/read`;
+  const res = await axios.get(apiHref, {
+    params: {
+      page,
+      limit,
+      search,
+      timeId,
+    },
+  });
   if (res && res.data.DT && res.data.EC === 0) {
     return res.data.DT;
   }
