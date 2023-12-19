@@ -19,9 +19,17 @@ const ProfileCard = ({ userData }) => {
                     `/student/profile/edit-profile/${userData?.User?.name}`
                   );
                 case "teacher":
-                  return router.push("/teacher/profile/edit-profile");
+                  return router.push(
+                    `/teacher/profile/edit-profile/${userData?.User?.name}`
+                  );
                 case "aa":
-                  return router.push("/aa/profile/edit-profile");
+                  return router.push(
+                    `/academic-affair/profile/edit-profile/${userData?.User?.name}`
+                  );
+                case "admin":
+                  return router.push(
+                    `/admin/profile/edit-profile/${userData?.User?.name}`
+                  );
                 default:
                   return null;
               }
@@ -142,12 +150,14 @@ const ProfileCard = ({ userData }) => {
                   d="M17.982 18.725A7.488 7.488 0 0012 15.75a7.488 7.488 0 00-5.982 2.975m11.963 0a9 9 0 10-11.963 0m11.963 0A8.966 8.966 0 0112 21a8.966 8.966 0 01-5.982-2.275M15 9.75a3 3 0 11-6 0 3 3 0 016 0z"
                 />
               </svg>
-              {formatRole(userData?.role)} -{" "}
+              {formatRole(userData?.role)}{" "}
               {userData?.role === "student"
-                ? userData?.studentCode
+                ? "- " + userData?.studentCode
                 : userData?.role === "teacher"
-                ? userData?.teacherCode
-                : userData?.aaCode}
+                ? "- " + userData?.teacherCode
+                : userData?.role === "aa"
+                ? "- " + userData?.academicAffairCode
+                : ""}
             </div>
             <div className="flex gap-3 items-center">
               <svg
@@ -176,9 +186,17 @@ const ProfileCard = ({ userData }) => {
                       `/student/profile/edit-profile/${userData?.User?.name}`
                     );
                   case "teacher":
-                    return router.push("/teacher/profile/edit-profile");
+                    return router.push(
+                      `/teacher/profile/edit-profile/${userData?.User?.name}`
+                    );
                   case "aa":
-                    return router.push("/aa/profile/edit-profile");
+                    return router.push(
+                      `/academic-affair/profile/edit-profile/${userData?.User?.name}`
+                    );
+                  case "admin":
+                    return router.push(
+                      `/admin/profile/edit-profile/${userData?.User?.name}`
+                    );
                   default:
                     return null;
                 }

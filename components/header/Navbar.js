@@ -119,9 +119,13 @@ const Navbar = ({ items }) => {
                     href={(() => {
                       switch (userData.role) {
                         case "teacher":
-                          return "/teacher/profile/view-profile";
+                          return `/teacher/profile/view-profile/${userData?.User?.name}`;
                         case "student":
-                          return "/student/profile/view-profile";
+                          return `/student/profile/view-profile/${userData?.User?.name}`;
+                        case "aa":
+                          return `/academic-affair/profile/view-profile/${userData?.User?.name}`;
+                        case "admin":
+                          return `/admin/profile/view-profile/${userData?.User?.name}`;
                         default:
                           return "/";
                       }

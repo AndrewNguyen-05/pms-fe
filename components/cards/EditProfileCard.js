@@ -81,7 +81,13 @@ const EditProfileCard = ({ userData }) => {
                 <input
                   type="text"
                   className="bg-gray-100 rounded-md my-2 p-2 w-11/12 hover:disabled:cursor-not-allowed disabled:opacity-50"
-                  disabled={userData?.role === "student" ? true : false}
+                  disabled={
+                    userData?.role === "student" ||
+                    userData?.role === "teacher" ||
+                    userData?.role === "aa"
+                      ? true
+                      : false
+                  }
                   defaultValue={userData?.User?.name}
                   onChange={(e) => setName(e.target.value)}
                 />

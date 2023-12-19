@@ -1,21 +1,10 @@
 import { useState, useEffect } from "react";
 import Meta from "@/components/header/Meta";
-import {
-  getListProject,
-  getProjectData,
-  deleteProject,
-  searchProject,
-  searchProjectStudent,
-} from "../../../services/projectServices";
-import ButtonCreate from "@/components/buttons/ButtonCreate";
+import { searchProjectStudent } from "../../../services/projectServices";
 import {} from "../../../services/projectServices";
 import SearchBar from "@/components/SearchBar";
-import { toast } from "react-toastify";
-import WarningModal from "@/components/modals/DeleteModal";
-import ButtonDelete from "@/components/buttons/ButtonDelete";
 import ProjectCardStudent from "@/components/cards/ProjectCardStudent";
 import Footer from "@/components/footer/Footer";
-import ViewProjectModal from "@/components/modals/ViewProjectModal";
 import { useSession } from "next-auth/react";
 
 const ViewProject = () => {
@@ -25,7 +14,6 @@ const ViewProject = () => {
   const [currentLimit, setCurrentLimit] = useState(10);
   const [currentOffset, setCurrentOffset] = useState(0);
   const [pageSearchValue, setPageSearchValue] = useState("");
-  const [selectedProjectForModal, setSelectedProjectForModal] = useState({});
 
   useEffect(() => {
     getProjectsData();

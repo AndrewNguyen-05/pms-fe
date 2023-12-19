@@ -164,7 +164,7 @@ const ViewAnnouncement = () => {
                     data-test="end-message"
                     className="font-semibold my-3 text-center"
                   >
-                    Nothing more to show
+                    Nothing left to show
                   </div>
                 }
                 scrollableTarget="scrollableAnnouncementDiv"
