@@ -27,7 +27,7 @@ const ProfileCard = ({ userData }) => {
                   );
                 case "admin":
                   return router.push(
-                    `/admin/profile/edit-profile/${userData?.User?.name}`
+                    `/admin/profile/view-profile/${userData?.User?.name}`
                   );
                 default:
                   return null;
@@ -194,7 +194,7 @@ const ProfileCard = ({ userData }) => {
                     );
                   case "admin":
                     return router.push(
-                      `/admin/profile/edit-profile/${userData?.User?.name}`
+                      `/admin/profile/view-profile/${userData?.User?.name}`
                     );
                   default:
                     return null;

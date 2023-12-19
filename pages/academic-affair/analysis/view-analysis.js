@@ -90,7 +90,7 @@ const ViewAnalysis = () => {
       <div className="w-full h-screen px-7 pb-7 pt-4 bg-slate-50">
         <div className="flex justify-between items-center">
           <div
-            className="w-[575px] mb-3 shadow-lg rounded-lg"
+            className="w-[645px] mb-3 shadow-lg rounded-lg"
             id="navbar-default"
           >
             <ul className="font-medium flex gap-5 p-3 w-full border bg-white rounded-lg border-gray-100 rtl:space-x-reverse">
@@ -112,7 +112,7 @@ const ViewAnalysis = () => {
                 <div
                   className={activeIndex === 2 ? "nav-active" : "nav-default"}
                 >
-                  Score average
+                  Student&apos;s score average
                 </div>
               </li>
             </ul>
@@ -364,7 +364,7 @@ const ViewAnalysis = () => {
                   }
                 >
                   <div className="font-semibold text-2xl ml-10 my-5">
-                    Average score
+                    Average student&apos;s score
                   </div>
                   <BarChart
                     width={1300}
@@ -392,9 +392,13 @@ const ViewAnalysis = () => {
                       verticalAlign="top"
                       align="right"
                     />
-                    <Bar dataKey="Average score" stackId="a" fill="#93c5fd">
+                    <Bar
+                      dataKey="Average student's score"
+                      stackId="a"
+                      fill="#93c5fd"
+                    >
                       <LabelList
-                        dataKey="Average score"
+                        dataKey="Average student's score"
                         position="top"
                         className="text-green-200 text-lg font-semibold"
                       />
