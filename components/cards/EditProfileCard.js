@@ -7,9 +7,9 @@ import { toast } from "react-toastify";
 import { useRouter } from "next/router";
 
 const EditProfileCard = ({ userData }) => {
-  console.log(">>> check userData", userData);
   const router = useRouter();
   const [email, setEmail] = useState("");
+  const [name, setName] = useState("");
   const [username, setUsername] = useState("");
   const [phone, setPhone] = useState("");
   const [isUploading, setIsUploading] = useState(false);
@@ -26,7 +26,6 @@ const EditProfileCard = ({ userData }) => {
       }
       const res = await axios.post("/api/upload", data);
       setImages(res.data.links);
-      console.log(">>>> res.data.links", res.data.links);
       setIsUploading(false);
     }
   }
@@ -34,15 +33,19 @@ const EditProfileCard = ({ userData }) => {
   useEffect(() => {
     if (userData) {
       getUserData();
-      console.log(">>> check data", userData.username);
     }
   }, [userData]);
 
   const getUserData = () => {
+    setName(userData?.User?.name);
     setEmail(userData?.User?.email);
     setUsername(userData?.username);
     setPhone(userData?.User?.phone);
-    setDateOfBirth(userData?.User?.dateOfBirth.slice(0, 10));
+    setDateOfBirth(
+      userData?.User?.dateOfBirth
+        ? userData?.User?.dateOfBirth.slice(0, 10)
+        : ""
+    );
     setImages([
       userData?.User?.avatarLink === null
         ? "https://ecommercenextjs.blob.core.windows.net/ecommerceadmin/1702837258987.png"
@@ -52,18 +55,36 @@ const EditProfileCard = ({ userData }) => {
 
   const handleUpdateUser = async () => {
     let data = {
+      name,
       username,
       email,
       phone,
       dateOfBirth,
       avatarLink: images[0],
     };
-    console.log(">>> check data", data);
     const res = await updateUserData(userData?.userId, data);
     let serverData = res.data;
     if (+serverData.EC === 0) {
       toast.success(serverData.EM);
-      router.push("/student/profile/view-profile");
+      switch (userData?.role) {
+        case "student":
+          router.push(`/student/profile/view-profile/${userData?.User?.name}`);
+          break;
+        case "teacher":
+          router.push(`/teacher/profile/view-profile/${userData?.User?.name}`);
+          break;
+        case "aa":
+          router.push(
+            `/academic-affair/profile/view-profile/${userData?.User?.name}`
+          );
+          break;
+        case "admin":
+          router.push(`/admin/profile/view-profile/${userData?.User?.name}`);
+          break;
+        default:
+          router.push("/");
+          break;
+      }
     } else {
       toast.error(serverData.EM);
     }
@@ -88,7 +109,7 @@ const EditProfileCard = ({ userData }) => {
                       ? true
                       : false
                   }
-                  defaultValue={userData?.User?.name}
+                  defaultValue={name}
                   onChange={(e) => setName(e.target.value)}
                 />
               </div>
@@ -157,10 +178,12 @@ const EditProfileCard = ({ userData }) => {
                   content="You will lost all your unsaved works!"
                   hrefConfirm={
                     userData?.role === "student"
-                      ? `/student/profile/view-profile/`
+                      ? `/student/profile/view-profile/${userData?.User?.name}`
                       : userData?.role === "teacher"
-                      ? `/teacher/profile/view-profile/`
-                      : `/aa/profile/view-profile/`
+                      ? `/teacher/profile/view-profile/${userData?.User?.name}`
+                      : userData?.role === "aa"
+                      ? `/academic-affair/profile/view-profile/${userData?.User?.name}`
+                      : `/admin/profile/view-profile/${userData?.User?.name}`
                   }
                 />
               </div>

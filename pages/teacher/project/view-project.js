@@ -110,7 +110,6 @@ const ViewProject = () => {
     const data = await getListProjectTeacher(
       myProject ? session?.data?.user.userId : null
     );
-    console.log(">>> check data", data);
     ExportExcel(data);
   };
 

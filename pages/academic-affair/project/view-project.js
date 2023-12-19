@@ -55,7 +55,6 @@ const ViewProject = () => {
   const getCurrentUserData = async () => {
     if (session.status === "authenticated") {
       let result = await getUserByID(session?.data?.user.userId);
-      console.log(result);
       setAAData(result);
     }
   };
@@ -126,7 +125,6 @@ const ViewProject = () => {
   //export excel
   const handleExport = async () => {
     const data = await getListProject(selectedTime);
-    console.log(">>> check data", data);
     const time = timeData.find((item) => item.id === +selectedTime);
     ExportExcel(data, time);
   };

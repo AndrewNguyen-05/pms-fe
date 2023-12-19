@@ -3,7 +3,6 @@ import dayjs from "dayjs";
 import { useRouter } from "next/router";
 
 const ProfileCard = ({ userData }) => {
-  console.log(">>> check userdata: ", userData);
   const router = useRouter();
   return (
     <>

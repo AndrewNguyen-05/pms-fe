@@ -91,7 +91,7 @@ const Navbar = ({ items }) => {
                   </div>
                 </div>
               </summary>
-              <ul className="p-2 bg-base-100 dropdown-content w-full rounded-t-none shadow-md rounded-md flex flex-col items-center">
+              <ul className="p-2 bg-base-100 w-[200px] dropdown-content rounded-t-none shadow-md rounded-md flex flex-col items-center z-50">
                 <li className="w-11/12">
                   <Link
                     href="/"

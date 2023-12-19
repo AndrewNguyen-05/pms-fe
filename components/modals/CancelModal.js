@@ -38,7 +38,6 @@ const CancelModal = ({
           });
           router.push(hrefConfirm);
         } else {
-          console.log(">>> check link: ", hrefConfirm);
           router.push(hrefConfirm);
         }
       }

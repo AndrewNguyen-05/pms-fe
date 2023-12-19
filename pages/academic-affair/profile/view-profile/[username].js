@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import { getProjectOfStudent } from "@/services/studentServices";
 import CancelModal from "@/components/modals/CancelModal";
 import Meta from "@/components/header/Meta";
-import TeacherProfileCard from "@/components/cards/TeacherProfileCard";
+import AcademicAffairProfileCard from "@/components/cards/AcademicAffairProfileCard";
 
 const AcademicAffairProfile = () => {
   const { data: session } = useSession();
@@ -35,7 +35,7 @@ const AcademicAffairProfile = () => {
       <Meta title="My Profile" />
       <div className="bg-slate-50 w-full p-1 flex gap-5">
         <ProfileCard userData={userData} />
-        <TeacherProfileCard />
+        <AcademicAffairProfileCard />
       </div>
     </>
   );

@@ -1,5 +1,14 @@
 import axios from "axios";
 
+const getStudentByTeacher = async () => {
+  const res = await axios.get(
+    "http://localhost:8888/api/v1/analysis/readStudent"
+  );
+  if (res && res.data.DT && res.data.EC === 0) {
+    return res.data.DT;
+  }
+};
+
 const getStudentAndProject = async () => {
   const res = await axios.get(
     `http://localhost:8888/api/v1/analysis/readStudentAndProject`
@@ -64,6 +73,7 @@ const getHighestAverageScore = async () => {
 };
 
 export {
+  getStudentByTeacher,
   getStudentAndProject,
   getTeacherWithMostProject,
   getTeacherWithMostStudent,

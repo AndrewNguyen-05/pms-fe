@@ -73,7 +73,6 @@ const ViewAnalysis = () => {
   };
 
   const handleExport = () => {
-    console.log(">>> check data", numberOfStudentAndProject);
     ExportExcel(
       numberOfStudentAndProject,
       projectStatus,
