@@ -38,11 +38,15 @@ const ViewProject = () => {
   const [timeData, setTimeData] = useState([]);
   const [selectedTime, setSelectedTime] = useState("");
 
+  //Reload
+  const [pageReload, setPageReload] = useState(false);
+
   useEffect(() => {
     getCurrentUserData();
     getProjectsData();
     setCurrentOffset((currentPage - 1) * currentLimit + 1);
-  }, [currentPage, pageSearchValue, session, selectedTime]);
+    setPageReload(false);
+  }, [currentPage, pageSearchValue, session, selectedTime, pageReload]);
 
   useEffect(() => {
     setSelectedProject([]);
@@ -172,6 +176,7 @@ const ViewProject = () => {
               aaData={aaData}
               selectedItem={selectedProject}
               setParentTimeData={setTimeData}
+              setParentPageReload={setPageReload}
             />
             <button className="btn-blue" onClick={() => handleExport()}>
               <svg

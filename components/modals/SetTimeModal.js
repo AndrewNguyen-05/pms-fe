@@ -13,6 +13,7 @@ const SetTimeModal = ({
   aaData,
   selectedItem,
   setParentTimeData,
+  setParentPageReload,
 }) => {
   const [isNewTime, setIsNewTime] = useState(false);
   const [isEditTime, setIsEditTime] = useState(false);
@@ -99,6 +100,7 @@ const SetTimeModal = ({
     console.log("timeID", tmpTimeId);
     const data = { selectedProject, timeId: tmpTimeId };
     await setProjectTime(data);
+    setParentPageReload(true);
   };
 
   const handleDeleteTime = async () => {
