@@ -30,7 +30,14 @@ const getScoreById = async (id) => {
   }
 };
 
-const searchScore = async (page, limit, search = "", timeId = null) => {
+const searchScore = async (
+  page,
+  limit,
+  search = "",
+  timeId = null,
+  teacherUserId
+) => {
+  console.log(">>> teacherUserId", teacherUserId);
   let apiHref = `http://localhost:8888/api/v1/score/read`;
   const res = await axios.get(apiHref, {
     params: {
@@ -38,6 +45,7 @@ const searchScore = async (page, limit, search = "", timeId = null) => {
       limit,
       search,
       timeId,
+      teacherUserId,
     },
   });
   if (res && res.data.DT && res.data.EC === 0) {
