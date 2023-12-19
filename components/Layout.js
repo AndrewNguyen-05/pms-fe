@@ -49,6 +49,11 @@ const teacherItems = [
     href: "/teacher/announcement/view-announcement",
     effectHref: "/teacher/announcement/",
   },
+  {
+    name: "Score",
+    href: "/teacher/score/view-score",
+    effectHref: "/teacher/score/",
+  },
 ];
 const adminItems = [
   {
