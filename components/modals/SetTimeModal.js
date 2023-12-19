@@ -11,6 +11,7 @@ import {
 const SetTimeModal = ({
   selectedProject,
   aaData,
+  teacherData,
   selectedItem,
   setParentTimeData,
   setParentPageReload,
@@ -62,7 +63,7 @@ const SetTimeModal = ({
     const newData = {
       newYear: newYear,
       newSemester: newSemester,
-      faculty: aaData.faculty,
+      faculty: aaData ? aaData.faculty : teacher ? teacherData.faculty : null,
       newStart: newStart,
       newEnd: newEnd,
     };
@@ -79,7 +80,7 @@ const SetTimeModal = ({
       id: timeId,
       newYear: newYear,
       newSemester: newSemester,
-      faculty: aaData.faculty,
+      faculty: aaData ? aaData.faculty : teacher ? teacherData.faculty : null,
       newStart: newStart,
       newEnd: newEnd,
     };
@@ -91,6 +92,9 @@ const SetTimeModal = ({
   };
 
   const setTime = async () => {
+    console.log("setting time");
+    console.log("aadata", aaData);
+    console.log("teacherdata", teacherData);
     let tmpTimeId = timeId;
     if (isNewTime && isEditTime) {
       tmpTimeId = await editTime();
@@ -161,33 +165,39 @@ const SetTimeModal = ({
                     })}
                   </select>
                 </div>
-                <button
-                  onClick={() => {
-                    setIsNewTime(true);
-                  }}
-                  className="self-end px-5 py-1 text-base font-medium border-2 border-blue-700 text-center text-blue-700 bg-white  rounded-lg focus:ring-2 focus:ring-blue-200 hover:bg-blue-700 hover:text-white"
-                >
-                  New
-                </button>{" "}
-                {timeId != "" ? (
+                {aaData ? (
                   <>
                     <button
                       onClick={() => {
                         setIsNewTime(true);
-                        setIsEditTime(true);
                       }}
                       className="self-end px-5 py-1 text-base font-medium border-2 border-blue-700 text-center text-blue-700 bg-white  rounded-lg focus:ring-2 focus:ring-blue-200 hover:bg-blue-700 hover:text-white"
                     >
-                      Edit
-                    </button>
-                    <button
-                      onClick={() => {
-                        handleDeleteTime();
-                      }}
-                      className="self-end px-5 py-1 text-base font-medium border-2 border-red-700 text-center text-red-700 bg-white  rounded-lg focus:ring-2 focus:ring-blue-200 hover:bg-red-700 hover:text-white"
-                    >
-                      Delete
-                    </button>
+                      New
+                    </button>{" "}
+                    {timeId != "" ? (
+                      <>
+                        <button
+                          onClick={() => {
+                            setIsNewTime(true);
+                            setIsEditTime(true);
+                          }}
+                          className="self-end px-5 py-1 text-base font-medium border-2 border-blue-700 text-center text-blue-700 bg-white  rounded-lg focus:ring-2 focus:ring-blue-200 hover:bg-blue-700 hover:text-white"
+                        >
+                          Edit
+                        </button>
+                        <button
+                          onClick={() => {
+                            handleDeleteTime();
+                          }}
+                          className="self-end px-5 py-1 text-base font-medium border-2 border-red-700 text-center text-red-700 bg-white  rounded-lg focus:ring-2 focus:ring-blue-200 hover:bg-red-700 hover:text-white"
+                        >
+                          Delete
+                        </button>
+                      </>
+                    ) : (
+                      <></>
+                    )}
                   </>
                 ) : (
                   <></>
