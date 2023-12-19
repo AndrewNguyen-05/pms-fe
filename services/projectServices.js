@@ -66,10 +66,11 @@ const searchProjectStudent = async (page, limit, search = "") => {
   }
 };
 
-const getListProjectTeacher = async (teacherId) => {
+const getListProjectTeacher = async (teacherId, timeId = null) => {
   const res = await axios.get(`http://localhost:8888/api/v1/project/read`, {
     params: {
       teacherId,
+      timeId,
     },
   });
   if (res && res.data.DT && res.data.EC === 0) {

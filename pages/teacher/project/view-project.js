@@ -139,9 +139,11 @@ const ViewProject = () => {
   //export excel
   const handleExport = async () => {
     const data = await getListProjectTeacher(
-      myProject ? session?.data?.user.userId : null
+      myProject ? session?.data?.user.userId : null,
+      selectedTime
     );
-    ExportExcel(data);
+    const time = timeData.find((item) => item.id === +selectedTime);
+    ExportExcel(data, time);
   };
 
   // my project event
