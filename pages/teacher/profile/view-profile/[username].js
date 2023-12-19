@@ -35,7 +35,7 @@ const TeacherProfile = () => {
       <Meta title="My Profile" />
       <div className="bg-slate-50 w-full p-1 flex gap-5">
         <ProfileCard userData={userData} />
-        <TeacherProfileCard />
+        <TeacherProfileCard userData={userData} />
       </div>
     </>
   );
