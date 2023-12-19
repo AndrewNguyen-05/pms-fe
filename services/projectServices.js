@@ -122,14 +122,14 @@ const postCreateProject = async (
   projectName,
   projectType,
   projectFaculty,
-  teacherUserId,
+  teacherId,
   projectRequirement
 ) => {
   return await axios.post("http://localhost:8888/api/v1/project/create", {
     projectName,
     projectType,
     projectFaculty,
-    teacherUserId,
+    teacherId,
     projectRequirement,
   });
 };
@@ -139,7 +139,7 @@ const putUpdateProject = async (
   projectName,
   projectType,
   projectFaculty,
-  teacherUserId,
+  teacherId,
   projectRequirement
 ) => {
   try {
@@ -149,7 +149,7 @@ const putUpdateProject = async (
         projectName,
         projectType,
         projectFaculty,
-        teacherUserId,
+        teacherId,
         projectRequirement,
       }
     );
