@@ -13,6 +13,7 @@ const SetTimeModal = ({
   aaData,
   selectedItem,
   setParentTimeData,
+  setParentPageReload,
 }) => {
   const [isNewTime, setIsNewTime] = useState(false);
   const [isEditTime, setIsEditTime] = useState(false);
@@ -38,17 +39,18 @@ const SetTimeModal = ({
   useEffect(() => {
     if (isEditTime) {
       let data = timeData.find((timeValue) => timeValue.id == timeId);
-      setNewYear(data.year);
-      setNewSemester(data.semester);
-      setNewStart(data.start.slice(0, 16));
-      setNewEnd(data.end.slice(0, 16));
+
+      setNewYear(data?.year);
+      setNewSemester(data?.semester);
+      setNewStart(data?.start?.slice(0, 16));
+      setNewEnd(data?.end?.slice(0, 16));
     } else {
       setNewYear("");
       setNewSemester("");
       setNewStart("");
       setNewEnd("");
     }
-  }, [isNewTime, isEditTime]);
+  }, [isNewTime, isEditTime, timeData]);
 
   const getTimeData = async () => {
     let timedata = await getListTime();
@@ -69,6 +71,7 @@ const SetTimeModal = ({
     await getTimeData();
     setIsNewTime(false);
     setTimeId(result.data.DT.id);
+    return result.data.DT.id;
   };
 
   const editTime = async () => {
@@ -84,16 +87,20 @@ const SetTimeModal = ({
     await getTimeData();
     setIsNewTime(false);
     setIsEditTime(false);
+    return timeId;
   };
 
   const setTime = async () => {
+    let tmpTimeId = timeId;
     if (isNewTime && isEditTime) {
-      await editTime();
+      tmpTimeId = await editTime();
     } else if (isNewTime) {
-      await createNewTime();
+      tmpTimeId = await createNewTime();
     }
-    const data = { selectedProject, timeId };
+    console.log("timeID", tmpTimeId);
+    const data = { selectedProject, timeId: tmpTimeId };
     await setProjectTime(data);
+    setParentPageReload(true);
   };
 
   const handleDeleteTime = async () => {
