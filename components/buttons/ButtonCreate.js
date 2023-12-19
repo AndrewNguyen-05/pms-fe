@@ -4,7 +4,7 @@ import Link from "next/link";
 const ButtonCreate = ({ text, href }) => {
   return (
     <Link href={href}>
-      <button id="create-button" type="button" className="btn-blue">
+      <button id="create-button" type="button" className="btn-blue h-full">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           fill="none"

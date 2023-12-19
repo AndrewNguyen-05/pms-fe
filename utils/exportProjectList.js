@@ -66,31 +66,35 @@ const exportProjectList = (data, time) => {
   // Add another empty row
   worksheet.addRow([]);
 
-  // Add another empty row
-  worksheet.addRow([]);
+  if (time) {
+    // Add another empty row
+    worksheet.addRow([]);
+    // Add the semester
 
-  // Add the semester
-  const semesterCell = worksheet.getCell("B6");
-  semesterCell.value = `${time.semester}`;
-  semesterCell.font = {
-    name: "Times New Roman",
-    size: 13,
-    bold: true,
-  };
-  semesterCell.alignment = { horizontal: "left", vertical: "middle" };
+    const semesterCell = worksheet.getCell("B6");
+    semesterCell.value = `${time.semester}`;
+    semesterCell.font = {
+      name: "Times New Roman",
+      size: 13,
+      bold: true,
+    };
+    semesterCell.alignment = { horizontal: "left", vertical: "middle" };
 
-  // Add the year
-  const yearCell = worksheet.getCell("B5");
-  yearCell.value = `NĂM HỌC ${time.year}`;
-  yearCell.font = {
-    name: "Times New Roman",
-    size: 13,
-    bold: true,
-  };
-  yearCell.alignment = { horizontal: "left", vertical: "middle" };
+    // Add the year
+
+    worksheet.mergeCells("A5:G5");
+    const yearCell = worksheet.getCell("B5");
+    yearCell.value = `NĂM HỌC ${time.year}`;
+    yearCell.font = {
+      name: "Times New Roman",
+      size: 13,
+      bold: true,
+    };
+    yearCell.alignment = { horizontal: "center", vertical: "middle" };
+  }
 
   // Add the total number of projects
-  const totalProject = worksheet.getCell("B7");
+  const totalProject = worksheet.getCell(time ? "B7" : "B6");
   totalProject.value = `Tổng số đề tài: ${data.length}`;
   totalProject.font = {
     name: "Times New Roman",

@@ -112,7 +112,7 @@ const SetTimeModal = ({
   return (
     <div>
       <button
-        className="btn-blue "
+        className="btn-blue h-full"
         onClick={() => document.getElementById("set_time_modal").showModal()}
       >
         <svg
