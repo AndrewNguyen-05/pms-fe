@@ -126,6 +126,13 @@ const ViewProject = () => {
     ExportExcel(data);
   };
 
+  //select year
+  const handleSelectTime = (e) => {
+    setSelectedTime(e.target.value);
+    setCurrentPage(1);
+    setPageSearchValue(pageSearchValue);
+  };
+
   return (
     <>
       <Meta title={"View project"} />
@@ -147,7 +154,7 @@ const ViewProject = () => {
               className="select select-info w-full max-w-xs"
               value={selectedTime}
               onChange={(e) => {
-                setSelectedTime(e.target.value);
+                handleSelectTime(e);
               }}
             >
               <option value="">All</option>
