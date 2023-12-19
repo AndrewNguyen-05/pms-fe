@@ -1,6 +1,6 @@
 import ExcelJS from "exceljs";
 
-const exportProjectList = (data) => {
+const exportProjectList = (data, time) => {
   const workbook = new ExcelJS.Workbook();
   const worksheet = workbook.addWorksheet("DanhSachDoAn");
 
@@ -66,8 +66,31 @@ const exportProjectList = (data) => {
   // Add another empty row
   worksheet.addRow([]);
 
+  // Add another empty row
+  worksheet.addRow([]);
+
+  // Add the semester
+  const semesterCell = worksheet.getCell("B6");
+  semesterCell.value = `${time.semester}`;
+  semesterCell.font = {
+    name: "Times New Roman",
+    size: 13,
+    bold: true,
+  };
+  semesterCell.alignment = { horizontal: "left", vertical: "middle" };
+
+  // Add the year
+  const yearCell = worksheet.getCell("B5");
+  yearCell.value = `NĂM HỌC ${time.year}`;
+  yearCell.font = {
+    name: "Times New Roman",
+    size: 13,
+    bold: true,
+  };
+  yearCell.alignment = { horizontal: "left", vertical: "middle" };
+
   // Add the total number of projects
-  const totalProject = worksheet.getCell("B6");
+  const totalProject = worksheet.getCell("B7");
   totalProject.value = `Tổng số đề tài: ${data.length}`;
   totalProject.font = {
     name: "Times New Roman",
