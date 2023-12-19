@@ -66,10 +66,11 @@ const searchProjectStudent = async (page, limit, search = "") => {
   }
 };
 
-const getListProjectTeacher = async (teacherId) => {
+const getListProjectTeacher = async (teacherId, timeId = null) => {
   const res = await axios.get(`http://localhost:8888/api/v1/project/read`, {
     params: {
       teacherId,
+      timeId,
     },
   });
   if (res && res.data.DT && res.data.EC === 0) {
@@ -84,6 +85,27 @@ const getProjectDataTeacher = async (page, limit, search = "", teacherId) => {
       limit,
       search,
       teacherId,
+    },
+  });
+  if (res && res.data.DT && res.data.EC === 0) {
+    return res.data.DT;
+  }
+};
+
+const getProjectDataTeacherWithTime = async (
+  page,
+  limit,
+  search = "",
+  teacherId,
+  timeId = null
+) => {
+  const res = await axios.get(`http://localhost:8888/api/v1/project/read`, {
+    params: {
+      page,
+      limit,
+      search,
+      teacherId,
+      timeId,
     },
   });
   if (res && res.data.DT && res.data.EC === 0) {
@@ -230,4 +252,5 @@ export {
   setProjectTime,
   searchProjectWithTime,
   searchProjectStudent,
+  getProjectDataTeacherWithTime,
 };

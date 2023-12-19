@@ -7,6 +7,7 @@ import {
   searchProject,
   getProjectDataTeacher,
   getListProjectTeacher,
+  getProjectDataTeacherWithTime,
 } from "../../../services/projectServices";
 import ButtonCreate from "@/components/buttons/ButtonCreate";
 import {} from "../../../services/projectServices";
@@ -18,9 +19,12 @@ import Footer from "@/components/footer/Footer";
 import ExportExcel from "@/utils/exportProjectList";
 import ProjectCardTeacher from "@/components/cards/ProjectCardTeacher";
 import { useSession } from "next-auth/react";
+import SetTimeModal from "@/components/modals/SetTimeModal";
+import { getUserByID } from "@/services/userServices";
 
 const ViewProject = () => {
   const session = useSession();
+  const [teacherData, setTeacherData] = useState({});
 
   const [project_list, setProjectList] = useState([]);
   const [totalPage, setTotalPage] = useState(0);
@@ -34,11 +38,38 @@ const ViewProject = () => {
   //list of project that is selected
   const [selectedProject, setSelectedProject] = useState([]);
 
+  //Time data
+  const [timeData, setTimeData] = useState([]);
+  const [selectedTime, setSelectedTime] = useState("");
+
+  //Reload
+  const [pageReload, setPageReload] = useState(false);
+
   useEffect(() => {
+    getCurrentUserData();
     getProjectsData();
-    getListProject();
     setCurrentOffset((currentPage - 1) * currentLimit + 1);
-  }, [currentPage, pageSearchValue, myProject]);
+    setPageReload(false);
+  }, [
+    currentPage,
+    pageSearchValue,
+    myProject,
+    session,
+    selectedTime,
+    pageReload,
+  ]);
+
+  useEffect(() => {
+    setSelectedProject([]);
+  }, [selectedTime]);
+
+  const getCurrentUserData = async () => {
+    if (session.status === "authenticated") {
+      let result = await getUserByID(session?.data?.user.userId);
+      setTeacherData(result);
+      console.log("gubid", result);
+    }
+  };
 
   const setProjectListRaw = (projectsData) => {
     setProjectList(
@@ -71,12 +102,12 @@ const ViewProject = () => {
 
   async function getProjectsData() {
     let projectsData;
-    let queryData = { currentPage, currentLimit };
-    projectsData = await getProjectDataTeacher(
+    projectsData = await getProjectDataTeacherWithTime(
       currentPage,
       currentLimit,
       pageSearchValue,
-      myProject ? session?.data?.user.userId : null
+      myProject ? session?.data?.user.userId : null,
+      selectedTime === "" ? null : selectedTime
     );
     setProjectListRaw(projectsData);
     setTotalPage(projectsData.totalPage);
@@ -108,15 +139,24 @@ const ViewProject = () => {
   //export excel
   const handleExport = async () => {
     const data = await getListProjectTeacher(
-      myProject ? session?.data?.user.userId : null
+      myProject ? session?.data?.user.userId : null,
+      selectedTime
     );
-    ExportExcel(data);
+    const time = timeData.find((item) => item.id === +selectedTime);
+    ExportExcel(data, time);
   };
 
   // my project event
   const handleMyProject = async () => {
     setCurrentPage(1);
     setMyProject(!myProject);
+  };
+
+  //select time event
+  const handleSelectTime = (e) => {
+    setSelectedTime(e.target.value);
+    setCurrentPage(1);
+    setPageSearchValue(pageSearchValue);
   };
 
   return (
@@ -136,36 +176,64 @@ const ViewProject = () => {
             />
           </div>
 
-          <div className="flex justify-end gap-4 w-full mr-16">
-            <button className="btn-blue" onClick={() => handleMyProject()}>
-              {myProject ? "All Project" : "My Project"}
-            </button>
-            <button className="btn-blue" onClick={() => handleExport()}>
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                strokeWidth={1.5}
-                stroke="currentColor"
-                className="w-6 h-6"
+          <div className="flex flex-col-reverse justify-end gap-4 w-full mr-16">
+            <div className="flex gap-3 justify-end">
+              <select
+                className="select select-info w-full max-w-xs"
+                value={selectedTime}
+                onChange={(e) => {
+                  handleSelectTime(e);
+                }}
               >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M6.72 13.829c-.24.03-.48.062-.72.096m.72-.096a42.415 42.415 0 0110.56 0m-10.56 0L6.34 18m10.94-4.171c.24.03.48.062.72.096m-.72-.096L17.66 18m0 0l.229 2.523a1.125 1.125 0 01-1.12 1.227H7.231c-.662 0-1.18-.568-1.12-1.227L6.34 18m11.318 0h1.091A2.25 2.25 0 0021 15.75V9.456c0-1.081-.768-2.015-1.837-2.175a48.055 48.055 0 00-1.913-.247M6.34 18H5.25A2.25 2.25 0 013 15.75V9.456c0-1.081.768-2.015 1.837-2.175a48.041 48.041 0 011.913-.247m10.5 0a48.536 48.536 0 00-10.5 0m10.5 0V3.375c0-.621-.504-1.125-1.125-1.125h-8.25c-.621 0-1.125.504-1.125 1.125v3.659M18 10.5h.008v.008H18V10.5zm-3 0h.008v.008H15V10.5z"
-                />
-              </svg>
-              Export
-            </button>
-            <ButtonCreate
-              text="Add project"
-              href="/teacher/project/create-project"
-            />
-            <DeleteModal
-              item="project"
-              selectedItem={selectedProject}
-              handleConfirmDelete={handleConfirmDelete}
-            />
+                <option value="">All</option>
+                {timeData.map((timeValue, index) => {
+                  return (
+                    <option value={timeValue.id} key={index}>
+                      {timeValue.semester} - {timeValue.year}
+                    </option>
+                  );
+                })}
+                <option value="#NotSetted">Not setted</option>
+              </select>
+              <SetTimeModal
+                selectedProject={selectedProject}
+                teacherData={teacherData}
+                selectedItem={selectedProject}
+                setParentTimeData={setTimeData}
+                setParentPageReload={setPageReload}
+              />
+              <button className="btn-blue" onClick={() => handleMyProject()}>
+                {myProject ? "All Project" : "My Project"}
+              </button>
+            </div>
+            <div className="flex gap-3 justify-end">
+              <button className="btn-blue" onClick={() => handleExport()}>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  strokeWidth={1.5}
+                  stroke="currentColor"
+                  className="w-6 h-6"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="M6.72 13.829c-.24.03-.48.062-.72.096m.72-.096a42.415 42.415 0 0110.56 0m-10.56 0L6.34 18m10.94-4.171c.24.03.48.062.72.096m-.72-.096L17.66 18m0 0l.229 2.523a1.125 1.125 0 01-1.12 1.227H7.231c-.662 0-1.18-.568-1.12-1.227L6.34 18m11.318 0h1.091A2.25 2.25 0 0021 15.75V9.456c0-1.081-.768-2.015-1.837-2.175a48.055 48.055 0 00-1.913-.247M6.34 18H5.25A2.25 2.25 0 013 15.75V9.456c0-1.081.768-2.015 1.837-2.175a48.041 48.041 0 011.913-.247m10.5 0a48.536 48.536 0 00-10.5 0m10.5 0V3.375c0-.621-.504-1.125-1.125-1.125h-8.25c-.621 0-1.125.504-1.125 1.125v3.659M18 10.5h.008v.008H18V10.5zm-3 0h.008v.008H15V10.5z"
+                  />
+                </svg>
+                Export
+              </button>
+              <ButtonCreate
+                text="Add project"
+                href="/teacher/project/create-project"
+              />
+              <DeleteModal
+                item="project"
+                selectedItem={selectedProject}
+                handleConfirmDelete={handleConfirmDelete}
+              />
+            </div>
           </div>
         </div>
         <div className="px-16 py-7">

@@ -129,7 +129,7 @@ const ViewProject = () => {
     ExportExcel(data, time);
   };
 
-  //select year
+  //select time event
   const handleSelectTime = (e) => {
     setSelectedTime(e.target.value);
     setCurrentPage(1);
