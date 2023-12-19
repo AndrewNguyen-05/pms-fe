@@ -14,7 +14,7 @@ const AcademicAffairProfileCard = () => {
   };
   return (
     <div className="bg-white shadow-md rounded-md my-5 mr-5 h-[580px] w-full p-2 overflow-scroll">
-      <div className="m-5 text-lg font-semibold">Teacher's Dashboard </div>
+      <div className="m-5 text-lg font-semibold">Teacher&apos;s Dashboard </div>
       <table className="table m-5 text-base w-[1000px]">
         <thead className="text-base">
           <tr>

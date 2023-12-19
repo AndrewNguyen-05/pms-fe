@@ -31,21 +31,15 @@ const EditProfileCard = ({ userData }) => {
   }
   //get data
   useEffect(() => {
-    if (userData) {
-      getUserData();
-    }
+    getUserData();
   }, [userData]);
 
   const getUserData = () => {
-    setName(userData?.User?.name);
-    setEmail(userData?.User?.email);
-    setUsername(userData?.username);
-    setPhone(userData?.User?.phone);
-    setDateOfBirth(
-      userData?.User?.dateOfBirth
-        ? userData?.User?.dateOfBirth.slice(0, 10)
-        : ""
-    );
+    setName(userData?.User?.name || "");
+    setEmail(userData?.User?.email || "");
+    setUsername(userData?.username || "");
+    setPhone(userData?.User?.phone || "");
+    setDateOfBirth(userData?.User?.dateOfBirth.slice(0, 10) || "");
     setImages([
       userData?.User?.avatarLink === null
         ? "https://ecommercenextjs.blob.core.windows.net/ecommerceadmin/1702837258987.png"

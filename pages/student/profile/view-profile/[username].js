@@ -147,7 +147,7 @@ const StudentProfile = () => {
           ) : (
             <>
               <div className="mt-24 flex items-center justify-center text-2xl font-semibold">
-                You haven't registered any project yet!
+                You haven&apos;t registered any project yet!
               </div>
             </>
           )}
