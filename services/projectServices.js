@@ -66,10 +66,10 @@ const searchProjectStudent = async (page, limit, search = "") => {
   }
 };
 
-const getListProjectTeacher = async (teacherId, timeId = null) => {
+const getListProjectTeacher = async (teacherUserId, timeId = null) => {
   const res = await axios.get(`http://localhost:8888/api/v1/project/read`, {
     params: {
-      teacherId,
+      teacherUserId,
       timeId,
     },
   });
@@ -78,13 +78,18 @@ const getListProjectTeacher = async (teacherId, timeId = null) => {
   }
 };
 
-const getProjectDataTeacher = async (page, limit, search = "", teacherId) => {
+const getProjectDataTeacher = async (
+  page,
+  limit,
+  search = "",
+  teacherUserId
+) => {
   const res = await axios.get(`http://localhost:8888/api/v1/project/read`, {
     params: {
       page,
       limit,
       search,
-      teacherId,
+      teacherUserId,
     },
   });
   if (res && res.data.DT && res.data.EC === 0) {
@@ -96,7 +101,7 @@ const getProjectDataTeacherWithTime = async (
   page,
   limit,
   search = "",
-  teacherId,
+  teacherUserId,
   timeId = null
 ) => {
   const res = await axios.get(`http://localhost:8888/api/v1/project/read`, {
@@ -104,7 +109,7 @@ const getProjectDataTeacherWithTime = async (
       page,
       limit,
       search,
-      teacherId,
+      teacherUserId,
       timeId,
     },
   });
@@ -117,14 +122,14 @@ const postCreateProject = async (
   projectName,
   projectType,
   projectFaculty,
-  teacherId,
+  teacherUserId,
   projectRequirement
 ) => {
   return await axios.post("http://localhost:8888/api/v1/project/create", {
     projectName,
     projectType,
     projectFaculty,
-    teacherId,
+    teacherUserId,
     projectRequirement,
   });
 };
@@ -134,7 +139,7 @@ const putUpdateProject = async (
   projectName,
   projectType,
   projectFaculty,
-  teacherId,
+  teacherUserId,
   projectRequirement
 ) => {
   try {
@@ -144,7 +149,7 @@ const putUpdateProject = async (
         projectName,
         projectType,
         projectFaculty,
-        teacherId,
+        teacherUserId,
         projectRequirement,
       }
     );
