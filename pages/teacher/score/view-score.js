@@ -29,6 +29,8 @@ const NewViewScore = () => {
   const [timeData, setTimeData] = useState([]);
   const [selectedTime, setSelectedTime] = useState("");
 
+  console.log(">>> check user data:", session?.data?.user);
+
   // use effect
   useEffect(() => {
     getScoreInfo();
@@ -60,6 +62,7 @@ const NewViewScore = () => {
           student2Name: row.Student2.User.name,
           student2Code: row.Student2.studentCode,
           score: row.score,
+          submitLink: row.submissionLink,
         };
       })
     );
@@ -146,7 +149,12 @@ const NewViewScore = () => {
           {score_list.map((score_item) => {
             return (
               <div key={score_item.id}>
-                <ScoreCard scoreObj={score_item} />
+                <ScoreCard
+                  scoreObj={score_item}
+                  isTeacher={
+                    session?.data?.user?.role === "teacher" ? true : false
+                  }
+                />
               </div>
             );
           })}

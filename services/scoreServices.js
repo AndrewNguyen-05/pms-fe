@@ -37,7 +37,6 @@ const searchScore = async (
   timeId = null,
   teacherUserId
 ) => {
-  console.log(">>> teacherUserId", teacherUserId);
   let apiHref = `http://localhost:8888/api/v1/score/read`;
   const res = await axios.get(apiHref, {
     params: {
@@ -69,6 +68,21 @@ const putUpdateScore = async (id, title, content, isPublic) => {
   });
 };
 
+const updateScore = async (id, score) => {
+  return await axios.put(`http://localhost:8888/api/v1/score/update/${id}`, {
+    score,
+  });
+};
+
+const putUpdateSubmitLink = async (projectId, submitLink) => {
+  return await axios.put(
+    `http://localhost:8888/api/v1//score/updateSubmitLink/${projectId}`,
+    {
+      submitLink,
+    }
+  );
+};
+
 const deleteScore = async (ids) => {
   return await axios.delete("http://localhost:8888/api/v1/score/delete", {
     data: { ids },
@@ -83,4 +97,6 @@ export {
   searchScore,
   getScoreById,
   putUpdateScore,
+  putUpdateSubmitLink,
+  updateScore,
 };

@@ -1,6 +1,12 @@
-import { useState, useEffect, use } from "react";
+import { useState, useEffect } from "react";
+import { updateScore } from "@/services/scoreServices";
+import { toast } from "react-toastify";
+import Swal from "sweetalert2";
+import withReactContent from "sweetalert2-react-content";
 
-const ScoreCard = ({ scoreObj }) => {
+const MySwal = withReactContent(Swal);
+
+const ScoreCard = ({ scoreObj, isTeacher = false }) => {
   const [progressValue, setProgressValue] = useState(0);
   const [progressEndValue, setProgressEndValue] = useState(0);
   const speed = 10;
@@ -29,9 +35,88 @@ const ScoreCard = ({ scoreObj }) => {
       progressValue * 36
     }deg)`,
   };
+  const inputValue = 0;
+  const inputStep = 0.1;
+  const handleScoreClick = async () => {
+    await Swal.fire({
+      title: `Score information`,
+      html: `
+      <div class="p-0 text-left">
+        <div class="mb-2"><span class="font-semibold">Project:</span> ${
+          scoreObj.projectName
+        }</div>
+        <div class="my-2">
+          <div class="font-semibold mb-1">Submit link of this project:</div>
+          ${
+            scoreObj.submitLink === null
+              ? "Students haven't submitted yet!"
+              : `<span>${scoreObj.submitLink}</span>`
+          }
+        </div>
+        <div class="flex gap-2 items-center mt-2">
+          <span class="font-semibold">Grading this project:</span>
+          <span>
+          <input
+          type="number"
+          value="${inputValue}"
+          step="${inputStep}"
+          min="0"
+          max="10"
+          class="swal2-input mt-2 mr-1 w-[80px] p-0"
+          id="range-value"
+        /> / 10</span>
+        </div>
+        
+      </div>`,
+      input: "range",
+      inputValue,
+      inputAttributes: {
+        min: "0",
+        max: "10",
+        step: inputStep.toString(),
+      },
+      didOpen: () => {
+        const inputRange = Swal.getInput();
+        const inputNumber = Swal.getPopup().querySelector("#range-value");
 
+        if (!inputRange || !inputNumber) {
+          return;
+        }
+
+        // remove default output
+        Swal.getPopup().querySelector("output").style.display = "none";
+        inputRange.style.width = "100%";
+
+        // sync input[type=number] with input[type=range]
+        inputRange.addEventListener("input", () => {
+          inputNumber.value = inputRange.value;
+        });
+
+        // sync input[type=range] with input[type=number]
+        inputNumber.addEventListener("change", () => {
+          inputRange.value = inputNumber.value;
+        });
+      },
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        let res = await updateScore(scoreObj.id, result.value);
+        if (res && res.data.EC === 0) {
+          toast.success("Update score successfully!");
+        } else {
+          toast.error("Update score failed!");
+        }
+      }
+    });
+  };
   return (
-    <div className="bg-white border-2 border-slate-100 rounded-2xl h-28 my-2 shadow-md ">
+    <div
+      onClick={isTeacher === true ? handleScoreClick : null}
+      className={
+        isTeacher === true
+          ? "hover:cursor-pointer bg-white border-2 border-slate-100 rounded-2xl h-28 my-2 shadow-md "
+          : "bg-white border-2 border-slate-100 rounded-2xl h-28 my-2 shadow-md "
+      }
+    >
       <div className="grid grid-cols-7 px-16 py-5 h-full ">
         <div className="col-span-5 flex flex-col justify-between">
           <div className="font-bold text-blue-700">{scoreObj.projectName}</div>

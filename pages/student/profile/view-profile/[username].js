@@ -5,11 +5,17 @@ import { useEffect, useState } from "react";
 import { getProjectOfStudent } from "@/services/studentServices";
 import CancelModal from "@/components/modals/CancelModal";
 import Meta from "@/components/header/Meta";
+import Swal from "sweetalert2";
+import withReactContent from "sweetalert2-react-content";
+import { putUpdateSubmitLink } from "@/services/scoreServices";
+
+const MySwal = withReactContent(Swal);
 
 const StudentProfile = () => {
   const { data: session } = useSession();
   const [userData, setUserData] = useState({});
   const [projectData, setProjectData] = useState({});
+  const [submitLink, setSubmitLink] = useState("");
 
   useEffect(() => {
     const getUser = async () => {
@@ -29,6 +35,31 @@ const StudentProfile = () => {
     getUser();
     getProject();
   }, [session]);
+
+  const handleSubmit = async () => {
+    await MySwal.fire({
+      title: "Enter your project's submit link",
+      input: "text",
+      inputLabel: "Your project's link",
+      showCancelButton: true,
+      inputValidator: (value) => {
+        if (!value) {
+          return "You need to submit something!";
+        }
+      },
+    }).then(async (result) => {
+      console.log(
+        ">>> check submit link: ",
+        result.value,
+        ", id: ",
+        projectData?.id
+      );
+      setSubmitLink(result.value);
+      const res = await putUpdateSubmitLink(projectData?.id, result.value);
+      console.log(">>> check return value:", res);
+    });
+  };
+
   return (
     <>
       <Meta title="My Profile" />
@@ -138,7 +169,10 @@ const StudentProfile = () => {
                     projectId={projectData?.id}
                     studentId={userData?.id}
                   />
-                  <button className="w-[150px] border-2 border-blue-700 px-5 py-2.5 mt-4 shadow-md text-blue-600 bg-white hover:text-white hover:bg-blue-600 focus:ring-1 focus:ring-blue-300 font-medium rounded-lg text-sm focus:outline-none flex items-center justify-center gap-3">
+                  <button
+                    onClick={handleSubmit}
+                    className="w-[150px] border-2 border-blue-700 px-5 py-2.5 mt-4 shadow-md text-blue-600 bg-white hover:text-white hover:bg-blue-600 focus:ring-1 focus:ring-blue-300 font-medium rounded-lg text-sm focus:outline-none flex items-center justify-center gap-3"
+                  >
                     Submit project
                   </button>
                 </div>

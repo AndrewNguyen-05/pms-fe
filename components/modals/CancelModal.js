@@ -46,7 +46,7 @@ const CancelModal = ({
 
   return (
     <button
-      className="items-center w-[100px] disabled:border-gray-300 disabled:text-gray-300 hover:disabled:bg-gray-200 hover:disabled:text-white px-5 py-2.5 mt-4 text-base font-medium border-2 border-red-600 text-center text-red-600 bg-white rounded-lg focus:ring-2 focus:ring-red-200 hover:bg-red-600 hover:text-white hover:border-red-600"
+      className="items-center w-fit disabled:border-gray-300 disabled:text-gray-300 hover:disabled:bg-gray-200 hover:disabled:text-white px-5 py-2.5 mt-4 text-base font-medium border-2 border-red-600 text-center text-red-600 bg-white rounded-lg focus:ring-2 focus:ring-red-200 hover:bg-red-600 hover:text-white hover:border-red-600"
       onClick={handleCancel}
       disabled={disabled}
     >
