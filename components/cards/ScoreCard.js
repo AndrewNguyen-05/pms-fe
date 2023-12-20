@@ -6,7 +6,7 @@ import withReactContent from "sweetalert2-react-content";
 
 const MySwal = withReactContent(Swal);
 
-const ScoreCard = ({ scoreObj, isTeacher = false }) => {
+const ScoreCard = ({ scoreObj, isTeacher = false, setParentPageReload }) => {
   const [progressValue, setProgressValue] = useState(0);
   const [progressEndValue, setProgressEndValue] = useState(0);
   const speed = 10;
@@ -105,6 +105,7 @@ const ScoreCard = ({ scoreObj, isTeacher = false }) => {
         } else {
           toast.error("Update score failed!");
         }
+        setParentPageReload(true);
       }
     });
   };

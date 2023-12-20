@@ -29,13 +29,15 @@ const NewViewScore = () => {
   const [timeData, setTimeData] = useState([]);
   const [selectedTime, setSelectedTime] = useState("");
 
-  console.log(">>> check user data:", session?.data?.user);
+  const [pageReload, setPageReload] = useState(false);
 
   // use effect
   useEffect(() => {
+    console.log(">>> check user data:", session?.data?.user);
     getScoreInfo();
     setCurrentOffset((currentPage - 1) * currentLimit + 1);
-  }, [currentPage, pageSearchValue, selectedTime]);
+    setPageReload(false);
+  }, [currentPage, pageSearchValue, selectedTime, session, pageReload]);
 
   // get time data
   useEffect(() => {
@@ -154,6 +156,7 @@ const NewViewScore = () => {
                   isTeacher={
                     session?.data?.user?.role === "teacher" ? true : false
                   }
+                  setParentPageReload={setPageReload}
                 />
               </div>
             );
