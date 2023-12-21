@@ -79,7 +79,7 @@ const ViewProject = () => {
       {project_list.length <= 0 ? (
         <div className="bg-slate-50 h-screen flex justify-center">
           <div className="bg-red-50 rounded-md w-max h-max px-48 py-8 text-center text-red-500 mt-5">
-            Chưa đến thời gian đăng kí
+            Project registration is not yet open.
           </div>
         </div>
       ) : (
