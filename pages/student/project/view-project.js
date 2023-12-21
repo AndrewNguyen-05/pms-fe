@@ -76,54 +76,64 @@ const ViewProject = () => {
   return (
     <>
       <Meta title={"View project"} />
-      <div className="bg-slate-50 h-full w-full overflow-auto flex flex-col justify-between pt-6">
-        <div className="flex items-start flex-shrink">
-          <div className="px-16">
-            <SearchBar
-              placeholder="Search Project..."
-              handleSearch={handleSearch}
-              handleKeyDown={(event) => {
-                if (event.key === "Enter") {
-                  handleSearch(event.target.value);
-                }
-              }}
-            />
+      {project_list.length <= 0 ? (
+        <div className="bg-slate-50 h-screen flex justify-center">
+          <div className="bg-red-50 rounded-md w-max h-max px-48 py-8 text-center text-red-500 mt-5">
+            Chưa đến thời gian đăng kí
           </div>
-          <div className="flex justify-end gap-4 w-full mr-16"></div>
         </div>
-        <div className="px-16 py-7">
-          {project_list.map((project_item, index) => {
-            return (
-              <div data-test={index} key={project_item.id}>
-                <ProjectCardStudent
-                  project={project_item}
-                  student={dataUser}
-                  refreshProjects={getProjectsData}
-                />
-              </div>
-            );
-          })}
-          <div className="flex items-center flex-row flex-wrap justify-between pt-4">
-            <span className="text-sm font-normal text-gray-500 mb-4 md:mb-0 block w-full md:inline md:w-auto">
-              Showing{" "}
-              <span className="font-semibold text-gray-900 ">
-                {currentOffset}-{currentOffset + currentLimit - 1}
-              </span>{" "}
-              of{" "}
-              <span className="font-semibold text-gray-900 ">{totalPage}</span>
-            </span>
+      ) : (
+        <div className="bg-slate-50 h-full w-full overflow-auto flex flex-col justify-between pt-6">
+          <div className="flex items-start flex-shrink">
+            <div className="px-16">
+              <SearchBar
+                placeholder="Search Project..."
+                handleSearch={handleSearch}
+                handleKeyDown={(event) => {
+                  if (event.key === "Enter") {
+                    handleSearch(event.target.value);
+                  }
+                }}
+              />
+            </div>
+            <div className="flex justify-end gap-4 w-full mr-16"></div>
+          </div>
+          <div className="px-16 py-7">
+            {project_list.map((project_item, index) => {
+              return (
+                <div data-test={index} key={project_item.id}>
+                  <ProjectCardStudent
+                    project={project_item}
+                    student={dataUser}
+                    refreshProjects={getProjectsData}
+                  />
+                </div>
+              );
+            })}
+            <div className="flex items-center flex-row flex-wrap justify-between pt-4">
+              <span className="text-sm font-normal text-gray-500 mb-4 md:mb-0 block w-full md:inline md:w-auto">
+                Showing{" "}
+                <span className="font-semibold text-gray-900 ">
+                  {currentOffset}-{currentOffset + currentLimit - 1}
+                </span>{" "}
+                of{" "}
+                <span className="font-semibold text-gray-900 ">
+                  {totalPage}
+                </span>
+              </span>
 
-            <div className="">
-              {totalPage > 0 && (
-                <Footer
-                  totalPage={totalPage}
-                  handlePageClick={handlePageClick}
-                />
-              )}
+              <div className="">
+                {totalPage > 0 && (
+                  <Footer
+                    totalPage={totalPage}
+                    handlePageClick={handlePageClick}
+                  />
+                )}
+              </div>
             </div>
           </div>
         </div>
-      </div>
+      )}
     </>
   );
 };
