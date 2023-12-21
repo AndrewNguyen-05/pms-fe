@@ -10,6 +10,7 @@ const ScoreCard = ({ scoreObj, isTeacher = false, setParentPageReload }) => {
   const [progressValue, setProgressValue] = useState(0);
   const [progressEndValue, setProgressEndValue] = useState(0);
   const speed = 10;
+  console.log(">>> check score obj", scoreObj);
 
   useEffect(() => {
     setProgressEndValue(scoreObj.score);
@@ -35,7 +36,7 @@ const ScoreCard = ({ scoreObj, isTeacher = false, setParentPageReload }) => {
       progressValue * 36
     }deg)`,
   };
-  const inputValue = 0;
+  const inputValue = scoreObj?.score;
   const inputStep = 0.1;
   const handleScoreClick = async () => {
     await Swal.fire({
@@ -45,7 +46,7 @@ const ScoreCard = ({ scoreObj, isTeacher = false, setParentPageReload }) => {
         <div class="mb-2"><span class="font-semibold">Project:</span> ${
           scoreObj.projectName
         }</div>
-        <div class="my-2">
+        <div class="my-4">
           <div class="font-semibold mb-1">Submit link of this project:</div>
           ${
             scoreObj.submitLink === null
@@ -53,7 +54,7 @@ const ScoreCard = ({ scoreObj, isTeacher = false, setParentPageReload }) => {
               : `<span>${scoreObj.submitLink}</span>`
           }
         </div>
-        <div class="flex gap-2 items-center mt-2">
+        <div class="flex gap-2 items-center mt-2 mb-0">
           <span class="font-semibold">Grading this project:</span>
           <span>
           <input
@@ -121,7 +122,7 @@ const ScoreCard = ({ scoreObj, isTeacher = false, setParentPageReload }) => {
       <div className="grid grid-cols-7 px-16 py-5 h-full ">
         <div className="col-span-5 flex flex-col justify-between">
           <div className="font-bold text-blue-700">{scoreObj.projectName}</div>
-          <div className="grid grid-cols-5 text-base my-1">
+          <div className="grid grid-cols-7 text-base my-1">
             <div className="col-span-2 text-base">
               <span className="">Giảng viên: </span>
               {scoreObj.teacher}
@@ -141,6 +142,15 @@ const ScoreCard = ({ scoreObj, isTeacher = false, setParentPageReload }) => {
                   {scoreObj.faculty}
                 </div>
               </div>
+            </div>
+            <div className="col-span-2">
+              {scoreObj.score === null ? (
+                <div className="text-sm bg-red-100 py-1 px-3 text-red-700 w-[130px] rounded-3xl flex justify-center items-center">
+                  Not graded
+                </div>
+              ) : (
+                <></>
+              )}
             </div>
           </div>
         </div>

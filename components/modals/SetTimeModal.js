@@ -219,17 +219,22 @@ const SetTimeModal = ({
                   </div>
                   <div className="flex flex-col">
                     <label className="text-left font-semibold">Semester</label>
-                    <input
-                      value={newSemester}
-                      type="text"
-                      className="border border-gray-200 rounded px-2 py-1 w-72 focus:border focus:border-black"
-                      onChange={(e) => {
-                        setNewSemester(e.target.value);
-                      }}
-                    />
+                    <div>
+                      <input
+                        value={newSemester}
+                        type="text"
+                        className="border border-gray-200 rounded px-2 py-1 w-72 focus:border focus:border-black"
+                        onChange={(e) => {
+                          setNewSemester(e.target.value);
+                        }}
+                      />
+                      <div>
+                        (Format for semester: HỌC KỲ X, Học kỳ X, HKX,...)
+                      </div>
+                    </div>
                   </div>
                 </div>
-                <div className="flex flex-row gap-3">
+                <div className="flex flex-row gap-3 mt-2">
                   <div className="flex flex-col">
                     <label className="text-left font-semibold">Start</label>
                     <input

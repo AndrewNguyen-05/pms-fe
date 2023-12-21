@@ -1,14 +1,13 @@
-import React from "react";
 import Link from "next/link";
-import Meta from "@/components/header/Meta";
+import Meta from "../header/Meta";
 
-const AcademicAffairHome = () => {
+const TeacherHome = () => {
   return (
     <>
       <Meta title={"Project Management System"} />
       <div className="bg-slate-50 w-full h-full flex flex-col items-center">
         <div className="font-bold rounded-md text-xl px-5 py-3 mt-3 text-white bg-gradient-to-r from-blue-600 to-cyan-500 ">
-          TRANG HƯỚNG DẪN WEBSITE QUẢN LÝ ĐỒ ÁN 1, 2 CHO GIÁO VỤ
+          TRANG HƯỚNG DẪN WEBSITE QUẢN LÝ ĐỒ ÁN 1, 2 CHO GIẢNG VIÊN
         </div>
         <div data-test="main-page-card" className="main-page-card">
           <div className="font-bold text-lg text-center text-blue-600 ">
@@ -32,13 +31,8 @@ const AcademicAffairHome = () => {
                 </Link>
               </li>
               <li className="hover:text-sky-500 cursor-pointer">
-                <Link data-test="analysis-link" href="#analysis">
-                  Quản lý báo cáo, thống kê{" "}
-                </Link>
-              </li>
-              <li className="hover:text-sky-500 cursor-pointer">
                 <Link data-test="account-link" href="#account">
-                  Quản lý tài khoản cá nhân{" "}
+                  Quản lý tài khoản cá nhân
                 </Link>
               </li>
             </ol>
@@ -78,9 +72,7 @@ const AcademicAffairHome = () => {
                 Cài đặt thời gian của mỗi đồ án bằng cách tick chọn đồ án thuộc
                 vào cùng 1 học kỳ - năm học, sau đó chọn <b>Set time</b>, 1
                 khung chọn sẽ hiện ra, và sử dụng thanh chọn để lựa chọn thời
-                gian mong muốn, và nhấn <b>Save</b>. Ngoài ra, giáo vụ cũng có
-                thể thêm mới khoảng thời gian bằng cách chọn <b>New</b>, sau đó
-                thêm vào các thông tin cần thiết.
+                gian mong muốn, và nhấn <b>Save</b>
               </li>
               <li>
                 Có thể lọc đồ án theo thời án bằng cách sử dụng thanh chọn thời
@@ -155,6 +147,16 @@ const AcademicAffairHome = () => {
                 Sử dụng nút <b>Export</b> để xuất danh sách điểm ra file Excel
               </li>
               <li>
+                Có thể chấm - sửa điểm bằng cách nhấn vào thẻ score cần sửa, sử
+                dụng thanh trượt bên dưới, hoặc nhập thẳng vào ô <b>input</b>,
+                hoặc sử dụng nút mũi tên lên xuống để thay đổi điểm
+              </li>
+              <li>
+                Đồng thời khi nhấn vào thẻ score, link nộp đồ án cũng sẽ được
+                hiển thị, phụ thuộc vào sinh viên đã nộp hay chưa, để giảng viên
+                có thể đưa ra 1 số điểm phù hợp
+              </li>
+              <li>
                 Có thể sử dụng thanh <b>Search</b> để tìm kiếm điểm. Lưu ý: tìm
                 theo tên đồ án
               </li>
@@ -164,33 +166,9 @@ const AcademicAffairHome = () => {
         <div data-test="analysis-management-card" className="main-page-card">
           <div
             className="font-bold text-lg text-center text-blue-600"
-            id="analysis"
-          >
-            4. QUẢN LÝ BÁO CÁO, THỐNG KÊ
-          </div>
-          <div>
-            <ul className="main-page-card-list list-disc">
-              <li>
-                Xem và quản lý thống kê trong hệ thống, bằng cách vào tab{" "}
-                <b>Analysis</b> trên thanh navigation
-              </li>
-              <li>
-                Trong tab <b>Analysis</b> sử dụng phím chuyển để chuyển đổi qua
-                lại giữa các biểu đồ thống kê
-              </li>
-              <li>
-                Các tab <b>Project</b>, <b>Score</b> và <b>Analysis</b> sẽ có
-                nút export để xuất ra báo cáo
-              </li>
-            </ul>
-          </div>
-        </div>
-        <div data-test="analysis-management-card" className="main-page-card">
-          <div
-            className="font-bold text-lg text-center text-blue-600"
             id="account"
           >
-            5. QUẢN LÝ TÀI KHOẢN CÁ NHÂN
+            4. QUẢN LÝ TÀI KHOẢN CÁ NHÂN
           </div>
           <div>
             <ul className="main-page-card-list list-disc">
@@ -201,14 +179,14 @@ const AcademicAffairHome = () => {
               </li>
               <li>
                 Trong tab <b>Profile</b> nội dung ở bên tay trái sẽ là thông tin
-                cá nhân cùng ảnh đại diện, bên tay phải sẽ là bảng xếp hạng
-                thống kê các giảng viên về số lượng sinh viên mỗi giảng viên đó,
-                cũng như thông tin cá nhân của mỗi giảng viên
+                cá nhân cùng ảnh đại diện, bên tay phải sẽ là thống kê về đồ án,
+                cũng như thống kê về số lượng - điểm số trung bình, trung vị của
+                sinh viên mỗi giảng viên đó
               </li>
               <li>
-                Tại nội dung bên tay trái, giáo vụ có thể nhấn chọn vào ảnh đại
-                diện, hoặc vào nút "Edit profile" để chỉnh sửa thông tin tài
-                khoản cá nhân, tại đây giáo vụ có thể thay đổi ảnh đại diện,
+                Tại nội dung bên tay trái, giảng viên có thể nhấn chọn vào ảnh
+                đại diện, hoặc vào nút "Edit profile" để chỉnh sửa thông tin tài
+                khoản cá nhân, tại đây giảng viên có thể thay đổi ảnh đại diện,
                 cũng như có thể chỉnh sửa thông tin cá nhân tùy ý, một số thông
                 tin cá nhân chỉ có thể được thay đổi bởi admin hệ thống
               </li>
@@ -220,4 +198,4 @@ const AcademicAffairHome = () => {
   );
 };
 
-export default AcademicAffairHome;
+export default TeacherHome;

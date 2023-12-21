@@ -56,6 +56,7 @@ const ViewProject = () => {
       currentLimit,
       pageSearchValue?.toLowerCase()
     );
+    console.log(">>> check data", projectsData);
     setProjectListRaw(projectsData);
     setTotalPage(projectsData.totalPage);
   }

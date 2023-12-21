@@ -80,7 +80,7 @@ const Navbar = ({ items }) => {
                   <div className="avatar flex items-center gap-4">
                     <div className="w-8 rounded-full ring ring-sky-300 ring-offset-base-100 ring-offset-2">
                       <img
-                        alt="Tailwind CSS Navbar component"
+                        alt="avatar"
                         src={
                           userData?.User?.avatarLink ||
                           "https://ecommercenextjs.blob.core.windows.net/ecommerceadmin/1702837258987.png"

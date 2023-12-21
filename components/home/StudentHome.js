@@ -27,13 +27,8 @@ const StudentHome = () => {
                 </Link>
               </li>
               <li className="hover:text-sky-500 cursor-pointer">
-                <Link data-test="score-link" href="#score">
-                  Quản lý đồ án hiện tại đã đăng ký
-                </Link>
-              </li>
-              <li className="hover:text-sky-500 cursor-pointer">
-                <Link data-test="analysis-link" href="#analysis">
-                  Quản lý tài khoản{" "}
+                <Link data-test="analysis-link" href="#account">
+                  Quản lý tài khoản cá nhân - đồ án đang đăng ký{" "}
                 </Link>
               </li>
             </ol>
@@ -51,6 +46,10 @@ const StudentHome = () => {
               <li>
                 Đăng ký những đồ án đang có trong hệ thống, bằng cách vào tab{" "}
                 <b>Project</b> trên thanh navigation
+              </li>
+              <li>
+                Có thể tìm kiếm đồ án mong muốn bằng cách sử dụng thanh{" "}
+                <b>Search</b> để tìm kiếm đồ án. Lưu ý: tìm kiếm đồ án theo tên
               </li>
               <li>
                 Có thể xem thông tin chi tiết của đồ án, như điều kiện để được
@@ -94,34 +93,42 @@ const StudentHome = () => {
               <li>
                 Có thể tìm kiếm thông báo mong muốn, bằng cách sử dụng thanh{" "}
                 <b>Search</b> ở góc trái màn hình, tương tự như bên tab{" "}
-                <b>Project</b>
+                <b>Project</b>. Lưu ý: tìm kiếm thông báo theo tiêu đề
               </li>
-            </ul>
-          </div>
-        </div>
-        <div data-test="score-management-card" className="main-page-card">
-          <div
-            className="font-bold text-lg text-center text-blue-600"
-            id="score"
-          >
-            3. QUẢN LÝ ĐỒ ÁN HIỆN TẠI ĐÃ ĐĂNG KÝ
-          </div>
-          <div>
-            <ul className="main-page-card-list list-disc">
-              <li>Đang trong quá trình phát triển</li>
             </ul>
           </div>
         </div>
         <div data-test="analysis-management-card" className="main-page-card">
           <div
             className="font-bold text-lg text-center text-blue-600"
-            id="analysis"
+            id="account"
           >
-            4. QUẢN LÝ TÀI KHOẢN
+            3. QUẢN LÝ TÀI KHOẢN CÁ NHÂN - ĐỒ ÁN ĐANG ĐĂNG KÝ
           </div>
           <div>
             <ul className="main-page-card-list list-disc">
-              <li>Đang trong quá trình phát triển</li>
+              <li>
+                Xem và quản lý tài khoản cá nhân trong hệ thống, bằng cách vào
+                tên tài khoản ở góc phải trên cùng màn hình, và chọn{" "}
+                <b>Profile</b> để truy cập trang quản lý tài khoản cá nhân
+              </li>
+              <li>
+                Trong tab <b>Profile</b> nội dung ở bên tay trái sẽ là thông tin
+                cá nhân cùng ảnh đại diện, bên tay phải sẽ là thông tin đồ án
+                sinh viên đang đăng ký, nếu chưa đăng ký đồ án nào thì hệ thống
+                sẽ báo sinh viên chưa đăng ký. Tại đây sinh viên có thể xem được
+                điểm số, cũng như có thể hủy đồ án đang đăng ký bằng cách chọn{" "}
+                <b>Cancel register</b>, hoặc sử dụng <b>Submit project</b> để
+                nộp đường dẫn chứa đồ án của bản thân, cùng các tài liệu liên
+                quan.
+              </li>
+              <li>
+                Tại nội dung bên tay trái, sinh viên có thể nhấn chọn vào ảnh
+                đại diện, hoặc vào nút "Edit profile" để chỉnh sửa thông tin tài
+                khoản cá nhân, tại đây sinh viên có thể thay đổi ảnh đại diện,
+                cũng như có thể chỉnh sửa thông tin cá nhân tùy ý, một số thông
+                tin cá nhân chỉ có thể được thay đổi bởi admin hệ thống
+              </li>
             </ul>
           </div>
         </div>
