@@ -112,8 +112,13 @@ const AccountCard = ({
               >
                 {account.name}
               </div>
-              <div className={` w-max`}>{account.username}</div>
-              <div className={`${getRoleBox(account.role)} w-fit mt-1`}>
+              <div data-test="account-card-username" className={` w-max`}>
+                {account.username}
+              </div>
+              <div
+                data-test="account-card-role"
+                className={`${getRoleBox(account.role)} w-fit mt-1`}
+              >
                 {convertToFullRole(account.role)}
               </div>
             </div>
@@ -121,8 +126,10 @@ const AccountCard = ({
           <div></div>
         </div>
         <div className="flex flex-col gap-1 justify-center col-span-3">
-          <div className={`font-semibold`}>{account.email}</div>
-          <div>{account.phone}</div>
+          <div data-test="account-card-email" className={`font-semibold`}>
+            {account.email}
+          </div>
+          <div data-test="account-card-phone">{account.phone}</div>
         </div>
         <div
           className={`${getRoleText(
