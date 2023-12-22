@@ -22,12 +22,14 @@ export const GetRoleInput = ({ role, setRole }) => {
       return (
         <>
           <InputField
+            dataTest="aa-id-input"
             title={"Academic Affair ID"}
             content={role}
             setContent={setRole}
             propertyChangeName={["aa", "code"]}
           />
           <InputField
+            dataTest="aa-faculty-input"
             title={"Faculty"}
             content={role}
             setContent={setRole}
@@ -39,18 +41,21 @@ export const GetRoleInput = ({ role, setRole }) => {
       return (
         <>
           <InputField
+            dataTest="teacher-id-input"
             title={"Teacher ID"}
             content={role}
             setContent={setRole}
             propertyChangeName={["teacher", "code"]}
           />
           <InputField
+            dataTest="teacher-faculty-input"
             title={"Faculty"}
             content={role}
             setContent={setRole}
             propertyChangeName={["teacher", "faculty"]}
           />
           <InputField
+            dataTest="teacher-degree-input"
             title={"Academic Degree"}
             content={role}
             setContent={setRole}
@@ -62,6 +67,7 @@ export const GetRoleInput = ({ role, setRole }) => {
       return (
         <>
           <InputField
+            dataTest="student-id-input"
             title={"Student ID"}
             content={role}
             setContent={setRole}
@@ -89,6 +95,7 @@ export const GetRoleInput = ({ role, setRole }) => {
             </button>
           </span>
           <select
+            data-test="student-class-select"
             className="border border-slate-200 rounded px-2 py-1"
             value={role.student.class}
             onChange={(e) => {
@@ -115,6 +122,7 @@ export const GetRoleInput = ({ role, setRole }) => {
           />
 
           <InputField
+            dataTest="student-major-input"
             title={"Major"}
             content={role}
             setContent={setRole}

@@ -5,6 +5,7 @@ export const InputField = ({
   inputType = "text",
   propertyChangeName = null,
   isHidden = false,
+  dataTest,
 }) => {
   let changeContent;
   let viewContent;
@@ -33,6 +34,7 @@ export const InputField = ({
         {title}
       </label>
       <input
+        data-test={dataTest}
         hidden={isHidden}
         type={inputType}
         className="border border-gray-200 rounded px-2 py-1"

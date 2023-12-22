@@ -30,6 +30,7 @@ const DeleteModal = ({ item, selectedItem, handleConfirmDelete }) => {
 
   return (
     <button
+      data-test="delete-account-button"
       id="delete-button"
       type="button"
       className="btn-red"

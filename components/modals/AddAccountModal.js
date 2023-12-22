@@ -63,6 +63,7 @@ const AddAccountModal = ({ setNeedReload }) => {
   return (
     <div>
       <button
+        data-test="create-account-button"
         className="btn-blue "
         onClick={() => document.getElementById("my_modal_2").showModal()}
       >
@@ -82,7 +83,11 @@ const AddAccountModal = ({ setNeedReload }) => {
         </svg>
         Add account
       </button>
-      <dialog id="my_modal_2" className="modal">
+      <dialog
+        data-test="create-account-dialog"
+        id="my_modal_2"
+        className="modal"
+      >
         <div className="modal-box max-w-5xl max-h-screen">
           <h2 className="text-2xl mb-6 mx-2 font-bold text-blue-600">
             Add new account
@@ -95,11 +100,13 @@ const AddAccountModal = ({ setNeedReload }) => {
                     Authentication information
                   </legend>
                   <InputField
+                    dataTest="create-username-input"
                     title={"Username"}
                     content={username}
                     setContent={setUsername}
                   />
                   <InputField
+                    dataTest="create-password-input"
                     title={"Password"}
                     content={password}
                     setContent={setPassword}
@@ -112,22 +119,26 @@ const AddAccountModal = ({ setNeedReload }) => {
                     User information
                   </legend>
                   <InputField
+                    dataTest="create-name-input"
                     title={"Name"}
                     content={name}
                     setContent={setName}
                   />
                   <InputField
+                    dataTest="create-email-input"
                     title={"Email"}
                     content={email}
                     setContent={setEmail}
                   />
                   <InputField
+                    dataTest="create-date-of-birth-input"
                     title={"Date of birth"}
                     content={dateOfBirth}
                     setContent={setDateOfBirth}
                     inputType="date"
                   />
                   <InputField
+                    dataTest="create-phone-number-input"
                     title={"Phone"}
                     content={phone}
                     setContent={setPhone}
@@ -141,6 +152,7 @@ const AddAccountModal = ({ setNeedReload }) => {
                 <div className="flex flex-col">
                   <label className="text-left font-semibold">Role</label>
                   <select
+                    data-test="create-role-select"
                     className="border border-gray-200 rounded px-2 py-1"
                     value={role.value}
                     onChange={(e) => {
@@ -160,6 +172,7 @@ const AddAccountModal = ({ setNeedReload }) => {
           </div>
           <div className="modal-action flex gap-3">
             <button
+              data-test="create-save-button"
               onClick={() => {
                 createAccount();
                 clearInformation();
@@ -171,6 +184,7 @@ const AddAccountModal = ({ setNeedReload }) => {
               Save
             </button>
             <button
+              data-test="create-cancel-button"
               onClick={() => {
                 clearInformation();
                 document.getElementById("my_modal_2").close();

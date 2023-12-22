@@ -139,17 +139,19 @@ const ViewAccount = () => {
         </div>
         <div className="flex flex-col h-full">
           <div className="flex flex-col gap-1.5">
-            {accountList.map((account) => (
-              <AccountCard
-                account={account}
-                key={account.id}
-                editOnClick={() => {
-                  router.push(`/admin/account/update-account/${account.id}`);
-                }}
-                selectedItem={selectedAccount}
-                setSelectedItem={setSelectedAccount}
-                setNeedReload={setNeedReload}
-              />
+            {accountList.map((account, index) => (
+              <div data-test={`account-card-${index}`}>
+                <AccountCard
+                  account={account}
+                  key={account.id}
+                  editOnClick={() => {
+                    router.push(`/admin/account/update-account/${account.id}`);
+                  }}
+                  selectedItem={selectedAccount}
+                  setSelectedItem={setSelectedAccount}
+                  setNeedReload={setNeedReload}
+                />
+              </div>
             ))}
           </div>
           <div className="px-5 py-8 h-full flex flex-row-reverse">

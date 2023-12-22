@@ -133,22 +133,26 @@ const UpdateAccountModal = ({ id, setNeedReload }) => {
                     User information
                   </legend>
                   <InputField
+                    dataTest="update-name-input"
                     title={"Name"}
                     content={name}
                     setContent={setName}
                   />
                   <InputField
+                    dataTest="update-email-input"
                     title={"Email"}
                     content={email}
                     setContent={setEmail}
                   />
                   <InputField
+                    dataTest="update-date-of-birth-input"
                     title={"Date of birth"}
                     content={dateOfBirth}
                     setContent={setDateOfBirth}
                     inputType="date"
                   />
                   <InputField
+                    dataTest="update-phone-number-input"
                     title={"Phone"}
                     content={phone}
                     setContent={setPhone}
@@ -162,6 +166,7 @@ const UpdateAccountModal = ({ id, setNeedReload }) => {
                 <div className="flex flex-col">
                   <label className="text-left font-semibold">Role</label>
                   <select
+                    data-test="update-role-select"
                     className="border border-gray-200 rounded px-2 py-1"
                     value={role.value}
                     onChange={(e) => {
@@ -181,6 +186,7 @@ const UpdateAccountModal = ({ id, setNeedReload }) => {
           </div>
           <div className="modal-action flex gap-3">
             <button
+              data-test="update-save-button"
               onClick={() => {
                 updateAccount();
                 document.getElementById(`edit_modal_${id}`).close();
@@ -191,6 +197,7 @@ const UpdateAccountModal = ({ id, setNeedReload }) => {
               Save
             </button>
             <button
+              data-test="update-cancel-button"
               onClick={() => {
                 document.getElementById(`edit_modal_${id}`).close();
               }}

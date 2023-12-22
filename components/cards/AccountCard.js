@@ -106,7 +106,10 @@ const AccountCard = ({
         <div className="flex flex-col gap-2 w-1/3 col-span-4">
           <div className="flex items-center w-full">
             <div className="flex flex-col gap-1">
-              <div className={`font-bold w-max ${getRoleText(account.role)}`}>
+              <div
+                data-test="account-card-title"
+                className={`font-bold w-max ${getRoleText(account.role)}`}
+              >
                 {account.name}
               </div>
               <div className={` w-max`}>{account.username}</div>
