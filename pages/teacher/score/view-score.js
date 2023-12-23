@@ -148,9 +148,9 @@ const NewViewScore = () => {
           </div>
         </div>
         <div className="px-16 py-7">
-          {score_list.map((score_item) => {
+          {score_list.map((score_item, index) => {
             return (
-              <div key={score_item.id}>
+              <div data-test={`score-card-${index}`} key={score_item.id}>
                 <ScoreCard
                   scoreObj={score_item}
                   isTeacher={
