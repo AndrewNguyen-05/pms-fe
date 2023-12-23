@@ -116,6 +116,7 @@ const Navbar = ({ items }) => {
                 </li>
                 <li className="w-11/12">
                   <Link
+                    data-test="view-profile-button"
                     href={(() => {
                       switch (userData.role) {
                         case "teacher":
@@ -151,6 +152,7 @@ const Navbar = ({ items }) => {
                 </li>
                 <li className="w-11/12 flex items-center border-t-2">
                   <button
+                    data-test="logout-button"
                     className="flex w-full justify-start gap-2 p-2  items-center rounded-md hover:bg-blue-500 hover:text-white"
                     onClick={() => {
                       signOut();
