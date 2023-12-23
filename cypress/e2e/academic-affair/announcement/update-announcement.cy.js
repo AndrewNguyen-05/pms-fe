@@ -4,7 +4,7 @@ describe("Update Announcement", () => {
 
     cy.url().should("include", "/auth/signin");
 
-    cy.get('[data-test="username-input"]').type("7kinhNgan59");
+    cy.get('[data-test="username-input"]').type("NguyenKhang_Trinh");
     cy.get('[data-test="password-input"]').type("123");
     cy.get('[data-test="login-button"]').click();
 

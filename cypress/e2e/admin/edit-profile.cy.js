@@ -4,7 +4,7 @@ describe("Edit User Profile", () => {
 
     cy.url().should("include", "/auth/signin");
 
-    cy.get('[data-test="username-input"]').type("Tan7kinh.Duong38");
+    cy.get('[data-test="username-input"]').type("ChanHung.Lam71");
     cy.get('[data-test="password-input"]').type("123");
     cy.get('[data-test="login-button"]').click();
 
@@ -46,7 +46,7 @@ describe("Edit User Profile", () => {
     cy.get(".btn > .avatar").dblclick();
     cy.get('[data-test="logout-button"]').click();
 
-    cy.get('[data-test="username-input"]').type("Tan7kinh.Duong38");
+    cy.get('[data-test="username-input"]').type("ChanHung.Lam71");
     cy.get('[data-test="password-input"]').type("123");
     cy.get('[data-test="login-button"]').click();
 
