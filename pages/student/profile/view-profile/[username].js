@@ -170,6 +170,7 @@ const StudentProfile = () => {
                     studentId={userData?.id}
                   />
                   <button
+                    data-test="submit-project-button"
                     onClick={handleSubmit}
                     className="w-[150px] border-2 border-blue-700 px-5 py-2.5 mt-4 shadow-md text-blue-600 bg-white hover:text-white hover:bg-blue-600 focus:ring-1 focus:ring-blue-300 font-medium rounded-lg text-sm focus:outline-none flex items-center justify-center gap-3"
                   >

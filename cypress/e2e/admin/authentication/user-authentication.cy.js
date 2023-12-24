@@ -43,7 +43,7 @@ describe("User Authentication", () => {
 
     cy.url().should("include", "/auth/signin");
 
-    cy.get('[data-test="username-input"]').type("QuocHung.Ngo47");
+    cy.get('[data-test="username-input"]').type("ThanhNgan80");
     cy.get('[data-test="password-input"]').type("123");
     cy.get('[data-test="login-button"]').click();
 
