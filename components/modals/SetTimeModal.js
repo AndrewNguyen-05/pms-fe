@@ -149,6 +149,7 @@ const SetTimeModal = ({
                     Semester - Year
                   </label>
                   <select
+                    data-test="set-time-select"
                     value={timeId}
                     className="border border-gray-200 rounded px-2 py-1 w-72 focus:border focus:border-black"
                     onChange={(e) => {
@@ -272,6 +273,7 @@ const SetTimeModal = ({
           </div>
           <div className="modal-action flex gap-3">
             <button
+              data-test="save-button"
               onClick={() => {
                 setTime();
                 document.getElementById("set_time_modal").close();
