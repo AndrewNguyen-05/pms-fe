@@ -156,7 +156,11 @@ const ViewAnalysis = () => {
                 />
               </svg>
             }
-            name={teacherWithMostProject["Teacher.User.name"]}
+            name={
+              teacherWithMostProject["Teacher.User.name"] === undefined
+                ? ""
+                : teacherWithMostProject["Teacher.User.name"]
+            }
             value={`${teacherWithMostProject["projectCount"]} projects`}
           />
           <AnalysisCard
@@ -177,8 +181,18 @@ const ViewAnalysis = () => {
                 />
               </svg>
             }
-            name={teacherWithMostStudent["Teacher.User.name"]}
-            value={`${teacherWithMostStudent["Student"]} students`}
+            name={
+              teacherWithMostStudent &&
+              teacherWithMostStudent["Teacher.User.name"]
+                ? teacherWithMostStudent["Teacher.User.name"]
+                : ""
+            }
+            value={
+              teacherWithMostStudent &&
+              teacherWithMostStudent["Teacher.User.name"]
+                ? `${teacherWithMostStudent["Student"]} students`
+                : ""
+            }
           />
           <AnalysisCard
             title="Teacher has the most project registered"
