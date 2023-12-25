@@ -140,7 +140,7 @@ const ViewAccount = () => {
         <div className="flex flex-col h-full">
           <div className="flex flex-col gap-1.5">
             {accountList.map((account, index) => (
-              <div data-test={`account-card-${index}`}>
+              <div key={index} data-test={`account-card-${index}`}>
                 <AccountCard
                   account={account}
                   key={account.id}

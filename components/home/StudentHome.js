@@ -124,10 +124,10 @@ const StudentHome = () => {
               </li>
               <li>
                 Tại nội dung bên tay trái, sinh viên có thể nhấn chọn vào ảnh
-                đại diện, hoặc vào nút "Edit profile" để chỉnh sửa thông tin tài
-                khoản cá nhân, tại đây sinh viên có thể thay đổi ảnh đại diện,
-                cũng như có thể chỉnh sửa thông tin cá nhân tùy ý, một số thông
-                tin cá nhân chỉ có thể được thay đổi bởi admin hệ thống
+                đại diện, hoặc vào nút <b>Edit profile</b> để chỉnh sửa thông
+                tin tài khoản cá nhân, tại đây sinh viên có thể thay đổi ảnh đại
+                diện, cũng như có thể chỉnh sửa thông tin cá nhân tùy ý, một số
+                thông tin cá nhân chỉ có thể được thay đổi bởi admin hệ thống
               </li>
             </ul>
           </div>

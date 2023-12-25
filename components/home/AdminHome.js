@@ -82,10 +82,10 @@ const AdminHome = () => {
               </li>
               <li>
                 Tại nội dung bên tay trái, admin có thể nhấn chọn vào ảnh đại
-                diện, hoặc vào nút "Edit profile" để chỉnh sửa thông tin tài
-                khoản cá nhân, tại đây admin có thể thay đổi ảnh đại diện, cũng
-                như có thể chỉnh sửa thông tin cá nhân tùy ý, một số thông tin
-                cá nhân chỉ có thể được thay đổi bởi admin hệ thống
+                diện, hoặc vào nút <b>Edit profile</b> để chỉnh sửa thông tin
+                tài khoản cá nhân, tại đây admin có thể thay đổi ảnh đại diện,
+                cũng như có thể chỉnh sửa thông tin cá nhân tùy ý, một số thông
+                tin cá nhân chỉ có thể được thay đổi bởi admin hệ thống
               </li>
             </ul>
           </div>
