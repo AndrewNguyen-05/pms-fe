@@ -8,7 +8,6 @@ const getTeacherData = async () => {
 };
 
 const getAnalysisTeacher = async (teacherId) => {
-  console.log(">>> check teacher id: ", teacherId);
   const res = await axios.get(
     `http://localhost:8888/api/v1/teacher/readAnalysisData?id=${teacherId}`
   );

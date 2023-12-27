@@ -6,13 +6,13 @@ const TeacherProfileCard = ({ userData }) => {
   const getAnalysisData = async () => {
     if (userData?.id) {
       const res = await getAnalysisTeacher(userData?.id);
+      console.log(">> check analysis:", res);
       setAnalysisData(res);
     }
   };
   useEffect(() => {
     getAnalysisData();
   }, [userData]);
-  console.log(">>> check data user: ", analysisData);
   return (
     <div className="bg-white shadow-md rounded-md my-5 mr-5 w-full h-full p-2 overflow-auto text-lg">
       <div className="m-5">
